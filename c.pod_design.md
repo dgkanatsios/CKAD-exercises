@@ -1,0 +1,626 @@
+# Pod design (20%)
+
+## Labels and annotations
+
+### Create 3 pods with names nginx1,nginx2,nginx3. All of them should have the label app=v1
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl run nginx1 --image=nginx --restart=Never --labels=app=v1
+kubectl run nginx2 --image=nginx --restart=Never --labels=app=v1
+kubectl run nginx3 --image=nginx --restart=Never --labels=app=v1
+```
+
+</p>
+</details>
+
+### Show all labels of the pods
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl get po --show-labels
+```
+
+</p>
+</details>
+
+### Change the labels of pod 'nginx2' to be app=v2
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl label po nginx2 app=v2 --overwrite
+```
+
+</p>
+</details>
+
+### Get the label 'app' for the pods
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl get po -L app
+```
+
+</p>
+</details>
+
+### Get only the 'app=v2' pods
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl get po -l app=v2
+# or
+kubectl get po -l 'app in (v2)'
+```
+
+</p>
+</details>
+
+### Remove the 'app' label from the pods we created before
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl label po nginx1 nginx2 nginx3 app-
+# or
+kubectl label po nginx{1..3} app-
+```
+
+</p>
+</details>
+
+### Create a pod that will be deployed to a Node that has the label 'accelerator=nvidia-tesla-p100'
+
+<details><summary>show</summary>
+<p>
+
+We can use the 'nodeSelector' property on the Pod YAML:
+
+```YAML
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cuda-test
+spec:
+  containers:
+    - name: cuda-test
+      image: "k8s.gcr.io/cuda-vector-add:v0.1"
+  nodeSelector: # add this
+    accelerator: nvidia-tesla-p100 # the slection label
+```
+
+You can easily find out where in the YAML it should be placed by:
+
+```bash
+kubectl explain po.spec
+```
+
+</p>
+</details>
+
+### Annotate pods nginx1, nginx2, ngingx3 with "description='my description'" value
+
+<details><summary>show</summary>
+<p>
+
+
+```bash
+kubectl annotate po nginx1 nginx2 nginx3 description='my description'
+```
+
+</p>
+</details>
+
+### Check the annotations for pod nginx1
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl describe po nginx1 | grep -i 'annotations'
+```
+
+</p>
+</details>
+
+### Remove the annotations fot these three pods
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl annotate po nginx{1..3} description-
+```
+
+</p>
+</details>
+
+### Remove these pods to have a clean state in your cluster
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl delete po nginx{1..3}
+```
+
+</p>
+</details>
+
+## Deployments
+
+### Create a deployment with image nginx:1.7.8, 2 replicas, defining port 80 as the port that this container exposes (don't create a service for this deployment)
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl run nginx --image=nginx:1.7.8 --replicas=2 --port=80
+```
+
+</p>
+</details>
+
+### View the YAML of this deployment
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl get deploy nginx --export -o yaml
+```
+
+</p>
+</details>
+
+### View the YAML of the replica set that was created by this deployment
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl describe deploy nginx # you'll see the name of the replica set on the Events section and in the 'NewReplicaSet' property
+# you could also just do kubectl get rs
+kubectl get rs nginx-7bf7478b77 --export -o yaml
+```
+
+</p>
+</details>
+
+### Get the YAML for one of the pods
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl get po # get all the pods
+kubectl get po nginx-7bf7478b77-gjzp8 -o yaml --export
+```
+
+</p>
+</details>
+
+### Check how the deployment rollout is going
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl rollout status deploy nginx
+```
+
+</p>
+</details>
+
+### Update the nginx image to nginx:1.7.9
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl set image deploy nginx nginx=nginx:1.7.9
+# alternatively...
+kubectl edit deploy nginx # change the .spec.template.spec.containers[0].image
+```
+
+The syntax of the 'kubectl set image' command is `kubectl set image (-f FILENAME | TYPE NAME) CONTAINER_NAME_1=CONTAINER_IMAGE_1 ... CONTAINER_NAME_N=CONTAINER_IMAGE_N [options]`
+
+</p>
+</details>
+
+### Check the rollout history and confirm that the replicas are OK
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl rollout history deploy nginx
+kubectl get deploy nginx
+kubectl get rs # check that a new replica set has been created
+kubectl get po
+```
+
+</p>
+</details>
+
+### Undo the latest rollout and verify that new pods have the old image (nginx:1.7.8)
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl rollout undo deploy nginx
+# wait a bit
+kubectl get po # select one 'Running' Pod
+kubectl describe po nginx-5ff4457d65-nslcl | grep -i image # should be nginx:1.7.8
+```
+
+</p>
+</details>
+
+### Do an on purpose update of the deployment with a wrong image nginx:1.91
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl set image deploy nginx nginx=nginx:1.91
+# or
+kubectl edit deploy nginx
+# change the image to nginx:1.91
+# vim tip: type (without quotes) '/image' and Enter, to navigate quickly
+```
+
+</p>
+</details>
+
+### Verify that something's wrong with the rollout
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl rollout status deploy nginx
+# or
+kubectl get po # you'll see 'ErrImagePull'
+```
+
+</p>
+</details>
+
+
+### Return the deployment to the second revision (number 2) and verify the image is nginx:1.7.9
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl rollout undo deploy nginx --to-revision=2
+kubectl describe deploy nginx | grep Image:
+kubectl rollout status deploy nginx # Everything should be OK
+```
+
+</p>
+</details>
+
+### Check the details of the third revision (number 3)
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl rollout history deploy nginx --revision=3 # You'll also see the wrong image displayed here
+```
+
+</p>
+</details>
+
+### Scale the deployment to 5 replicas
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl scale deploy nginx --replicas=5
+kubectl get po
+kubectl describe deploy nginx
+```
+
+</p>
+</details>
+
+### Autoscale the deployment, pods between 5 and 10, targetting CPU utilization at 80%
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl autoscale deploy nginx --min=5 --max=10 --cpu-percent=80
+```
+
+</p>
+</details>
+
+### Pause the rollout of the deployment
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl rollout pause deploy nginx
+```
+
+</p>
+</details>
+
+### Update the image to nginx:1.9.1 and check that there's nothing going on, since we paused the rollout
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl set image deploy nginx nginx=nginx:1.9.1
+# or
+kubectl edit deploy nginx
+# change the image to nginx:1.9.1
+kubectl rollout history deploy nginx # no new revision
+```
+
+</p>
+</details>
+
+### Resume the rollout and check that the nginx:1.9.1 image has been applied
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl rollout resume deploy nginx
+kubectl rollout history deploy nginx
+kubectl rollout history deploy nginx --revision=6 # insert the number of your latest revision
+```
+
+</p>
+</details>
+
+### Delete the deployment and the horizontal pod autoscaler you created
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl delete deploy nginx
+kubectl delete hpa nginx
+```
+
+</p>
+</details>
+
+## Jobs
+
+### Create a job with image perl that runs default command with arguments "perl -Mbignum=bpi -wle 'print bpi(2000)'"
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl run pi --image=perl --restart=OnFailure -- perl -Mbignum=bpi -wle 'print bpi(2000)'
+```
+
+</p>
+</details>
+
+### Wait till it's done, get the output
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl get jobs -w # wait till 'SUCCESSFUL' is 1 (will take some time, perl image might be big)
+kubectl get po # get the pod name
+kubectl logs perl-**** # get the pi numbers
+kubectl delete job pi
+```
+
+</p>
+</details>
+
+### Create a job with the image busybox that executes the command 'echo hello;sleep 30;echo world'
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl run busybox --image=busybox --restart=OnFailure -- /bin/sh -c 'echo hello;sleep 30;echo world'
+```
+
+</p>
+</details>
+
+### Follow the logs for the pod (you'll wait for 30 seconds)
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl get po # find the job pod
+kubectl logs busybox-ptx58 -f # follow the logs
+```
+
+</p>
+</details>
+
+### See the status of the job, describe it and see the logs
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl get jobs
+kubectl describe jobs busybox
+kubectl logs job/busybox
+```
+
+</p>
+</details>
+
+### Delete the job
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl delete job busybox
+```
+
+</p>
+</details>
+
+### Create the same job, make it run 5 times, one after the other. Verify its status and delete it
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl run busybox --image=busybox --restart=OnFailure --dry-run -o yaml -- /bin/sh -c 'echo hello;sleep 30;echo world' > job.yaml
+vi job.yaml
+```
+
+Add job.cpec.completions=5
+
+```YAML
+apiVersion: batch/v1
+kind: Job
+metadata:
+  creationTimestamp: null
+  labels:
+    run: busybox
+  name: busybox
+spec:
+  completions: 5 # add this line
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: busybox
+    spec:
+      containers:
+      - args:
+        - /bin/sh
+        - -c
+        - echo hello;sleep 30;echo world
+        image: busybox
+        name: busybox
+        resources: {}
+      restartPolicy: OnFailure
+status: {}
+```
+
+```bash
+kubectl create -f job.yaml
+```
+
+Verify that it has been completed:
+
+```bash
+kubectl get job busybox -w # will take two and a half minutes
+kubectl delete jobs busybox
+```
+
+</p>
+</details>
+
+### Create the same job, but make it run 5 parallel times
+
+<details><summary>show</summary>
+<p>
+
+```bash
+vi job.yaml
+```
+
+Add job.spec.parallelism=5
+
+```YAML
+apiVersion: batch/v1
+kind: Job
+metadata:
+  creationTimestamp: null
+  labels:
+    run: busybox
+  name: busybox
+spec:
+  parallelism: 5 # add this line
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: busybox
+    spec:
+      containers:
+      - args:
+        - /bin/sh
+        - -c
+        - echo hello;sleep 30;echo world
+        image: busybox
+        name: busybox
+        resources: {}
+      restartPolicy: OnFailure
+status: {}
+```
+
+```bash
+kubectl create -f job.yaml
+kubectl get jobs
+```
+
+It will take some time for the parallel jobs to finish (>= 30 seconds)
+
+```bash
+kubectl delete job busybox
+```
+
+</p>
+</details>
+
+## Cron jobs
+
+### Create a cron job with image busybox that runs on a schedule of "*/1 * * * *" and writes 'date; echo Hello from the Kubernetes cluster' to standard output
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl run busybox --image=busybox --restart=OnFailure --schedule="*/1 * * * *" -- /bin/sh -c 'date; echo Hello from the Kubernetes cluster'
+```
+
+</p>
+</details>
+
+### See its logs and delete it
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl get cj
+kubectl get jobs --watch
+kubectl get po --show-labels # observe that the pods have a label that mentions their 'parent' job
+kubect logs busybox-1529745840-m867r
+# Bear in mind that Kubernetes will run a new job/pod for each new cron job
+kubectl delete cj busybox
+```
+
+</p>
+</details>
