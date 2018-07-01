@@ -4,7 +4,7 @@
 
 # CKAD Exercises
 
-A set of exercises that helped me prepare [Certified Kubernetes Application Developer](https://www.cncf.io/certification/ckad/) exam by the Cloud Native Computing Foundation. Organized by curriculum domains. Feel free to PR and edit/add questions and solutions.
+A set of exercises that helped me prepare [Certified Kubernetes Application Developer](https://www.cncf.io/certification/ckad/) exam by the Cloud Native Computing Foundation, organized by curriculum domains. May as well serve as learning and practicing with Kubernetes.
 
 ## Contents
 
@@ -15,3 +15,7 @@ A set of exercises that helped me prepare [Certified Kubernetes Application Deve
 - [Observability - 18%](e.observability.md)
 - [Services and networking - 13%](f.services.md)
 - [State persistence - 8%](g.state.md)
+
+### Can I PR?
+
+Absolutely! Feel free to PR and edit/add questions and solutions.
