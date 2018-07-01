@@ -299,7 +299,7 @@ status: {}
 <p>
 
 ```bash
-kubectl run nginx --image=nginx --restart=Never --request='cpu=100m,memory=256Mi' --limits='cpu=200m,memory=512Mi'
+kubectl run nginx --image=nginx --restart=Never --requests='cpu=100m,memory=256Mi' --limits='cpu=200m,memory=512Mi'
 ```
 
 </p>
