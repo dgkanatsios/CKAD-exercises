@@ -1,3 +1,4 @@
+![](https://gaforgithub.azurewebsites.net/api?repo=CKAD-exercises/state&empty)
 # State Persistence (8%)
 
 ## Define volumes 
@@ -82,7 +83,7 @@ kubectl delete po busybox
 </details>
 
 
-### Create a PersistentVolume of 20GB, called 'myvolume' accessMode 'ReadWriteOnce' and 'ReadWriteMany', storageClassName 'normal' on hostPath '/etc/foo'. Save it on pv.yaml, add it to the cluster. Show the PersistentVolumes residing on the cluster 
+### Create a PersistentVolume of 20GB, called 'myvolume'. Make it have accessMode of 'ReadWriteOnce' and 'ReadWriteMany', storageClassName 'normal', mounted on hostPath '/etc/foo'. Save it on pv.yaml, add it to the cluster. Show the PersistentVolumes that exist on the cluster 
 
 <details><summary>show</summary>
 <p>
@@ -118,7 +119,7 @@ kubectl get pv
 </p>
 </details>
 
-### Create a PersistentVolumeClaim for this storage class, called mypvc, a request of 4GB and save it on pvc.yaml. Create it on the cluster. Show the PersistentVolumeClaims of the cluster. Show the PersistentVolumes of the cluster.
+### Create a PersistentVolumeClaim for this storage class, called mypvc, a request of 4GB and save it on pvc.yaml. Create it on the cluster. Show the PersistentVolumeClaims of the cluster. Show the PersistentVolumes of the cluster
 
 <details><summary>show</summary>
 <p>
@@ -151,7 +152,7 @@ kubectl get pv # will show as 'Bound' as well
 </p>
 </details>
 
-### Create a busybox pod with command 'sleep 3600', save it on pod.yaml. Mount the PersistentVolumeClaim to '/etc/foo'. Connect to the 'busybox' pod, and copy the '/etc/passwd' file to '/etc/foo'.
+### Create a busybox pod with command 'sleep 3600', save it on pod.yaml. Mount the PersistentVolumeClaim to '/etc/foo'. Connect to the 'busybox' pod, and copy the '/etc/passwd' file to '/etc/foo'
 
 <details><summary>show</summary>
 <p>
@@ -229,14 +230,14 @@ kubectl delete po busybox busybox2
 </p>
 </details>
 
-### Create a busybox pod with 'sleep 3600' as arguments. Copy '/etc/passwd' from the pod to your local folder.
+### Create a busybox pod with 'sleep 3600' as arguments. Copy '/etc/passwd' from the pod to your local folder
 
 <details><summary>show</summary>
 <p>
 
 ```bash
 kubectl run busybox --image=busybox --restart=Never -- sleep 3600
-kubectl cp busybox:/etc/passwd .
+kubectl cp busybox:/etc/passwd . # kubectl cp command
 cat passwd
 ```
 

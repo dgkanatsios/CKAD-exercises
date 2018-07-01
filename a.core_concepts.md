@@ -1,3 +1,4 @@
+![](https://gaforgithub.azurewebsites.net/api?repo=CKAD-exercises/core_concepts&empty)
 # Core Concepts (13%)
 
 ### Create a namespace called 'mynamespace' and a pod with image nginx called nginx on this namespace
