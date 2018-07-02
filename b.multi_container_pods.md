@@ -29,8 +29,8 @@ containers:
     - /bin/sh
     - -c
     - echo hello;sleep 3600
-    image: busybox2
-    name: busybox
+    image: busybox
+    name: busybox2
 ```
 
 ```bash
