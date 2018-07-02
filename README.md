@@ -19,3 +19,7 @@ A set of exercises that helped me prepare for the [Certified Kubernetes Applicat
 ### Can I PR? There is an error/an alternative way/an extra question/solution I can offer
 
 Absolutely! Feel free to PR and edit/add questions and solutions, but please stick to the existing format.
+
+### Any other links that could help me prepare?
+
+[twajr](https://github.com/twajr) has written some great notes [here](https://github.com/twajr/ckad-prep-notes)
