@@ -164,7 +164,7 @@ kubectl delete deploy foo
 
 ```bash
 kubectl run nginx --image=nginx --replicas=2 --port=80 --expose
-kubectl describe svc nginx -o wide # see the 'run=nginx' selector for the pods
+kubectl describe svc nginx # see the 'run=nginx' selector for the pods
 # or
 kubectl get svc nginx -o yaml --export
 
