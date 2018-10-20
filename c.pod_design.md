@@ -498,7 +498,7 @@ kubectl run busybox --image=busybox --restart=OnFailure --dry-run -o yaml -- /bi
 vi job.yaml
 ```
 
-Add job.cpec.completions=5
+Add job.spec.completions=5
 
 ```YAML
 apiVersion: batch/v1
