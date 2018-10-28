@@ -55,7 +55,7 @@ kubectl create -f pod.yaml
 </p>
 </details>
 
-### Create a busybox pod (using YAML) that runs the command "env". Run it and see the output
+### Create a busybox pod (using kubectl command) that runs the command "env". Run it and see the output
 
 <details><summary>show</summary>
 <p>
@@ -65,6 +65,44 @@ kubectl run busybox --image=busybox --command --restart=Never -it -- env # -it w
 # or, just run it without -it
 kubectl run busybox --image=busybox --command --restart=Never -- env
 # and then, check its logs
+kubectl logs busybox
+```
+
+</p>
+</details>
+
+### Create a busybox pod (using YAML) that runs the command "env". Run it and see the output
+
+<details><summary>show</summary>
+<p>
+
+```bash
+# create a  YAML template with this command
+kubectl run busybox --image=busybox --restart=Never --dry-run -o yaml > envpod.yaml
+# edit it
+vi envpod.yaml
+```
+
+```YAML
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: busybox
+  name: busybox
+spec:
+  containers:
+  - image: busybox
+    imagePullPolicy: IfNotPresent
+    name: busybox
+    command: ["env"] # <----- add this
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+```
+
+```bash
+# apply it and then see the logs
+kubectl apply -f envpod.yaml
 kubectl logs busybox
 ```
 
