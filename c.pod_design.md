@@ -618,7 +618,7 @@ kubectl run busybox --image=busybox --restart=OnFailure --schedule="*/1 * * * *"
 kubectl get cj
 kubectl get jobs --watch
 kubectl get po --show-labels # observe that the pods have a label that mentions their 'parent' job
-kubect logs busybox-1529745840-m867r
+kubectl logs busybox-1529745840-m867r
 # Bear in mind that Kubernetes will run a new job/pod for each new cron job
 kubectl delete cj busybox
 ```
