@@ -23,3 +23,7 @@ Absolutely! Feel free to PR and edit/add questions and solutions, but please sti
 ### Any other links that could help me prepare?
 
 [twajr](https://github.com/twajr) has written some great notes [here](https://github.com/twajr/ckad-prep-notes)
+
+### Praise and thanks
+
+- [here](https://www.reddit.com/r/kubernetes/comments/9uydc1/passed_the_ckad_special_thanks_to_the_linux/) on Reddit
