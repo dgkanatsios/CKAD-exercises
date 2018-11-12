@@ -164,7 +164,7 @@ kubectl run nginx --image=nginx --restart=Never --port=80
 
 ```bash
 # kubectl set image POD_NAME CONTAINER_NAME=IMAGE_NAME:TAG
-kubectl set image nginx nginx=nginx:1.7.1
+kubectl set image pod/nginx nginx=nginx:1.7.1
 kubectl describe po nginx # you will see an event 'Container will be killed and recreated'
 kubectl get po nginx -w # watch it
 ```
