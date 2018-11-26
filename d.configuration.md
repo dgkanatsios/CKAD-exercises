@@ -60,8 +60,8 @@ echo -e "var1=val1\n# this is a comment\n\nvar2=val2\n#anothercomment" > config.
 <p>
 
 ```bash
-kubectl create cm configmap3 --from-file=config.txt
-kubectl get cm configmap2 -o yaml --export
+kubectl create cm configmap3 --from-env-file=config.env
+kubectl get cm configmap3 -o yaml --export
 ```
 
 </p>
