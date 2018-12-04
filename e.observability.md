@@ -157,7 +157,7 @@ kubectl logs busybox -f # follow the logs
 ```bash
 kubectl run busybox --restart=Never --image=busybox -- /bin/sh -c 'ls /notexist'
 # show that there's an error
-kubectl k logs bulogs busybox
+kubectl logs busybox
 kubectl describe po busybox
 kubectl delete po busybox
 ```

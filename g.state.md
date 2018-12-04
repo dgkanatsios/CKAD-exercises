@@ -132,7 +132,7 @@ apiVersion: v1
 metadata:
   name: mypvc
 spec:
-  storageClassName: manual
+  storageClassName: normal
   accessModes:
     - ReadWriteOnce
   resources:
