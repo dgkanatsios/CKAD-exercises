@@ -8,7 +8,7 @@
 
 ```bash
 kubectl create namespace mynamespace
-kubectl run nginx --image=nginx --restart=Never -n mynamespace
+kubectl run nginx --image=nginx --restart=Never --namespace mynamespace
 ```
 
 </p>
