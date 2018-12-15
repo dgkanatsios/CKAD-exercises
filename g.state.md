@@ -134,7 +134,7 @@ metadata:
 spec:
   storageClassName: normal
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 4Gi
