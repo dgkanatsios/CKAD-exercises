@@ -178,11 +178,14 @@ kubectl get po nginx -w # watch it
 <p>
 
 ```bash
+# Get IP of the nginx pod
+NGINX_IP = $(kubectl get pod nginx -o jsonpath='{.status.podIP}');
+
 kubectl get po -o wide # get the IP, will be something like '10.1.1.131'
 # create a temp busybox pod
-kubectl run busybox --image=busybox --rm -it --restart=Never -- sh
+kubectl run busybox --image=busybox --env="NGINX_IP=$NGINX_IP" --rm -it --restart=Never -- sh
 # run wget on specified IP:Port
-wget -O- 10.1.1.131:80
+wget -O- $NGINX_IP:80
 exit
 ```
 
