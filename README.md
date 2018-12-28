@@ -20,10 +20,8 @@ A set of exercises that helped me prepare for the [Certified Kubernetes Applicat
 
 Absolutely! Feel free to PR and edit/add questions and solutions, but please stick to the existing format.
 
-### Any other links that could help me prepare?
-
-[twajr](https://github.com/twajr) has written some great notes [here](https://github.com/twajr/ckad-prep-notes)
-
-### Praise and thanks
-
-- [here](https://www.reddit.com/r/kubernetes/comments/9uydc1/passed_the_ckad_special_thanks_to_the_linux/) on Reddit
+### References
+- [here](https://github.com/twajr/ckad-prep-notes) from twajr
+- [here](https://www.reddit.com/r/kubernetes/comments/9uydc1/passed_the_ckad_special_thanks_to_the_linux/) from Blockchain0
+- [here](https://medium.com/devopslinks/my-story-towards-cka-ckad-and-some-tips-daf495e711a9) from abdennour
+- [here](https://medium.com/chotot-techblog/tips-tricks-to-pass-certified-kubernetes-application-developer-ckad-exam-67c9e1b32e6e) from Anh Dang
