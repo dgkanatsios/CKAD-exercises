@@ -161,13 +161,31 @@ kubectl delete po nginx{1..3}
 
 ## Deployments
 
-### Create a deployment with image nginx:1.7.8, 2 replicas, defining port 80 as the port that this container exposes (don't create a service for this deployment)
+### Create a deployment with image nginx:1.7.8, called nginx, having 2 replicas, defining port 80 as the port that this container exposes (don't create a service for this deployment)
 
 <details><summary>show</summary>
 <p>
 
 ```bash
 kubectl run nginx --image=nginx:1.7.8 --replicas=2 --port=80
+```
+
+**However**, `kubectl run` for Deployments is Deprecated and will be removed in a future version. What you can do is:
+
+```bash
+kubectl create deployment nginx  --image=nginx:1.7.8  --dry-run -o yaml > deploy.yaml
+vi deploy.yaml
+# change the replicas field from 1 to 2
+# add this section to the container spec and save the deploy.yaml file
+# ports:
+#   - containerPort: 80
+kubectl apply -f deploy.yaml
+```
+
+or, do something like:
+
+```bash
+kubectl create deployment nginx  --image=nginx:1.7.8  --dry-run -o yaml | sed 's/replicas: 1/replicas: 2/g'  | sed 's/image: nginx:1.7.8/image: nginx:1.7.8\n        ports:\n        - containerPort: 80/g' | kubectl apply -f -
 ```
 
 </p>
