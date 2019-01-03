@@ -81,7 +81,7 @@ echo -e "var3=val3\nvar4=val4" > config4.txt
 ```bash
 kubectl create cm configmap4 --from-file=special=config4.txt
 kubectl describe cm configmap4
-kubectl get cm configmap4 -o --export
+kubectl get cm configmap4 -o yaml --export
 ```
 
 </p>
