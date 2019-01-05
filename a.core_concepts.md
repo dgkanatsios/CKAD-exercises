@@ -290,7 +290,7 @@ kubectl describe nginx | grep val1
 
 # or
 
-kubectl run po busybox --restart=Never --image=busybox --env=var1=val1 -it --rm -- env
+kubectl run nginx --restart=Never --image=busybox --env=var1=val1 -it --rm -- env
 ```
 
 </p>
