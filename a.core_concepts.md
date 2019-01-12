@@ -78,26 +78,29 @@ kubectl logs busybox
 
 ```bash
 # create a  YAML template with this command
-kubectl run busybox --image=busybox --restart=Never --dry-run -o yaml > envpod.yaml
-# edit it
-vi envpod.yaml
+kubectl run busybox --image=busybox --restart=Never --dry-run -o yaml --command  -- env > envpod.yaml
+# see it
+cat envpod.yaml
 ```
 
 ```YAML
 apiVersion: v1
 kind: Pod
 metadata:
+  creationTimestamp: null
   labels:
     run: busybox
   name: busybox
 spec:
   containers:
-  - image: busybox
-    imagePullPolicy: IfNotPresent
+  - command:
+    - env
+    image: busybox
     name: busybox
-    command: ["env"] # <----- add this
+    resources: {}
   dnsPolicy: ClusterFirst
   restartPolicy: Never
+status: {}
 ```
 
 ```bash
