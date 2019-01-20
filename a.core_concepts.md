@@ -49,7 +49,7 @@ status: {}
 ```
 
 ```bash
-kubectl create -f pod.yaml
+kubectl create -f pod.yaml -n mynamespace
 ```
 
 </p>
