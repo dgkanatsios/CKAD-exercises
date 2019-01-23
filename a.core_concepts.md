@@ -289,7 +289,7 @@ kubectl run nginx --image=nginx --restart=Never --env=var1=val1
 # then
 kubectl exec -it nginx -- env
 # or
-kubectl describe nginx | grep val1
+kubectl describe po nginx | grep val1
 
 # or
 
