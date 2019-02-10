@@ -76,6 +76,8 @@ kubectl get po -l 'app in (v2)'
 kubectl label po nginx1 nginx2 nginx3 app-
 # or
 kubectl label po nginx{1..3} app-
+# or
+kubectl label po -lapp app-
 ```
 
 </p>
