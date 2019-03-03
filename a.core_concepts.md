@@ -22,7 +22,7 @@ kubectl run nginx --image=nginx --restart=Never -n mynamespace
 Easily generate YAML with:
 
 ```bash
-kubectl run nginx --image=nginx --restart=Never -n mynamespace --dry-run -o yaml > pod.yaml
+kubectl run nginx --image=nginx --restart=Never --dry-run -o yaml > pod.yaml
 ```
 
 ```bash
@@ -50,6 +50,12 @@ status: {}
 
 ```bash
 kubectl create -f pod.yaml -n mynamespace
+```
+
+Alternatively, you can run in one line
+
+```bash
+kubectl run nginx --image=nginx --restart=Never --dry-run -o yaml | kubectl create -n mynamespace -f -
 ```
 
 </p>
@@ -130,7 +136,7 @@ kubectl create namespace myns -o yaml --dry-run
 <p>
 
 ```bash
-kubectl create resourcequota myrq -o yaml --dry-run
+kubectl create quota myrq --hard=cpu=1,memory=1G,pods=2 --dry-run -o yaml
 ```
 
 </p>
@@ -171,6 +177,11 @@ kubectl set image pod/nginx nginx=nginx:1.7.1
 kubectl describe po nginx # you will see an event 'Container will be killed and recreated'
 kubectl get po nginx -w # watch it
 ```
+*Note*: you can check pod's image by running
+
+```bash
+kubectl get po nginx -o jsonpath='{.spec.containers[].image}{"\n"}'
+```
 
 </p>
 </details>
@@ -188,6 +199,18 @@ kubectl run busybox --image=busybox --rm -it --restart=Never -- sh
 wget -O- 10.1.1.131:80
 exit
 ```
+
+Alternatively you can also try a more advanced option:
+
+```bash
+# Get IP of the nginx pod
+NGINX_IP=$(kubectl get pod nginx -o jsonpath='{.status.podIP}')
+# create a temp busybox pod
+kubectl run busybox --image=busybox --env="NGINX_IP=$NGINX_IP" --rm -it --restart=Never -- sh
+# run wget on specified IP:Port
+wget -O- $NGINX_IP:80
+exit
+``` 
 
 </p>
 </details>
@@ -290,9 +313,7 @@ kubectl run nginx --image=nginx --restart=Never --env=var1=val1
 kubectl exec -it nginx -- env
 # or
 kubectl describe po nginx | grep val1
-
 # or
-
 kubectl run nginx --restart=Never --image=nginx --env=var1=val1 -it --rm -- env
 ```
 
