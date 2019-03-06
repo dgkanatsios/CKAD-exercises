@@ -8,7 +8,7 @@
 
 ```bash
 kubectl run nginx --image=nginx --restart=Never --port=80 --expose
-# observer that a pod as well as a service are created
+# observe that a pod as well as a service are created
 ```
 
 </p>
