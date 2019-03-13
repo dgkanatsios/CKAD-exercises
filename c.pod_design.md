@@ -139,7 +139,7 @@ As an alternative to using `| grep` you can use jsonPath like `-o jsonpath='{.me
 </p>
 </details>
 
-### Remove the annotations fot these three pods
+### Remove the annotations for these three pods
 
 <details><summary>show</summary>
 <p>
