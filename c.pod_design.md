@@ -215,8 +215,8 @@ kubectl get deploy nginx --export -o yaml
 ```bash
 kubectl describe deploy nginx # you'll see the name of the replica set on the Events section and in the 'NewReplicaSet' property
 # OR you can find rs directly by:
-kubectl get rs -l run=nginx # if you created deployment by run command -OR-
-kubectl get rs -l app=nginx # if you created deployment by create command
+kubectl get rs -l run=nginx # if you created deployment by 'run' command
+kubectl get rs -l app=nginx # if you created deployment by 'create' command
 # you could also just do kubectl get rs
 kubectl get rs nginx-7bf7478b77 --export -o yaml
 ```
@@ -231,8 +231,9 @@ kubectl get rs nginx-7bf7478b77 --export -o yaml
 
 ```bash
 kubectl get po # get all the pods
-# OR you can find rs directly by:
-kubectl get po -l run=nginx
+# OR you can find pods directly by:
+kubectl get po -l run=nginx # if you created deployment by 'run' command
+kubectl get po -l app=nginx # if you created deployment by 'create' command
 kubectl get po nginx-7bf7478b77-gjzp8 -o yaml --export
 ```
 
