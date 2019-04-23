@@ -187,5 +187,14 @@ spec:
           access: 'true' # 'true' *needs* quotes in YAML, apparently
 ```
 
+```bash
+# Create the NetworkPolicy
+kubectl create -f policy.yaml
+
+# Check if the Network Policy has been created correctly:
+kubectl run busybox --image=busybox --rm -it --restart=Never -- wget -O- http://nginx:80                       # This should not work
+kubectl run busybox --image=busybox --rm -it --restart=Never --labels=access=true -- wget -O- http://nginx:80  # This should be fine
+```
+
 </p>
 </details>
