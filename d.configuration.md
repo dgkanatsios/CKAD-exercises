@@ -347,6 +347,12 @@ kubectl get secret mysecret2 -o yaml --export
 echo YWRtaW4K | base64 -d # shows 'admin'
 ```
 
+Alternative:
+
+```bash
+kubectl get secret mysecret2 -o jsonpath='{.data.username}{"\n"}' | base64 -d  # on MAC it is -D
+```
+
 </p>
 </details>
 
