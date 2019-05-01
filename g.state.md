@@ -53,9 +53,6 @@ spec:
   volumes: #
   - name: myvolume #
     emptyDir: {} #
-status: {}
-  dnsPolicy: ClusterFirst
-  restartPolicy: Never
 ```
 
 Connect to the second container:
