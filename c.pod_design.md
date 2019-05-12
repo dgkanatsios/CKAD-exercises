@@ -458,7 +458,7 @@ kubectl run pi --image=perl --restart=OnFailure -- perl -Mbignum=bpi -wle 'print
 ```bash
 kubectl get jobs -w # wait till 'SUCCESSFUL' is 1 (will take some time, perl image might be big)
 kubectl get po # get the pod name
-kubectl logs perl-**** # get the pi numbers
+kubectl logs pi-**** # get the pi numbers
 kubectl delete job pi
 ```
 
