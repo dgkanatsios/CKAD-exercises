@@ -466,7 +466,7 @@ kubectl get sa --all-namespaces
 <p>
 
 ```bash
-kubectl create sa 'myuser' --dry-run -o yaml
+kubectl create sa myuser
 ```
 
 Alternatively:
