@@ -165,6 +165,8 @@ kubectl delete po nginx{1..3}
 
 ## Deployments
 
+kubernetes.io > Documentation > Concepts > Workloads > Controllers > [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment)
+
 ### Create a deployment with image nginx:1.7.8, called nginx, having 2 replicas, defining port 80 as the port that this container exposes (don't create a service for this deployment)
 
 <details><summary>show</summary>
@@ -636,6 +638,8 @@ kubectl delete job busybox
 </details>
 
 ## Cron jobs
+
+kubernetes.io > Documentation > Tasks > Run Jobs > [Running Automated Tasks with a CronJob](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/)
 
 ### Create a cron job with image busybox that runs on a schedule of "*/1 * * * *" and writes 'date; echo Hello from the Kubernetes cluster' to standard output
 
