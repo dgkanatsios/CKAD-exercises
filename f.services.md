@@ -191,7 +191,8 @@ spec:
 # Create the NetworkPolicy
 kubectl create -f policy.yaml
 
-# Check if the Network Policy has been created correctly:
+# Check if the Network Policy has been created correctly
+# make sure that your cluster's network provider supports Network Policy (https://kubernetes.io/docs/tasks/administer-cluster/declare-network-policy/#before-you-begin)
 kubectl run busybox --image=busybox --rm -it --restart=Never -- wget -O- http://nginx:80                       # This should not work
 kubectl run busybox --image=busybox --rm -it --restart=Never --labels=access=true -- wget -O- http://nginx:80  # This should be fine
 ```
