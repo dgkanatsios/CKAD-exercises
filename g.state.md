@@ -225,7 +225,7 @@ Create the second pod, called busybox2:
 
 ```bash
 vim pod.yaml
-# change 'name: busybox' to 'name: busybox2'
+# change 'metadata.name: busybox' to 'metadata.name: busybox2'
 kubectl create -f pod.yaml
 kubectl exec busybox2 -- ls /etc/foo # will show 'passwd'
 # cleanup
@@ -242,7 +242,7 @@ kubectl delete po busybox busybox2
 
 ```bash
 kubectl run busybox --image=busybox --restart=Never -- sleep 3600
-kubectl cp busybox:/etc/passwd . # kubectl cp command
+kubectl cp busybox:/etc/passwd ./passwd # kubectl cp command
 cat passwd
 ```
 
