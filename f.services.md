@@ -159,6 +159,8 @@ kubectl delete deploy foo
 
 ### Create an nginx deployment of 2 replicas, expose it via a ClusterIP service on port 80. Create a NetworkPolicy so that only pods with labels 'access: true' can access the deployment and apply it
 
+kubernetes.io > Documentation > Concepts > Services, Load Balancing, and Networking > [Network Policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/)
+
 <details><summary>show</summary>
 <p>
 
@@ -191,7 +193,8 @@ spec:
 # Create the NetworkPolicy
 kubectl create -f policy.yaml
 
-# Check if the Network Policy has been created correctly:
+# Check if the Network Policy has been created correctly
+# make sure that your cluster's network provider supports Network Policy (https://kubernetes.io/docs/tasks/administer-cluster/declare-network-policy/#before-you-begin)
 kubectl run busybox --image=busybox --rm -it --restart=Never -- wget -O- http://nginx:80                       # This should not work
 kubectl run busybox --image=busybox --rm -it --restart=Never --labels=access=true -- wget -O- http://nginx:80  # This should be fine
 ```

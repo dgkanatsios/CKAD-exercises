@@ -165,6 +165,8 @@ kubectl delete po nginx{1..3}
 
 ## Deployments
 
+kubernetes.io > Documentation > Concepts > Workloads > Controllers > [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment)
+
 ### Create a deployment with image nginx:1.7.8, called nginx, having 2 replicas, defining port 80 as the port that this container exposes (don't create a service for this deployment)
 
 <details><summary>show</summary>
@@ -447,6 +449,12 @@ kubectl delete hpa nginx
 kubectl run pi --image=perl --restart=OnFailure -- perl -Mbignum=bpi -wle 'print bpi(2000)'
 ```
 
+**However**, `kubectl run` for Job is Deprecated and will be removed in a future version. What you can do is:
+
+```bash
+kubectl create job pi  --image=perl -- perl -Mbignum=bpi -wle 'print bpi(2000)'
+```
+
 </p>
 </details>
 
@@ -458,7 +466,7 @@ kubectl run pi --image=perl --restart=OnFailure -- perl -Mbignum=bpi -wle 'print
 ```bash
 kubectl get jobs -w # wait till 'SUCCESSFUL' is 1 (will take some time, perl image might be big)
 kubectl get po # get the pod name
-kubectl logs perl-**** # get the pi numbers
+kubectl logs pi-**** # get the pi numbers
 kubectl delete job pi
 ```
 
@@ -472,6 +480,12 @@ kubectl delete job pi
 
 ```bash
 kubectl run busybox --image=busybox --restart=OnFailure -- /bin/sh -c 'echo hello;sleep 30;echo world'
+```
+
+**However**, `kubectl run` for Job is Deprecated and will be removed in a future version. What you can do is:
+
+```bash
+kubectl create job busybox --image=busybox -- /bin/sh -c 'echo hello;sleep 30;echo world'
 ```
 
 </p>
@@ -522,7 +536,7 @@ kubectl delete job busybox
 <p>
 
 ```bash
-kubectl run busybox --image=busybox --restart=OnFailure --dry-run -o yaml -- /bin/sh -c 'echo hello;sleep 30;echo world' > job.yaml
+kubectl create job busybox --image=busybox --dry-run -o yaml -- /bin/sh -c 'echo hello;sleep 30;echo world' > job.yaml
 vi job.yaml
 ```
 
@@ -625,6 +639,8 @@ kubectl delete job busybox
 
 ## Cron jobs
 
+kubernetes.io > Documentation > Tasks > Run Jobs > [Running Automated Tasks with a CronJob](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/)
+
 ### Create a cron job with image busybox that runs on a schedule of "*/1 * * * *" and writes 'date; echo Hello from the Kubernetes cluster' to standard output
 
 <details><summary>show</summary>
@@ -632,6 +648,12 @@ kubectl delete job busybox
 
 ```bash
 kubectl run busybox --image=busybox --restart=OnFailure --schedule="*/1 * * * *" -- /bin/sh -c 'date; echo Hello from the Kubernetes cluster'
+```
+
+**However**, `kubectl run` for CronJob is Deprecated and will be removed in a future version. What you can do is:
+
+```bash
+kubectl create cronjob busybox --image=busybox --schedule="*/1 * * * *" -- /bin/sh -c 'date; echo Hello from the Kubernetes cluster'
 ```
 
 </p>
