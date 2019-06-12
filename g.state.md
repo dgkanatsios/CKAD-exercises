@@ -238,7 +238,7 @@ kubectl delete po busybox busybox2
 
 ```bash
 kubectl run busybox --image=busybox --restart=Never -- sleep 3600
-kubectl cp busybox:/etc/passwd . # kubectl cp command
+kubectl cp busybox:etc/passwd . # kubectl cp command
 cat passwd
 ```
 
