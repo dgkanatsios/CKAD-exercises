@@ -216,7 +216,7 @@ kubectl exec busybox -it -- cp /etc/passwd /etc/foo/passwd
 </p>
 </details>
 
-### Create a second pod which is identical with the one you just created (you can easily do it by changing the 'name' property on pod.yaml). Connect to it and verify that '/etc/foo' contains the 'passwd' file. Delete pods to cleanup
+### Create a second pod (deployed to the same node the first pod is on) which is identical with the one you just created (you can easily do it by changing the 'name' property on pod.yaml). Connect to it and verify that '/etc/foo' contains the 'passwd' file. Delete pods to cleanup
 
 <details><summary>show</summary>
 <p>
@@ -224,8 +224,14 @@ kubectl exec busybox -it -- cp /etc/passwd /etc/foo/passwd
 Create the second pod, called busybox2:
 
 ```bash
+# get details about the first pod
+# take the node name from the 7th column
+# remove the title/header line
+# add a label to that node
+kubectl get pods busybox -o wide | awk '{print $7}' | grep -v NODE | xargs -I{} kubectl label node {} use=thisone
 vim pod.yaml
 # change 'metadata.name: busybox' to 'metadata.name: busybox2'
+# add a nodeSelector with the same label as the node to the yaml
 kubectl create -f pod.yaml
 kubectl exec busybox2 -- ls /etc/foo # will show 'passwd'
 # cleanup
