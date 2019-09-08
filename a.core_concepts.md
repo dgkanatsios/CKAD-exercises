@@ -196,7 +196,7 @@ kubectl get po nginx -o jsonpath='{.spec.containers[].image}{"\n"}'
 </p>
 </details>
 
-### Get the pod's ip, use a temp busybox image to wget its '/'
+### Get nginx pod's ip created in previous step, use a temp busybox image to wget its '/'
 
 <details><summary>show</summary>
 <p>
