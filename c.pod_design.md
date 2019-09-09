@@ -226,7 +226,7 @@ kubectl get rs nginx-7bf7478b77 -o yaml
 </p>
 </details>
 
-### Get the YAML for one of the pods
+### Get the YAML for one of the pods created by above deployment named nginx
 
 <details><summary>show</summary>
 <p>
@@ -236,6 +236,9 @@ kubectl get po # get all the pods
 # OR you can find pods directly by:
 kubectl get po -l run=nginx # if you created deployment by 'run' command
 kubectl get po -l app=nginx # if you created deployment by 'create' command
+# OR you can describe the ReplicaSet to find the pods linked with it first and then get its yaml
+kubectl describe rs nginx-7bf7478b77 | grep -i pod
+# Get pod's yaml after finding its name
 kubectl get po nginx-7bf7478b77-gjzp8 -o yaml
 ```
 
