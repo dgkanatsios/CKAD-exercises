@@ -267,7 +267,7 @@ kubectl logs nginx -p
 </p>
 </details>
 
-### Connect to the nginx pod
+### Execute a simple shell on the nginx pod
 
 <details><summary>show</summary>
 <p>
