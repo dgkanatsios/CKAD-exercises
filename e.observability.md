@@ -96,7 +96,7 @@ kubectl delete -f pod.yaml
 <p>
 
 ```bash
-kubectl run nginx --image=nginx --dry-run -o yaml --restart=Never > pod.yaml
+kubectl run nginx --image=nginx --dry-run -o yaml --restart=Never --port=80 > pod.yaml
 vi pod.yaml
 ```
 
@@ -114,6 +114,8 @@ spec:
     imagePullPolicy: IfNotPresent
     name: nginx
     resources: {}
+    ports:
+      - containerPort: 80
     readinessProbe: # declare the readiness probe
       httpGet: # add this line
         path: / #
