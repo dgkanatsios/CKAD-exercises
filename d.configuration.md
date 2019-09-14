@@ -44,7 +44,7 @@ echo -e "foo3=lili\nfoo4=lele" > config.txt
 
 ```bash
 kubectl create cm configmap2 --from-file=config.txt
-kubectl get cm configmap2 -o yaml --export
+kubectl get cm configmap2 -o yaml
 ```
 
 </p>
