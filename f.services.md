@@ -43,7 +43,7 @@ exit
 </p>
 </details>
 
-### Convert the ClusterIP to NodePort and find the NodePort port. Hit it using Node's IP. Delete the service and the pod
+### Convert the ClusterIP to NodePort for the same service and find the NodePort port. Hit service using Node's IP. Delete the service and the pod at the end.
 
 <details><summary>show</summary>
 <p>
@@ -92,6 +92,10 @@ wget -O- NODE_IP:31931 # if you're using Kubernetes with Docker for Windows/Mac,
 #if you're using minikube, try minikube ip, then get the node ip such as 192.168.99.117
 ```
 
+```bash
+kubectl delete svc nginx # Deletes the service
+kbuectl delete pod nginx # Deletes the pod
+```
 </p>
 </details>
 
