@@ -104,7 +104,7 @@ wget -O- NODE_IP:31931 # if you're using Kubernetes with Docker for Windows/Mac,
 ```bash
 kubectl run foo --image=dgkanatsios/simpleapp --labels=app=foo --port=8080 --replicas=3
 ```
-Or, you can use below more latest approach of creating a deployment as above one to create a deployment using `kubectl run` has been marked deprecated.
+Or, you can use the more recent approach of creating the requested deployment as kubectl run has been deprecated.
 
 ```bash
 kubectl create deploy foo --image=dgkanatsios/simpleapp --dry-run -o yaml > foo.yml
