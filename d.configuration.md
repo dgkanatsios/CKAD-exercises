@@ -334,7 +334,7 @@ kubectl create secret generic mysecret --from-literal=password=mypass
 Create a file called username with the value admin:
 
 ```bash
-echo admin > username
+echo -n admin > username
 ```
 
 <details><summary>show</summary>
