@@ -44,7 +44,7 @@ echo -e "foo3=lili\nfoo4=lele" > config.txt
 
 ```bash
 kubectl create cm configmap2 --from-file=config.txt
-kubectl get cm configmap2 -o yaml --export
+kubectl get cm configmap2 -o yaml
 ```
 
 </p>
@@ -225,7 +225,7 @@ cat var8 # will show val8
 
 kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configure a Security Context for a Pod or Container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
 
-### Create the YAML for an nginx pod that runs with the UID 101. No need to create the pod
+### Create the YAML for an nginx pod that runs with the user ID 101. No need to create the pod
 
 <details><summary>show</summary>
 <p>
