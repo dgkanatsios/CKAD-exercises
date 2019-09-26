@@ -433,8 +433,10 @@ kubectl rollout history deploy nginx --revision=6 # insert the number of your la
 ```bash
 kubectl delete deploy nginx
 kubectl delete hpa nginx
-```
 
+#Or
+kubectl delete deploy/nginx hpa/nginx
+```
 </p>
 </details>
 
