@@ -509,7 +509,10 @@ kubectl create -f sa.yaml
 <p>
 
 ```bash
+kubectl run nginx --image=nginx --restart=Never --serviceaccount=myuser
+# or
 kubectl run nginx --image=nginx --restart=Never -o yaml --dry-run > pod.yaml
+# and
 vi pod.yaml
 ```
 
