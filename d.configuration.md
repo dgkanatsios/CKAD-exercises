@@ -354,7 +354,7 @@ kubectl create secret generic mysecret2 --from-file=username
 
 ```bash
 kubectl get secret mysecret2 -o yaml --export
-echo YWRtaW4K | base64 -d # shows 'admin'
+echo YWRtaW4K | base64 -d # on MAC it is -D, which decodes the value and shows 'admin'
 ```
 
 Alternative:
