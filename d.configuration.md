@@ -509,6 +509,13 @@ kubectl create -f sa.yaml
 <p>
 
 ```bash
+kubectl run nginx --image=nginx --restart=Never --serviceaccount=myuser -o yaml --dry-run > pod.yaml
+kubectl apply -f pod.yaml
+```
+
+or you can add manually:
+
+```bash
 kubectl run nginx --image=nginx --restart=Never -o yaml --dry-run > pod.yaml
 vi pod.yaml
 ```
@@ -538,12 +545,6 @@ kubectl create -f pod.yaml
 kubectl describe pod nginx # will see that a new secret called myuser-token-***** has been mounted
 ```
 
-or you can add directly with kubectl run command:
-
-```bash
-kubectl run nginx --image=nginx --restart=Never --serviceaccount=myuser -o yaml --dry-run > pod.yaml
-kubectl apply -f pod.yaml
-```
 
 </p>
 </details>
