@@ -346,13 +346,13 @@ kubectl rollout status deploy nginx # Everything should be OK
 </p>
 </details>
 
-### Check the details of the third revision (number 3)
+### Check the details of the fourth revision (number 4)
 
 <details><summary>show</summary>
 <p>
 
 ```bash
-kubectl rollout history deploy nginx --revision=3 # You'll also see the wrong image displayed here
+kubectl rollout history deploy nginx --revision=4 # You'll also see the wrong image displayed here
 ```
 
 </p>
