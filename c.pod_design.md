@@ -101,7 +101,7 @@ spec:
     - name: cuda-test
       image: "k8s.gcr.io/cuda-vector-add:v0.1"
   nodeSelector: # add this
-    accelerator: nvidia-tesla-p100 # the slection label
+    accelerator: nvidia-tesla-p100 # the selection label
 ```
 
 You can easily find out where in the YAML it should be placed by:
