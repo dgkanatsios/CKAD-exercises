@@ -121,6 +121,10 @@ kubectl explain po.spec
 
 ```bash
 kubectl annotate po nginx1 nginx2 nginx3 description='my description'
+
+#or
+
+kubectl annotate po nginx{1..3} description='my description'
 ```
 
 </p>
