@@ -39,6 +39,10 @@ kubectl create -f pod.yaml
 kubectl exec -it busybox -c busybox2 -- /bin/sh
 ls
 exit
+
+# or you can do the above with just an one-liner
+kubectl exec -it busybox -c busybox2 -- ls
+
 # you can do some cleanup
 kubectl delete po busybox
 ```
