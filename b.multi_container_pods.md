@@ -40,7 +40,7 @@ kubectl exec -it busybox -c busybox2 -- /bin/sh
 ls
 exit
 
-# or you can do the above using with just an one-liner
+# or you can do the above with just an one-liner
 kubectl exec -it busybox -c busybox2 -- ls
 
 # you can do some cleanup
