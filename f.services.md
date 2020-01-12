@@ -103,7 +103,7 @@ wget -O- NODE_IP:31931 # if you're using Kubernetes with Docker for Windows/Mac,
 
 ```bash
 kubectl delete svc nginx # Deletes the service
-kbuectl delete pod nginx # Deletes the pod
+kubectl delete pod nginx # Deletes the pod
 ```
 </p>
 </details>
