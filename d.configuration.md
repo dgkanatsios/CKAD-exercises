@@ -23,7 +23,7 @@ kubectl create configmap config --from-literal=foo=lala --from-literal=foo2=lolo
 <p>
 
 ```bash
-kubectl get cm config -o yaml --export
+kubectl get cm config -o yaml
 # or
 kubectl describe cm config
 ```
@@ -63,7 +63,7 @@ echo -e "var1=val1\n# this is a comment\n\nvar2=val2\n#anothercomment" > config.
 
 ```bash
 kubectl create cm configmap3 --from-env-file=config.env
-kubectl get cm configmap3 -o yaml --export
+kubectl get cm configmap3 -o yaml
 ```
 
 </p>
@@ -83,7 +83,7 @@ echo -e "var3=val3\nvar4=val4" > config4.txt
 ```bash
 kubectl create cm configmap4 --from-file=special=config4.txt
 kubectl describe cm configmap4
-kubectl get cm configmap4 -o yaml --export
+kubectl get cm configmap4 -o yaml
 ```
 
 </p>
@@ -353,7 +353,7 @@ kubectl create secret generic mysecret2 --from-file=username
 <p>
 
 ```bash
-kubectl get secret mysecret2 -o yaml --export
+kubectl get secret mysecret2 -o yaml
 echo YWRtaW4K | base64 -d # on MAC it is -D, which decodes the value and shows 'admin'
 ```
 
@@ -485,7 +485,7 @@ Alternatively:
 
 ```bash
 # let's get a template easily
-kubectl get sa default -o yaml --export > sa.yaml
+kubectl get sa default -o yaml > sa.yaml
 vim sa.yaml
 ```
 
