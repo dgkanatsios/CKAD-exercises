@@ -219,13 +219,19 @@ kubectl run busybox --image=busybox --env="NGINX_IP=$NGINX_IP" --rm -it --restar
 </p>
 </details>
 
-### Get this pod's YAML without cluster specific information
+### Get pod's YAML
 
 <details><summary>show</summary>
 <p>
 
 ```bash
-kubectl get po nginx -o yaml --export
+kubectl get po nginx -o yaml
+# or
+kubectl get po nginx -oyaml
+# or
+kubectl get po nginx --output yaml
+# or
+kubectl get po nginx --output=yaml
 ```
 
 </p>
