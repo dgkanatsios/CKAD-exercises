@@ -219,7 +219,7 @@ kubernetes.io > Documentation > Concepts > Services, Load Balancing, and Network
 kubectl run nginx --image=nginx --replicas=2 --port=80 --expose
 kubectl describe svc nginx # see the 'run=nginx' selector for the pods
 # or
-kubectl get svc nginx -o yaml --export
+kubectl get svc nginx -o yaml
 
 vi policy.yaml
 ```
