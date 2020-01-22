@@ -28,7 +28,7 @@ kubectl get ep # endpoints
 </p>
 </details>
 
-### Get pod's ClusterIP, create a temp busybox pod and 'hit' that IP with wget
+### Get service's ClusterIP, create a temp busybox pod and 'hit' that IP with wget
 
 <details><summary>show</summary>
 <p>
