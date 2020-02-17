@@ -47,7 +47,7 @@ kubectl delete -f pod.yaml
 </p>
 </details>
 
-### Modify the pod.yaml file so that liveness probe starts kicking in after 5 seconds whereas the period of probing would be 10 seconds. Run it, check the probe, delete it.
+### Modify the pod.yaml file so that liveness probe starts kicking in after 5 seconds whereas the interval between probes would be 5 seconds. Run it, check the probe, delete it.
 
 <details><summary>show</summary>
 <p>
@@ -72,7 +72,7 @@ spec:
     resources: {}
     livenessProbe: 
       initialDelaySeconds: 5 # add this line
-      periodSeconds: 10 # add this line as well
+      periodSeconds: 5 # add this line as well
       exec:
         command:
         - ls
