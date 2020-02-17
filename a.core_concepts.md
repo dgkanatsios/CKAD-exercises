@@ -17,7 +17,7 @@ kubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Use 
 <p>
 
 ```bash
-kubectl create namespace mynamespace
+kubectl create ns mynamespace
 kubectl run nginx --image=nginx --restart=Never -n mynamespace
 ```
 
@@ -71,7 +71,7 @@ kubectl run nginx --image=nginx --restart=Never --dry-run -o yaml | kubectl crea
 </p>
 </details>
 
-### Create a busybox pod (using kubectl command) that runs the command "env". Run it and see the output
+### Create a BusyBox pod (using kubectl command) that runs the command "env". Run it and see the output
 
 <details><summary>show</summary>
 <p>
@@ -87,7 +87,7 @@ kubectl logs busybox
 </p>
 </details>
 
-### Create a busybox pod (using YAML) that runs the command "env". Run it and see the output
+### Create a BusyBox pod (using YAML) that runs the command "env". Run it and see the output
 
 <details><summary>show</summary>
 <p>
@@ -134,7 +134,7 @@ kubectl logs busybox
 <p>
 
 ```bash
-kubectl create namespace myns -o yaml --dry-run
+kubectl create ns myns -o yaml --dry-run
 ```
 
 </p>
@@ -158,13 +158,13 @@ kubectl create quota myrq --hard=cpu=1,memory=1G,pods=2 --dry-run -o yaml
 <p>
 
 ```bash
-kubectl get po --all-namespaces
+kubectl get po -A # or the more verbose --all-namespaces
 ```
 
 </p>
 </details>
 
-### Create a pod with image nginx called nginx and allow traffic on port 80
+### Create a pod with image nginx called nginx, expose traffic to the container on port 80 without creating a service
 
 <details><summary>show</summary>
 <p>
@@ -196,25 +196,22 @@ kubectl get po nginx -o jsonpath='{.spec.containers[].image}{"\n"}'
 </p>
 </details>
 
-### Get nginx pod's ip created in previous step, use a temp busybox image to wget its '/'
+### Get nginx pod's IP created in previous step, use a temporary BusyBox image to retrieve the welcome page
 
 <details><summary>show</summary>
 <p>
 
 ```bash
 kubectl get po -o wide # get the IP, will be something like '10.1.1.131'
-# create a temp busybox pod
-kubectl run busybox --image=busybox --rm -it --restart=Never -- wget -O- 10.1.1.131:80
+# create a temporary BusyBox pod
+kubectl run busybox --image=busybox --rm -it --restart=Never -- wget -O- 10.1.1.131
 ```
 
 Alternatively you can also try a more advanced option:
 
 ```bash
-# Get IP of the nginx pod
-NGINX_IP=$(kubectl get pod nginx -o jsonpath='{.status.podIP}')
-# create a temp busybox pod
-kubectl run busybox --image=busybox --env="NGINX_IP=$NGINX_IP" --rm -it --restart=Never -- wget -O- $NGINX_IP:80
-``` 
+kubectl run busybox --image=busybox --restart=Never --rm -ti -- wget -O- $(kubectl get pod nginx -o jsonpath='{.status.podIP}{"\n"}')
+```
 
 </p>
 </details>
@@ -226,12 +223,6 @@ kubectl run busybox --image=busybox --env="NGINX_IP=$NGINX_IP" --rm -it --restar
 
 ```bash
 kubectl get po nginx -o yaml
-# or
-kubectl get po nginx -oyaml
-# or
-kubectl get po nginx --output yaml
-# or
-kubectl get po nginx --output=yaml
 ```
 
 </p>
@@ -279,13 +270,13 @@ kubectl logs nginx -p
 <p>
 
 ```bash
-kubectl exec -it nginx -- /bin/sh
+kubectl exec -it nginx -- sh
 ```
 
 </p>
 </details>
 
-### Create a busybox pod that echoes 'hello world' and then exits
+### Create a BusyBox pod that echoes 'hello world' and then exits
 
 <details><summary>show</summary>
 <p>
@@ -305,7 +296,7 @@ kubectl run busybox --image=busybox -it --restart=Never -- /bin/sh -c 'echo hell
 <p>
 
 ```bash
-kubectl run busybox --image=busybox -it --rm --restart=Never -- /bin/sh -c 'echo hello world'
+kubectl run busybox --image=busybox -it --rm --restart=Never -- echo hello world
 kubectl get po # nowhere to be found :)
 ```
 
@@ -324,8 +315,13 @@ kubectl exec -it nginx -- env
 # or
 kubectl describe po nginx | grep val1
 # or
-kubectl run nginx --restart=Never --image=nginx --env=var1=val1 -it --rm -- env
+kubectl get po nginx -o jsonpath='{.spec.containers[].env}{"\n"}'
+[map[name:var1 value:val1]] # not pretty but precise
+
+# alternatively the above could be done in one line like so
+kubectl run nginx --image=nginx --env=var1=val1 --restart=Never -it --rm  -- env | grep var1
 ```
+
 
 </p>
 </details>
