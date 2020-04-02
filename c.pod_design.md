@@ -728,3 +728,47 @@ kubectl delete cj busybox
 
 </p>
 </details>
+
+### Create a cron job with image busybox that runs every minutes and writes 'date; echo Hello from the Kubernetes cluster' to standard output. The cron job should be terminated if it takes more than 30 seconds to execute.
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl create cronjob time-limited-job --image=busybox --restart=Never --dry-run --schedule="* * * * *" -o yaml -- /bin/sh -c 'date; echo Hello from the Kubernetes cluster' > time-limited-job.yaml
+vi time-limited-job.yaml
+```
+Add job.spec.activeDeadlineSeconds=30
+
+```bash
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  creationTimestamp: null
+  name: time-limited-job
+spec:
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+      name: time-limited-job
+    spec:
+      activeDeadlineSeconds: 17 # add this line
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          containers:
+          - args:
+            - /bin/sh
+            - -c
+            - date; echo Hello from the Kubernetes cluster
+            image: busybox
+            name: time-limited-job
+            resources: {}
+          restartPolicy: Never
+  schedule: '* * * * *'
+status: {}
+```
+
+</p>
+</details>
