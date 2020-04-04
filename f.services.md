@@ -46,7 +46,8 @@ or
 
 ```bash
 IP=$(kubectl get svc nginx --template={{.spec.clusterIP}}) # get the IP (something like 10.108.93.130)
-kubectl run busybox --rm --image=busybox -it --restart=Never --env="IP=$IP" -- wget -O- $IP:80
+kubectl run busybox --rm --image=busybox -it --restart=Never --env="IP=$IP" -- wget -O- $IP:80 --timeout 2
+# Tip: --timeout is optional, but it helps to get answer more quickly when connection fails (in seconds vs minutes)
 ```
 
 </p>
@@ -246,8 +247,8 @@ kubectl create -f policy.yaml
 
 # Check if the Network Policy has been created correctly
 # make sure that your cluster's network provider supports Network Policy (https://kubernetes.io/docs/tasks/administer-cluster/declare-network-policy/#before-you-begin)
-kubectl run busybox --image=busybox --rm -it --restart=Never -- wget -O- http://nginx:80                       # This should not work
-kubectl run busybox --image=busybox --rm -it --restart=Never --labels=access=granted -- wget -O- http://nginx:80  # This should be fine
+kubectl run busybox --image=busybox --rm -it --restart=Never -- wget -O- http://nginx:80 --timeout 2                          # This should not work. --timeout is optional here. But it helps to get answer more quickly (in seconds vs minutes)
+kubectl run busybox --image=busybox --rm -it --restart=Never --labels=access=granted -- wget -O- http://nginx:80 --timeout 2  # This should be fine
 ```
 
 </p>
