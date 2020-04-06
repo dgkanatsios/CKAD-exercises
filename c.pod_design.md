@@ -729,7 +729,7 @@ kubectl delete cj busybox
 </p>
 </details>
 
-### Create a cron job with image busybox that runs every minutes and writes 'date; echo Hello from the Kubernetes cluster' to standard output. The cron job should be terminated if it takes more than 30 seconds to execute.
+### Create a cron job with image busybox that runs every minutes and writes 'date; echo Hello from the Kubernetes cluster' to standard output. The cron job should be terminated if it takes more than 17 seconds to execute.
 
 <details><summary>show</summary>
 <p>
