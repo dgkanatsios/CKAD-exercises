@@ -164,7 +164,7 @@ kubectl get po --all-namespaces
 </p>
 </details>
 
-### Create a pod with image nginx called nginx and allow traffic on port 80
+### Create a pod with image nginx called nginx and expose 80
 
 <details><summary>show</summary>
 <p>
