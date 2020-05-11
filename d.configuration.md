@@ -468,6 +468,11 @@ kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configu
 ```bash
 kubectl get sa --all-namespaces
 ```
+Alternatively 
+
+```bash
+kubectl get sa -A
+```
 
 </p>
 </details>
