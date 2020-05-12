@@ -43,7 +43,7 @@ exit
 # or you can do the above with just an one-liner
 kubectl exec -it busybox -c busybox2 -- ls
 
-# View the logs of the first container
+# View the logs of the second container
 kubectl logs busybox -c busybox2
 
 # you can do some cleanup
