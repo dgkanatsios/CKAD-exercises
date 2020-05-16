@@ -196,7 +196,13 @@ kubectl run nginx2 --image=nginx --expose --port 80
 ```bash
 # kubectl set image POD/POD_NAME CONTAINER_NAME=IMAGE_NAME:TAG
 kubectl set image pod/nginx nginx=nginx:1.7.1
-kubectl describe po nginx # you will see an event 'Container will be killed and recreated'
+# or save time by editing the file manually
+kubectl edit pod nginx
+#edit pod.spec.containers.image
+  - image: nginx:1.7.1
+
+# you will see an event 'Container will be killed and recreated'
+kubectl describe po nginx
 kubectl get po nginx -w # watch it
 ```
 *Note*: you can check pod's image by running
@@ -216,7 +222,7 @@ kubectl get po nginx -o jsonpath='{.spec.containers[].image}{"\n"}'
 ```bash
 kubectl get po -o wide # get the IP, will be something like '10.1.1.131'
 # create a temp busybox pod
-kubectl run busybox --image=busybox --rm -it --restart=Never -- wget -O- 10.1.1.131:80
+kubectl run busybox --image=busybox --rm -it -- wget -O- 10.1.1.131:80
 ```
 
 Alternatively you can also try a more advanced option:
@@ -225,7 +231,7 @@ Alternatively you can also try a more advanced option:
 # Get IP of the nginx pod
 NGINX_IP=$(kubectl get pod nginx -o jsonpath='{.status.podIP}')
 # create a temp busybox pod
-kubectl run busybox --image=busybox --env="NGINX_IP=$NGINX_IP" --rm -it --restart=Never -- wget -O- $NGINX_IP:80
+kubectl run busybox --image=busybox --env="NGINX_IP=$NGINX_IP" --rm -it -- wget -O- $NGINX_IP:80
 ``` 
 
 </p>
@@ -241,9 +247,7 @@ kubectl get po nginx -o yaml
 # or
 kubectl get po nginx -oyaml
 # or
-kubectl get po nginx --output yaml
-# or
-kubectl get po nginx --output=yaml
+kubectl get po nginx -o yaml
 ```
 
 </p>
@@ -303,9 +307,9 @@ kubectl exec -it nginx -- /bin/sh
 <p>
 
 ```bash
-kubectl run busybox --image=busybox -it --restart=Never -- echo 'hello world'
+kubectl run busybox --image=busybox -it -- echo 'hello world'
 # or
-kubectl run busybox --image=busybox -it --restart=Never -- /bin/sh -c 'echo hello world'
+kubectl run busybox --image=busybox -it -- /bin/sh -c 'echo hello world'
 ```
 
 </p>
@@ -317,7 +321,7 @@ kubectl run busybox --image=busybox -it --restart=Never -- /bin/sh -c 'echo hell
 <p>
 
 ```bash
-kubectl run busybox --image=busybox -it --rm --restart=Never -- /bin/sh -c 'echo hello world'
+kubectl run busybox --image=busybox -it --rm -- /bin/sh -c 'echo hello world'
 kubectl get po # nowhere to be found :)
 ```
 
@@ -330,13 +334,13 @@ kubectl get po # nowhere to be found :)
 <p>
 
 ```bash
-kubectl run nginx --image=nginx --restart=Never --env=var1=val1
+kubectl run nginx --image=nginx --env=var1=val1
 # then
 kubectl exec -it nginx -- env
 # or
 kubectl describe po nginx | grep val1
 # or
-kubectl run nginx --restart=Never --image=nginx --env=var1=val1 -it --rm -- env
+kubectl run nginx --image=nginx --env=var1=val1 -it --rm -- env
 ```
 
 </p>
