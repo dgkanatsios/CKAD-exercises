@@ -18,7 +18,7 @@ kubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Use 
 
 ```bash
 kubectl create namespace mynamespace
-kubectl config set-context --current --namespace mynamespace
+kubectl config set-context --current --namespace mynamespace      # The exam requires you to switch into your namespace and context every question.
 kubectl run nginx --image=nginx 
 # Verify pods
 kubectl get pods
