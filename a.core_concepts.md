@@ -18,7 +18,10 @@ kubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Use 
 
 ```bash
 kubectl create namespace mynamespace
-kubectl run nginx --image=nginx --restart=Never -n mynamespace
+kubectl config set-context --current --namespace mynamespace
+kubectl run nginx --image=nginx 
+# Verify pods
+kubectl get pods
 ```
 
 </p>
