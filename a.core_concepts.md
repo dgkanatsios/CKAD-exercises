@@ -11,6 +11,26 @@ kubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Acce
 
 kubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Use Port Forwarding to Access Applications in a Cluster](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/)
 
+kubernetes.io > Reference > kubectl CLI > kubectl Cheat Sheet > Kubectl Autocomplete > [Kubectl Autocomplete](https://kubernetes.io/docs/reference/kubectl/cheatsheet/#kubectl-autocomplete)
+
+### Setup your test environment with your custom variables and autocompletion
+
+<details><summary>show</summary>
+<p>
+
+```bash
+# Consider setting an shell variable string to store this flag for speed. Speed is very important on the exam
+export do='--dry-run -o yaml'
+```
+```bash
+# Use autocompletion if you feel comfortable. Some people don't like this and others swear by it. Try both. Check the Autocomplete documentation above.
+
+source <(kubectl completion bash) # setup autocomplete in bash into the current shell, bash-completion package should be installed first.
+echo "source <(kubectl completion bash)" >> ~/.bashrc # add autocomplete permanently to your bash shell.
+```
+</p>
+</details>
+
 ### Create a namespace called 'mynamespace' and a pod with image nginx called nginx on this namespace
 
 <details><summary>show</summary>
@@ -18,7 +38,10 @@ kubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Use 
 
 ```bash
 kubectl create namespace mynamespace
-kubectl run nginx --image=nginx --restart=Never -n mynamespace
+kubectl config set-context --current --namespace mynamespace      # The exam requires you to switch into your namespace and context every question.
+kubectl run nginx --image=nginx 
+# Verify pods
+kubectl get pods
 ```
 
 </p>
@@ -32,8 +55,16 @@ kubectl run nginx --image=nginx --restart=Never -n mynamespace
 Easily generate YAML with:
 
 ```bash
-kubectl run nginx --image=nginx --restart=Never --dry-run -o yaml > pod.yaml
+kubectl run nginx --image=nginx --dry-run=client -o yaml > pod.yaml
+# Isn't it a pain to type the dry run flag?
 ```
+```bash
+# Lets use the shell variable of the string
+kubectl run nginx --image=nginx $do > pod.yaml
+# You will use the dry run flag multiple times on the test.
+
+```
+
 
 ```bash
 cat pod.yaml
@@ -50,11 +81,10 @@ metadata:
 spec:
   containers:
   - image: nginx
-    imagePullPolicy: IfNotPresent
     name: nginx
     resources: {}
   dnsPolicy: ClusterFirst
-  restartPolicy: Never
+  restartPolicy: Always
 status: {}
 ```
 
@@ -65,7 +95,7 @@ kubectl create -f pod.yaml -n mynamespace
 Alternatively, you can run in one line
 
 ```bash
-kubectl run nginx --image=nginx --restart=Never --dry-run -o yaml | kubectl create -n mynamespace -f -
+kubectl run nginx --image=nginx $do | kubectl create -n mynamespace -f -
 ```
 
 </p>
@@ -77,9 +107,9 @@ kubectl run nginx --image=nginx --restart=Never --dry-run -o yaml | kubectl crea
 <p>
 
 ```bash
-kubectl run busybox --image=busybox --command --restart=Never -it -- env # -it will help in seeing the output
+kubectl run busybox --image=busybox $do -it -- env # -it will help in seeing the output
 # or, just run it without -it
-kubectl run busybox --image=busybox --command --restart=Never -- env
+kubectl run busybox --image=busybox $do -- env
 # and then, check its logs
 kubectl logs busybox
 ```
@@ -94,7 +124,7 @@ kubectl logs busybox
 
 ```bash
 # create a  YAML template with this command
-kubectl run busybox --image=busybox --restart=Never --dry-run -o yaml --command -- env > envpod.yaml
+kubectl run busybox --image=busybox $do --command -- env > envpod.yaml
 # see it
 cat envpod.yaml
 ```
@@ -115,7 +145,7 @@ spec:
     name: busybox
     resources: {}
   dnsPolicy: ClusterFirst
-  restartPolicy: Never
+  restartPolicy: Always
 status: {}
 ```
 
@@ -134,7 +164,7 @@ kubectl logs busybox
 <p>
 
 ```bash
-kubectl create namespace myns -o yaml --dry-run
+kubectl create namespace myns $do
 ```
 
 </p>
@@ -146,7 +176,7 @@ kubectl create namespace myns -o yaml --dry-run
 <p>
 
 ```bash
-kubectl create quota myrq --hard=cpu=1,memory=1G,pods=2 --dry-run -o yaml
+kubectl create quota myrq --hard=cpu=1,memory=1G,pods=2 $do
 ```
 
 </p>
@@ -170,7 +200,9 @@ kubectl get po --all-namespaces
 <p>
 
 ```bash
-kubectl run nginx --image=nginx --restart=Never --port=80
+kubectl run nginx2 --image=nginx $do --expose --port 80 
+# Verify what you have created. If it looks good go ahead and create it. 
+kubectl run nginx2 --image=nginx --expose --port 80
 ```
 
 </p>
@@ -184,7 +216,13 @@ kubectl run nginx --image=nginx --restart=Never --port=80
 ```bash
 # kubectl set image POD/POD_NAME CONTAINER_NAME=IMAGE_NAME:TAG
 kubectl set image pod/nginx nginx=nginx:1.7.1
-kubectl describe po nginx # you will see an event 'Container will be killed and recreated'
+# or save time by editing the file manually
+kubectl edit pod nginx
+#edit pod.spec.containers.image
+  - image: nginx:1.7.1
+
+# you will see an event 'Container will be killed and recreated'
+kubectl describe po nginx
 kubectl get po nginx -w # watch it
 ```
 *Note*: you can check pod's image by running
@@ -204,7 +242,7 @@ kubectl get po nginx -o jsonpath='{.spec.containers[].image}{"\n"}'
 ```bash
 kubectl get po -o wide # get the IP, will be something like '10.1.1.131'
 # create a temp busybox pod
-kubectl run busybox --image=busybox --rm -it --restart=Never -- wget -O- 10.1.1.131:80
+kubectl run busybox --image=busybox --rm -it -- wget -O- 10.1.1.131:80
 ```
 
 Alternatively you can also try a more advanced option:
@@ -213,7 +251,7 @@ Alternatively you can also try a more advanced option:
 # Get IP of the nginx pod
 NGINX_IP=$(kubectl get pod nginx -o jsonpath='{.status.podIP}')
 # create a temp busybox pod
-kubectl run busybox --image=busybox --env="NGINX_IP=$NGINX_IP" --rm -it --restart=Never -- wget -O- $NGINX_IP:80
+kubectl run busybox --image=busybox --env="NGINX_IP=$NGINX_IP" --rm -it -- wget -O- $NGINX_IP:80
 ``` 
 
 </p>
@@ -229,9 +267,7 @@ kubectl get po nginx -o yaml
 # or
 kubectl get po nginx -oyaml
 # or
-kubectl get po nginx --output yaml
-# or
-kubectl get po nginx --output=yaml
+kubectl get po nginx -o yaml
 ```
 
 </p>
@@ -291,9 +327,9 @@ kubectl exec -it nginx -- /bin/sh
 <p>
 
 ```bash
-kubectl run busybox --image=busybox -it --restart=Never -- echo 'hello world'
+kubectl run busybox --image=busybox -it -- echo 'hello world'
 # or
-kubectl run busybox --image=busybox -it --restart=Never -- /bin/sh -c 'echo hello world'
+kubectl run busybox --image=busybox -it -- /bin/sh -c 'echo hello world'
 ```
 
 </p>
@@ -305,7 +341,7 @@ kubectl run busybox --image=busybox -it --restart=Never -- /bin/sh -c 'echo hell
 <p>
 
 ```bash
-kubectl run busybox --image=busybox -it --rm --restart=Never -- /bin/sh -c 'echo hello world'
+kubectl run busybox --image=busybox -it --rm -- /bin/sh -c 'echo hello world'
 kubectl get po # nowhere to be found :)
 ```
 
@@ -318,13 +354,13 @@ kubectl get po # nowhere to be found :)
 <p>
 
 ```bash
-kubectl run nginx --image=nginx --restart=Never --env=var1=val1
+kubectl run nginx --image=nginx --env=var1=val1
 # then
 kubectl exec -it nginx -- env
 # or
 kubectl describe po nginx | grep val1
 # or
-kubectl run nginx --restart=Never --image=nginx --env=var1=val1 -it --rm -- env
+kubectl run nginx --image=nginx --env=var1=val1 -it --rm -- env
 ```
 
 </p>

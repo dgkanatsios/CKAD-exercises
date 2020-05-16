@@ -9,7 +9,7 @@
 Easiest way to do it is create a pod with a single container and save its definition in a YAML file:
 
 ```bash
-kubectl run busybox --image=busybox --restart=Never -o yaml --dry-run -- /bin/sh -c 'echo hello;sleep 3600' > pod.yaml
+kubectl run busybox --image=busybox $do -- /bin/sh -c 'echo hello;sleep 3600' > pod.yaml
 vi pod.yaml
 ```
 
