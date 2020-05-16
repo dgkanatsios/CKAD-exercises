@@ -10,9 +10,9 @@ kubernetes.io > Documentation > Concepts > Overview > [Labels and Selectors](htt
 <p>
 
 ```bash
-kubectl run nginx1 --image=nginx --restart=Never --labels=app=v1
-kubectl run nginx2 --image=nginx --restart=Never --labels=app=v1
-kubectl run nginx3 --image=nginx --restart=Never --labels=app=v1
+kubectl run nginx1 --image=nginx --labels=app=v1
+kubectl run nginx2 --image=nginx --labels=app=v1
+kubectl run nginx3 --image=nginx --labels=app=v1
 ```
 
 </p>
@@ -188,7 +188,7 @@ kubectl run nginx --image=nginx:1.7.8 --replicas=2 --port=80
 **However**, `kubectl run` for Deployments is Deprecated and will be removed in a future version. What you can do is:
 
 ```bash
-kubectl create deployment nginx  --image=nginx:1.7.8  --dry-run -o yaml > deploy.yaml
+kubectl create deployment nginx  --image=nginx:1.7.8  $do > deploy.yaml
 vi deploy.yaml
 # change the replicas field from 1 to 2
 # add this section to the container spec and save the deploy.yaml file
@@ -200,7 +200,7 @@ kubectl apply -f deploy.yaml
 or, do something like:
 
 ```bash
-kubectl create deployment nginx  --image=nginx:1.7.8  --dry-run -o yaml | sed 's/replicas: 1/replicas: 2/g'  | sed 's/image: nginx:1.7.8/image: nginx:1.7.8\n        ports:\n        - containerPort: 80/g' | kubectl apply -f -
+kubectl create deployment nginx  --image=nginx:1.7.8  $do | sed 's/replicas: 1/replicas: 2/g'  | sed 's/image: nginx:1.7.8/image: nginx:1.7.8\n        ports:\n        - containerPort: 80/g' | kubectl apply -f -
 ```
 
 </p>
@@ -457,13 +457,35 @@ kubectl delete deploy/nginx hpa/nginx
 <p>
 
 ```bash
-kubectl run pi --image=perl --restart=OnFailure -- perl -Mbignum=bpi -wle 'print bpi(2000)'
+kubectl create job pi --image=perl $do -- perl -Mbignum=bpi -wle 'print bpi(2000)'
+# Validate the yaml
 ```
-
-**However**, `kubectl run` for Job is Deprecated and will be removed in a future version. What you can do is:
-
+```yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  creationTimestamp: null
+  name: pi
+spec:
+  template:
+    metadata:
+      creationTimestamp: null
+    spec:
+      containers:
+      - command:
+        - perl
+        - -Mbignum=bpi
+        - -wle
+        - print bpi(2000)
+        image: perl
+        name: pi
+        resources: {}
+      restartPolicy: Never
+status: {}
+```
 ```bash
-kubectl create job pi  --image=perl -- perl -Mbignum=bpi -wle 'print bpi(2000)'
+# Create it
+kubectl create job pi --image=perl -- perl -Mbignum=bpi -wle 'print bpi(2000)'
 ```
 
 </p>
@@ -488,12 +510,6 @@ kubectl delete job pi
 
 <details><summary>show</summary>
 <p>
-
-```bash
-kubectl run busybox --image=busybox --restart=OnFailure -- /bin/sh -c 'echo hello;sleep 30;echo world'
-```
-
-**However**, `kubectl run` for Job is Deprecated and will be removed in a future version. What you can do is:
 
 ```bash
 kubectl create job busybox --image=busybox -- /bin/sh -c 'echo hello;sleep 30;echo world'
@@ -547,7 +563,7 @@ kubectl delete job busybox
 <p>
   
 ```bash
-kubectl create job busybox --image=busybox --dry-run -o yaml -- /bin/sh -c 'while true; do echo hello; sleep 10;done' > job.yaml
+kubectl create job busybox --image=busybox $do -- /bin/sh -c 'while true; do echo hello; sleep 10;done' > job.yaml
 vi job.yaml
 ```
   
@@ -589,7 +605,7 @@ status: {}
 <p>
 
 ```bash
-kubectl create job busybox --image=busybox --dry-run -o yaml -- /bin/sh -c 'echo hello;sleep 30;echo world' > job.yaml
+kubectl create job busybox --image=busybox $do -- /bin/sh -c 'echo hello;sleep 30;echo world' > job.yaml
 vi job.yaml
 ```
 
@@ -700,12 +716,6 @@ kubernetes.io > Documentation > Tasks > Run Jobs > [Running Automated Tasks with
 <p>
 
 ```bash
-kubectl run busybox --image=busybox --restart=OnFailure --schedule="*/1 * * * *" -- /bin/sh -c 'date; echo Hello from the Kubernetes cluster'
-```
-
-**However**, `kubectl run` for CronJob is Deprecated and will be removed in a future version. What you can do is:
-
-```bash
 kubectl create cronjob busybox --image=busybox --schedule="*/1 * * * *" -- /bin/sh -c 'date; echo Hello from the Kubernetes cluster'
 ```
 
@@ -735,7 +745,7 @@ kubectl delete cj busybox
 <p>
 
 ```bash
-kubectl create cronjob time-limited-job --image=busybox --restart=Never --dry-run --schedule="* * * * *" -o yaml -- /bin/sh -c 'date; echo Hello from the Kubernetes cluster' > time-limited-job.yaml
+kubectl create cronjob time-limited-job --image=busybox $do --schedule="* * * * *" -- /bin/sh -c 'date; echo Hello from the Kubernetes cluster' > time-limited-job.yaml
 vi time-limited-job.yaml
 ```
 Add job.spec.activeDeadlineSeconds=17
