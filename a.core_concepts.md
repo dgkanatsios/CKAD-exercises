@@ -11,6 +11,26 @@ kubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Acce
 
 kubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Use Port Forwarding to Access Applications in a Cluster](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/)
 
+kubernetes.io > Reference > kubectl CLI > kubectl Cheat Sheet > Kubectl Autocomplete > [Kubectl Autocomplete](https://kubernetes.io/docs/reference/kubectl/cheatsheet/#kubectl-autocomplete)
+
+### Setup your test environment with your custom variables and autocompletion
+
+<details><summary>show</summary>
+<p>
+
+```bash
+# Consider setting an shell variable string to store this flag for speed. Speed is very important on the exam
+export do='--dry-run -o yaml'
+```
+```bash
+# Use autocompletion if you feel comfortable. Some people don't like this and others swear by it. Try both. Check the Autocomplete documentation above.
+
+source <(kubectl completion bash) # setup autocomplete in bash into the current shell, bash-completion package should be installed first.
+echo "source <(kubectl completion bash)" >> ~/.bashrc # add autocomplete permanently to your bash shell.
+```
+</p>
+</details>
+
 ### Create a namespace called 'mynamespace' and a pod with image nginx called nginx on this namespace
 
 <details><summary>show</summary>
@@ -36,10 +56,10 @@ Easily generate YAML with:
 
 ```bash
 kubectl run nginx --image=nginx --dry-run=client -o yaml > pod.yaml
+# Isn't it a pain to type the dry run flag?
 ```
 ```bash
-# Consider setting an bash variable string to store this flag for speed. Speed is very important on the exam
-export do='--dry-run -o yaml'
+# Lets use the shell variable of the string
 kubectl run nginx --image=nginx $do > pod.yaml
 # You will use the dry run flag multiple times on the test.
 
