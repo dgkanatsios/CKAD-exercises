@@ -35,8 +35,16 @@ kubectl get pods
 Easily generate YAML with:
 
 ```bash
-kubectl run nginx --image=nginx --restart=Never --dry-run -o yaml > pod.yaml
+kubectl run nginx --image=nginx --dry-run=client -o yaml > pod.yaml
 ```
+```bash
+# Consider setting an bash variable string to store this flag for speed. Speed is very important on the exam
+export do='--dry-run -o yaml'
+kubectl run nginx --image=nginx $do > pod.yaml
+# You will use the dry run flag multiple times on the test.
+
+```
+
 
 ```bash
 cat pod.yaml
@@ -53,11 +61,10 @@ metadata:
 spec:
   containers:
   - image: nginx
-    imagePullPolicy: IfNotPresent
     name: nginx
     resources: {}
   dnsPolicy: ClusterFirst
-  restartPolicy: Never
+  restartPolicy: Always
 status: {}
 ```
 
@@ -68,7 +75,7 @@ kubectl create -f pod.yaml -n mynamespace
 Alternatively, you can run in one line
 
 ```bash
-kubectl run nginx --image=nginx --restart=Never --dry-run -o yaml | kubectl create -n mynamespace -f -
+kubectl run nginx --image=nginx $do | kubectl create -n mynamespace -f -
 ```
 
 </p>
@@ -80,9 +87,9 @@ kubectl run nginx --image=nginx --restart=Never --dry-run -o yaml | kubectl crea
 <p>
 
 ```bash
-kubectl run busybox --image=busybox --command --restart=Never -it -- env # -it will help in seeing the output
+kubectl run busybox --image=busybox $do -it -- env # -it will help in seeing the output
 # or, just run it without -it
-kubectl run busybox --image=busybox --command --restart=Never -- env
+kubectl run busybox --image=busybox $do -- env
 # and then, check its logs
 kubectl logs busybox
 ```
@@ -97,7 +104,7 @@ kubectl logs busybox
 
 ```bash
 # create a  YAML template with this command
-kubectl run busybox --image=busybox --restart=Never --dry-run -o yaml --command -- env > envpod.yaml
+kubectl run busybox --image=busybox $do --command -- env > envpod.yaml
 # see it
 cat envpod.yaml
 ```
@@ -118,7 +125,7 @@ spec:
     name: busybox
     resources: {}
   dnsPolicy: ClusterFirst
-  restartPolicy: Never
+  restartPolicy: Always
 status: {}
 ```
 
@@ -137,7 +144,7 @@ kubectl logs busybox
 <p>
 
 ```bash
-kubectl create namespace myns -o yaml --dry-run
+kubectl create namespace myns $do
 ```
 
 </p>
@@ -149,7 +156,7 @@ kubectl create namespace myns -o yaml --dry-run
 <p>
 
 ```bash
-kubectl create quota myrq --hard=cpu=1,memory=1G,pods=2 --dry-run -o yaml
+kubectl create quota myrq --hard=cpu=1,memory=1G,pods=2 $do
 ```
 
 </p>
@@ -173,7 +180,9 @@ kubectl get po --all-namespaces
 <p>
 
 ```bash
-kubectl run nginx --image=nginx --restart=Never --port=80
+kubectl run nginx2 --image=nginx $do --expose --port 80 
+# Verify what you have created. If it looks good go ahead and create it. 
+kubectl run nginx2 --image=nginx --expose --port 80
 ```
 
 </p>
