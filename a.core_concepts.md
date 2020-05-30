@@ -176,7 +176,7 @@ kubectl run nginx --image=nginx --restart=Never --port=80
 </p>
 </details>
 
-### Change pod's image to nginx:1.7.1. Observe that the pod will be killed and recreated as soon as the image gets pulled
+### Change pod's image to nginx:1.7.1. Observe that the container will be restarted as soon as the image gets pulled
 
 <details><summary>show</summary>
 <p>
