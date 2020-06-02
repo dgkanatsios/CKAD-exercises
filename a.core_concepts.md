@@ -251,11 +251,7 @@ Alternatively you can also try a more advanced option:
 # Get IP of the nginx pod
 NGINX_IP=$(kubectl get pod nginx -o jsonpath='{.status.podIP}')
 # create a temp busybox pod
-<<<<<<< master
 kubectl run busybox --image=busybox --env="NGINX_IP=$NGINX_IP" --rm -it -- wget -O- $NGINX_IP:80
-=======
-kubectl run busybox --image=busybox --env="NGINX_IP=$NGINX_IP" --rm -it --restart=Never -- sh -c 'wget -O- $NGINX_IP:80'
->>>>>>> master
 ``` 
 
 </p>
