@@ -451,12 +451,6 @@ kubectl delete deploy/nginx hpa/nginx
 <p>
 
 ```bash
-kubectl run pi --image=perl --restart=OnFailure -- perl -Mbignum=bpi -wle 'print bpi(2000)'
-```
-
-**However**, `kubectl run` for Job is Deprecated and will be removed in a future version. What you can do is:
-
-```bash
 kubectl create job pi  --image=perl -- perl -Mbignum=bpi -wle 'print bpi(2000)'
 ```
 
@@ -482,12 +476,6 @@ kubectl delete job pi
 
 <details><summary>show</summary>
 <p>
-
-```bash
-kubectl run busybox --image=busybox --restart=OnFailure -- /bin/sh -c 'echo hello;sleep 30;echo world'
-```
-
-**However**, `kubectl run` for Job is Deprecated and will be removed in a future version. What you can do is:
 
 ```bash
 kubectl create job busybox --image=busybox -- /bin/sh -c 'echo hello;sleep 30;echo world'
@@ -541,7 +529,7 @@ kubectl delete job busybox
 <p>
   
 ```bash
-kubectl create job busybox --image=busybox --dry-run -o yaml -- /bin/sh -c 'while true; do echo hello; sleep 10;done' > job.yaml
+kubectl create job busybox --image=busybox --dry-run=client -o yaml -- /bin/sh -c 'while true; do echo hello; sleep 10;done' > job.yaml
 vi job.yaml
 ```
   
@@ -583,7 +571,7 @@ status: {}
 <p>
 
 ```bash
-kubectl create job busybox --image=busybox --dry-run -o yaml -- /bin/sh -c 'echo hello;sleep 30;echo world' > job.yaml
+kubectl create job busybox --image=busybox --dry-run=client -o yaml -- /bin/sh -c 'echo hello;sleep 30;echo world' > job.yaml
 vi job.yaml
 ```
 
@@ -694,12 +682,6 @@ kubernetes.io > Documentation > Tasks > Run Jobs > [Running Automated Tasks with
 <p>
 
 ```bash
-kubectl run busybox --image=busybox --restart=OnFailure --schedule="*/1 * * * *" -- /bin/sh -c 'date; echo Hello from the Kubernetes cluster'
-```
-
-**However**, `kubectl run` for CronJob is Deprecated and will be removed in a future version. What you can do is:
-
-```bash
 kubectl create cronjob busybox --image=busybox --schedule="*/1 * * * *" -- /bin/sh -c 'date; echo Hello from the Kubernetes cluster'
 ```
 
@@ -729,7 +711,7 @@ kubectl delete cj busybox
 <p>
 
 ```bash
-kubectl create cronjob time-limited-job --image=busybox --restart=Never --dry-run --schedule="* * * * *" -o yaml -- /bin/sh -c 'date; echo Hello from the Kubernetes cluster' > time-limited-job.yaml
+kubectl create cronjob time-limited-job --image=busybox --restart=Never --dry-run=client --schedule="* * * * *" -o yaml -- /bin/sh -c 'date; echo Hello from the Kubernetes cluster' > time-limited-job.yaml
 vi time-limited-job.yaml
 ```
 Add job.spec.activeDeadlineSeconds=17
