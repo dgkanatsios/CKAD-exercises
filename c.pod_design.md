@@ -182,13 +182,7 @@ kubernetes.io > Documentation > Concepts > Workloads > Controllers > [Deployment
 <p>
 
 ```bash
-kubectl run nginx --image=nginx:1.7.8 --replicas=2 --port=80
-```
-
-**However**, `kubectl run` for Deployments is Deprecated and will be removed in a future version. What you can do is:
-
-```bash
-kubectl create deployment nginx  --image=nginx:1.7.8  --dry-run -o yaml > deploy.yaml
+kubectl create deployment nginx  --image=nginx:1.7.8  --dry-run=client -o yaml > deploy.yaml
 vi deploy.yaml
 # change the replicas field from 1 to 2
 # add this section to the container spec and save the deploy.yaml file
@@ -200,7 +194,7 @@ kubectl apply -f deploy.yaml
 or, do something like:
 
 ```bash
-kubectl create deployment nginx  --image=nginx:1.7.8  --dry-run -o yaml | sed 's/replicas: 1/replicas: 2/g'  | sed 's/image: nginx:1.7.8/image: nginx:1.7.8\n        ports:\n        - containerPort: 80/g' | kubectl apply -f -
+kubectl create deployment nginx  --image=nginx:1.7.8  --dry-run=client -o yaml | sed 's/replicas: 1/replicas: 2/g'  | sed 's/image: nginx:1.7.8/image: nginx:1.7.8\n        ports:\n        - containerPort: 80/g' | kubectl apply -f -
 ```
 
 </p>
