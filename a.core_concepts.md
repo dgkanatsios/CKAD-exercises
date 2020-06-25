@@ -160,7 +160,11 @@ kubectl create quota myrq --hard=cpu=1,memory=1G,pods=2 --dry-run -o yaml
 ```bash
 kubectl get po --all-namespaces
 ```
+Alternatively 
 
+```bash
+kubectl get po -A
+```
 </p>
 </details>
 
