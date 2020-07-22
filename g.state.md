@@ -139,6 +139,7 @@ spec:
   resources:
     requests:
       storage: 4Gi
+  volumeName: myvolume
 ```
 
 Create it on the cluster:
