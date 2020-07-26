@@ -180,10 +180,12 @@ kubectl run nginx --image=nginx --restart=Never --port=80
 </p>
 </details>
 
-### Change pod's image to nginx:1.7.1. Observe that the pod will be killed and recreated as soon as the image gets pulled
+### Change pod's image to nginx:1.7.1. Observe that the container will be restarted as soon as the image gets pulled
 
 <details><summary>show</summary>
 <p>
+
+*Note*: The `RESTARTS` column should contain 0 initially (ideally - it could be any number)
 
 ```bash
 # kubectl set image POD/POD_NAME CONTAINER_NAME=IMAGE_NAME:TAG
@@ -191,6 +193,21 @@ kubectl set image pod/nginx nginx=nginx:1.7.1
 kubectl describe po nginx # you will see an event 'Container will be killed and recreated'
 kubectl get po nginx -w # watch it
 ```
+
+*Note*: some time after changing the image, you should see that the value in the `RESTARTS` column has been increased by 1, because the container has been restarted, as stated in the events shown at the bottom of the `kubectl describe pod` command:
+
+```
+Events:
+  Type    Reason     Age                  From               Message
+  ----    ------     ----                 ----               -------
+[...]
+  Normal  Killing    100s                 kubelet, node3     Container pod1 definition changed, will be restarted
+  Normal  Pulling    100s                 kubelet, node3     Pulling image "nginx:1.7.1"
+  Normal  Pulled     41s                  kubelet, node3     Successfully pulled image "nginx:1.7.1"
+  Normal  Created    36s (x2 over 9m43s)  kubelet, node3     Created container pod1
+  Normal  Started    36s (x2 over 9m43s)  kubelet, node3     Started container pod1
+```
+
 *Note*: you can check pod's image by running
 
 ```bash
