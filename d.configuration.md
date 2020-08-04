@@ -212,6 +212,7 @@ status: {}
 ```
 
 ```bash
+kubectl create -f pod.yaml
 kubectl exec -it nginx -- /bin/sh
 cd /etc/lala
 ls # will show var8 var9
