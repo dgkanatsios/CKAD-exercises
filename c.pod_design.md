@@ -93,6 +93,13 @@ kubectl label po -l app app-
 <details><summary>show</summary>
 <p>
 
+Add the label to a node:
+
+```bash
+kubectl label nodes <your-node-name> accelerator=nvidia-tesla-p100
+kubectl get nodes --show-labels
+```
+
 We can use the 'nodeSelector' property on the Pod YAML:
 
 ```YAML
@@ -112,6 +119,28 @@ You can easily find out where in the YAML it should be placed by:
 
 ```bash
 kubectl explain po.spec
+```
+
+OR:
+Use node affinity (https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes-using-node-affinity/#schedule-a-pod-using-required-node-affinity)
+
+```YAML
+apiVersion: v1
+kind: Pod
+metadata:
+  name: affinity-pod
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: accelerator
+            operator: In
+            values:
+            - nvidia-tesla-p100
+  containers:
+    ...
 ```
 
 </p>
@@ -727,7 +756,7 @@ kubectl delete cj busybox
 </p>
 </details>
 
-### Create a cron job with image busybox that runs every minutes and writes 'date; echo Hello from the Kubernetes cluster' to standard output. The cron job should be terminated if it takes more than 17 seconds to execute.
+### Create a cron job with image busybox that runs every minutes and writes 'date; echo Hello from the Kubernetes cluster' to standard output. The cron job should be terminated if it takes more than 17 seconds to start execution after its schedule.
 
 <details><summary>show</summary>
 <p>
