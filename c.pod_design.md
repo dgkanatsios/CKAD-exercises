@@ -141,6 +141,10 @@ kubectl annotate po nginx{1..3} description='my description'
 
 ```bash
 kubectl describe po nginx1 | grep -i 'annotations'
+
+# or
+
+kubectl get pods -o custom-columns=Name:metadata.name,ANNOTATIONS:metadata.annotations.description
 ```
 
 As an alternative to using `| grep` you can use jsonPath like `kubectl get po nginx -o jsonpath='{.metadata.annotations}{"\n"}'`
