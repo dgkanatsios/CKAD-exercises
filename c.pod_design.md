@@ -48,7 +48,7 @@ kubectl label po nginx2 app=v2 --overwrite
 <p>
 
 ```bash
-kubectl get po -L app
+kubectl get po -l app
 # or
 kubectl get po --label-columns=app
 ```
@@ -82,7 +82,7 @@ kubectl label po nginx1 nginx2 nginx3 app-
 # or
 kubectl label po nginx{1..3} app-
 # or
-kubectl label po -lapp app-
+kubectl label po -l app app-
 ```
 
 </p>
