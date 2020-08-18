@@ -230,6 +230,11 @@ or, do something like:
 kubectl create deployment nginx  --image=nginx:1.7.8  --dry-run=client -o yaml | sed 's/replicas: 1/replicas: 2/g'  | sed 's/image: nginx:1.7.8/image: nginx:1.7.8\n        ports:\n        - containerPort: 80/g' | kubectl apply -f -
 ```
 
+or, something like:
+```bash
+kubectl run nginx --image=nginx:1.7.8 --replicas=2 --port=80
+```
+
 </p>
 </details>
 
