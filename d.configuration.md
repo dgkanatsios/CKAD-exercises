@@ -515,8 +515,7 @@ kubectl create -f sa.yaml
 <p>
 
 ```bash
-kubectl run nginx --image=nginx --restart=Never --serviceaccount=myuser -o yaml --dry-run > pod.yaml
-kubectl apply -f pod.yaml
+kubectl run nginx --image=nginx --restart=Never --serviceaccount=myuser
 ```
 
 or you can add manually:
