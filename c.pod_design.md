@@ -747,7 +747,7 @@ kubectl delete cj busybox
 kubectl create cronjob time-limited-job --image=busybox --restart=Never --dry-run=client --schedule="* * * * *" -o yaml -- /bin/sh -c 'date; echo Hello from the Kubernetes cluster' > time-limited-job.yaml
 vi time-limited-job.yaml
 ```
-Add job.spec.activeDeadlineSeconds=17
+Add cronjob.spec.startingDeadlineSeconds=17
 
 ```bash
 apiVersion: batch/v1beta1
