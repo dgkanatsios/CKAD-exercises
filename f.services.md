@@ -121,7 +121,7 @@ kubectl run foo --image=dgkanatsios/simpleapp --labels=app=foo --port=8080 --rep
 Or, you can use the more recent approach of creating the requested deployment as kubectl run has been deprecated.
 
 ```bash
-kubectl create deploy foo --image=dgkanatsios/simpleapp --dry-run -o yaml > foo.yml
+kubectl create deploy foo --image=dgkanatsios/simpleapp --dry-run=client -o yaml > foo.yml
 
 vi foo.yml
 ```
