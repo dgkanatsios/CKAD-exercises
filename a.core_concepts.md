@@ -94,7 +94,7 @@ kubectl logs busybox
 
 ```bash
 # create a  YAML template with this command
-kubectl run busybox --image=busybox --restart=Never --dry-run -o yaml --command -- env > envpod.yaml
+kubectl run busybox --image=busybox --restart=Never --dry-run=client -o yaml --command -- env > envpod.yaml
 # see it
 cat envpod.yaml
 ```
@@ -134,7 +134,7 @@ kubectl logs busybox
 <p>
 
 ```bash
-kubectl create namespace myns -o yaml --dry-run
+kubectl create namespace myns -o yaml --dry-run=client
 ```
 
 </p>
@@ -146,7 +146,7 @@ kubectl create namespace myns -o yaml --dry-run
 <p>
 
 ```bash
-kubectl create quota myrq --hard=cpu=1,memory=1G,pods=2 --dry-run -o yaml
+kubectl create quota myrq --hard=cpu=1,memory=1G,pods=2 --dry-run=client -o yaml
 ```
 
 </p>

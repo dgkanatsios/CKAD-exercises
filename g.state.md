@@ -17,7 +17,7 @@ kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configu
 Easiest way to do this is to create a template pod with:
 
 ```bash
-kubectl run busybox --image=busybox --restart=Never -o yaml --dry-run -- /bin/sh -c 'sleep 3600' > pod.yaml
+kubectl run busybox --image=busybox --restart=Never -o yaml --dry-run=client -- /bin/sh -c 'sleep 3600' > pod.yaml
 vi pod.yaml
 ```
 Copy paste the container definition and type the lines that have a comment in the end:
@@ -165,7 +165,7 @@ kubectl get pv # will show as 'Bound' as well
 Create a skeleton pod:
 
 ```bash
-kubectl run busybox --image=busybox --restart=Never -o yaml --dry-run -- /bin/sh -c 'sleep 3600' > pod.yaml
+kubectl run busybox --image=busybox --restart=Never -o yaml --dry-run=client -- /bin/sh -c 'sleep 3600' > pod.yaml
 vi pod.yaml
 ```
 
