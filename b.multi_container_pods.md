@@ -9,7 +9,7 @@
 Easiest way to do it is create a pod with a single container and save its definition in a YAML file:
 
 ```bash
-kubectl run busybox --image=busybox --restart=Never -o yaml --dry-run -- /bin/sh -c 'echo hello;sleep 3600' > pod.yaml
+kubectl run busybox --image=busybox --restart=Never -o yaml --dry-run=client -- /bin/sh -c 'echo hello;sleep 3600' > pod.yaml
 vi pod.yaml
 ```
 
@@ -49,3 +49,99 @@ kubectl delete po busybox
 
 </p>
 </details>
+
+
+### Create nginx pod exposed at port 80. Add an busybox init container which downloads the k8s page by "wget -O /work-dir/index.html http://kubernetes.io". Make a volume of type emptyDir and mount it in both pods. For nginx mount it on "/usr/share/nginx/html" and for the initcontainer use mount it on "/work-dir". When done, get the IP of the nginx pod and create a busybox pod and run wget -O- IP
+
+<details><summary>show</summary>
+<p>
+
+Easiest way to do it is create a pod with a single container and save its definition in a YAML file:
+
+```bash
+kubectl run web --image=nginx --restart=Never --port=80 --dry-run -o yaml > pod-init.yaml
+```
+
+Copy/paste the container related values, so your final YAML should contain the volume and the initContainer:
+
+Volume:
+
+```YAML
+containers:
+  - image: nginx
+...
+    volumeMounts:
+    - name: vol
+      mountPath: /usr/share/nginx/html
+  volumes:
+  - name: vol
+    emptyDir: {}
+```
+
+initContainer:
+
+```YAML
+...
+initContainers:
+- args:
+  - /bin/sh
+  - -c
+  - wget -O /work-dir/index.html http://kubernetes.io
+  image: busybox
+  name: box
+  volumeMounts:
+  - name: vol
+    mountPath: /work-dir
+```
+
+In total you get:
+
+```YAML
+
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: box
+  name: box
+spec:
+  initContainers: #
+  - args: #
+    - /bin/sh #
+    - -c #
+    - wget -O /work-dir/index.html http://kubernetes.io #
+    image: busybox #
+    name: box #
+    volumeMounts: #
+    - name: vol #
+      mountPath: /work-dir #
+  containers:
+  - image: nginx
+    name: nginx
+    ports:
+    - containerPort: 80
+    volumeMounts: #
+    - name: vol #
+      mountPath: /usr/share/nginx/html #
+  volumes: #
+  - name: vol #
+    emptyDir: {} #
+```
+
+```bash
+# Apply pod
+kubectl apply -f pod-init.yaml
+
+# Get IP
+kubectl get po -o wide
+
+# Execute wget
+kubectl run box --image=busybox --restart=Never -ti --rm -- /bin/sh -c "wget -O- IP"
+
+# you can do some cleanup
+kubectl delete po box
+```
+
+</p>
+</details>
+
