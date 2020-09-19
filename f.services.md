@@ -217,7 +217,9 @@ kubernetes.io > Documentation > Concepts > Services, Load Balancing, and Network
 <p>
 
 ```bash
-kubectl run nginx --image=nginx --replicas=2 --port=80 --expose
+kubectl create deployment nginx --image=nginx --replicas=2
+kubectl expose ndeployment nginx --port=80
+
 kubectl describe svc nginx # see the 'run=nginx' selector for the pods
 # or
 kubectl get svc nginx -o yaml
