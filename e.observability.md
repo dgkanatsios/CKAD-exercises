@@ -142,7 +142,7 @@ kubectl delete -f pod.yaml
 <p>
 
 ```bash
-kubectl run busybox --image=busybox --restart=Never -- /bin/sh -c 'i=0; while true; do echo "$i: $(date)"; i=$((i+1)); sleep 1; done'
+kubectl run busybox --image=busybox --restart=Never -- /bin/sh -c 'i=0; while true; do echo $i: $(date); i=$((i+1)); sleep 1; done'
 kubectl logs busybox -f # follow the logs
 ```
 
