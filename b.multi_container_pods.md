@@ -51,7 +51,7 @@ kubectl delete po busybox
 </details>
 
 
-### Create nginx pod exposed at port 80. Add an busybox init container which downloads the k8s page by "wget -O /work-dir/index.html http://kubernetes.io". Make a volume of type emptyDir and mount it in both pods. For nginx mount it on "/usr/share/nginx/html" and for the initcontainer use mount it on "/work-dir". When done, get the IP of the nginx pod and create a busybox pod and run wget -O- IP
+### Create nginx pod exposed at port 80. Add an busybox init container which downloads the k8s page by "wget -O /work-dir/index.html http://neverssl.com/online". Make a volume of type emptyDir and mount it in both pods. For nginx mount it on "/usr/share/nginx/html" and for the initcontainer use mount it on "/work-dir". When done, get the IP of the nginx pod and create a busybox pod and run wget -O- IP
 
 <details><summary>show</summary>
 <p>
@@ -86,7 +86,7 @@ initContainers:
 - args:
   - /bin/sh
   - -c
-  - wget -O /work-dir/index.html http://kubernetes.io
+  - wget -O /work-dir/index.html http://neverssl.com/online
   image: busybox
   name: box
   volumeMounts:
@@ -109,7 +109,7 @@ spec:
   - args: #
     - /bin/sh #
     - -c #
-    - wget -O /work-dir/index.html http://kubernetes.io #
+    - wget -O /work-dir/index.html http://neverssl.com/online #
     image: busybox #
     name: box #
     volumeMounts: #
