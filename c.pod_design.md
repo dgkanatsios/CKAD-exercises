@@ -42,13 +42,13 @@ kubectl label po nginx2 app=v2 --overwrite
 </p>
 </details>
 
-### Get the label 'app' for the pods
+### Get the label 'app' for the pods (show a column with APP labels)
 
 <details><summary>show</summary>
 <p>
 
 ```bash
-kubectl get po -l app
+kubectl get po -L app
 # or
 kubectl get po --label-columns=app
 ```
