@@ -483,7 +483,7 @@ kubectl delete deploy/nginx hpa/nginx
 
 ## Jobs
 
-### Create a job with image perl that runs the command with arguments "perl -Mbignum=bpi -wle 'print bpi(2000)'"
+### Create a job named pi with image perl that runs the command with arguments "perl -Mbignum=bpi -wle 'print bpi(2000)'"
 
 <details><summary>show</summary>
 <p>
