@@ -42,13 +42,13 @@ kubectl label po nginx2 app=v2 --overwrite
 </p>
 </details>
 
-### Get the label 'app' for the pods
+### Get the label 'app' for the pods (show a column with APP labels)
 
 <details><summary>show</summary>
 <p>
 
 ```bash
-kubectl get po -l app
+kubectl get po -L app
 # or
 kubectl get po --label-columns=app
 ```
@@ -228,6 +228,11 @@ or, do something like:
 
 ```bash
 kubectl create deployment nginx  --image=nginx:1.7.8  --dry-run=client -o yaml | sed 's/replicas: 1/replicas: 2/g'  | sed 's/image: nginx:1.7.8/image: nginx:1.7.8\n        ports:\n        - containerPort: 80/g' | kubectl apply -f -
+```
+
+or, 
+```bash
+kubectl create deploy nginx --image=nginx:1.7.8 --replicas=2 --port=80
 ```
 
 </p>
@@ -478,7 +483,7 @@ kubectl delete deploy/nginx hpa/nginx
 
 ## Jobs
 
-### Create a job with image perl that runs the command with arguments "perl -Mbignum=bpi -wle 'print bpi(2000)'"
+### Create a job named pi with image perl that runs the command with arguments "perl -Mbignum=bpi -wle 'print bpi(2000)'"
 
 <details><summary>show</summary>
 <p>

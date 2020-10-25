@@ -256,7 +256,7 @@ There are lots of different types per cloud provider (see here)[https://kubernet
 
 ```bash
 kubectl run busybox --image=busybox --restart=Never -- sleep 3600
-kubectl cp busybox:/etc/passwd ./passwd # kubectl cp command
+kubectl cp busybox:etc/passwd ./passwd # kubectl cp command
 # previous command might report an error, feel free to ignore it since copy command works
 cat passwd
 ```
