@@ -135,7 +135,7 @@ kubectl apply -f pod-init.yaml
 kubectl get po -o wide
 
 # Execute wget
-kubectl run box --image=busybox --restart=Never -ti --rm -- /bin/sh -c "wget -O- IP"
+kubectl run box --image=busybox --restart=Never -it --rm -- /bin/sh -c "wget -O- IP"
 
 # you can do some cleanup
 kubectl delete po box
