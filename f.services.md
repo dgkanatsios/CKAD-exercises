@@ -115,7 +115,7 @@ kubectl delete pod nginx # Deletes the pod
 <p>
 
 ```bash
-kubectl create deploy foo --image=dgkanatsios/simpleapp --port=8080 --replicas=3
+kubectl run foo --image=dgkanatsios/simpleapp --port=8080 --replicas=3 --labels=app=foo
 ```
 </p>
 </details>
