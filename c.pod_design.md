@@ -506,6 +506,12 @@ kubectl get po # get the pod name
 kubectl logs pi-**** # get the pi numbers
 kubectl delete job pi
 ```
+OR 
+
+```bash
+kubectl get jobs -w # wait till 'SUCCESSFUL' is 1 (will take some time, perl image might be big)
+kubectl logs job/pi
+```
 
 </p>
 </details>
