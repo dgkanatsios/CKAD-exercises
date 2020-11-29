@@ -215,13 +215,7 @@ kubernetes.io > Documentation > Concepts > Workloads > Controllers > [Deployment
 <p>
 
 ```bash
-kubectl create deployment nginx  --image=nginx:1.7.8  --dry-run=client -o yaml > deploy.yaml
-vi deploy.yaml
-# change the replicas field from 1 to 2
-# add this section to the container spec and save the deploy.yaml file
-# ports:
-#   - containerPort: 80
-kubectl apply -f deploy.yaml
+kubectl create deployment nginx  --image=nginx:1.7.8 --replicas=2 --port=80
 ```
 
 or, do something like:
