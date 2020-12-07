@@ -115,8 +115,15 @@ kubectl delete pod nginx # Deletes the pod
 <p>
 
 ```bash
-kubectl create deploy foo --image=dgkanatsios/simpleapp --port=8080 --replicas=3
+kubectl create deploy foo  --image=dgkanatsios/simpleapp  --dry-run=client -o yaml > deploy.yaml
+vi deploy.yaml
+# change the replicas field from 1 to 3
+# add this section to the container spec and save the deploy.yaml file
+# ports:
+#   - containerPort: 8080
+kubectl apply -f deploy.yaml
 ```
+
 </p>
 </details>
 
