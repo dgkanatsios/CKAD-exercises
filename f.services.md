@@ -185,7 +185,16 @@ kubernetes.io > Documentation > Concepts > Services, Load Balancing, and Network
 <p>
 
 ```bash
-kubectl create deployment nginx --image=nginx --replicas=2
+
+kubectl create deploy foo  --image=nginx  --dry-run=client -o yaml > deploy.yaml
+vi deploy.yaml
+# change the replicas field from 1 to 2
+# add this section to the container spec and save the deploy.yaml file
+# ports:
+#   - containerPort: 80
+kubectl apply -f deploy.yaml
+
+
 kubectl expose deployment nginx --port=80
 
 kubectl describe svc nginx # see the 'app=nginx' selector for the pods
