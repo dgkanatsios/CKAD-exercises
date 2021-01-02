@@ -60,7 +60,7 @@ status: {}
 ```
 
 ```bash
-kubectl create -f pod.yaml -n mynamespace
+kubectl create -f pod.yaml
 ```
 
 Alternatively, you can run in one line
