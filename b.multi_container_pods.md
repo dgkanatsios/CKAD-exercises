@@ -9,7 +9,7 @@
 Easiest way to do it is create a pod with a single container and save its definition in a YAML file:
 
 ```bash
-kubectl run busybox --image=busybox --restart=Never -o yaml --dry-run=client -- /bin/sh -c 'echo hello;sleep 3600' > pod.yaml
+kubectl run busybox --image=busybox -o yaml --dry-run=client -- /bin/sh -c 'echo hello;sleep 3600' > pod.yaml
 vi pod.yaml
 ```
 
@@ -58,7 +58,7 @@ kubectl delete po busybox
 Easiest way to do it is create a pod with a single container and save its definition in a YAML file:
 
 ```bash
-kubectl run web --image=nginx --restart=Never --port=80 --dry-run=client -o yaml > pod-init.yaml
+kubectl run web --image=nginx --port=80 --dry-run=client -o yaml > pod-init.yaml
 ```
 
 Copy/paste the container related values, so your final YAML should contain the volume and the initContainer:
@@ -135,7 +135,7 @@ kubectl apply -f pod-init.yaml
 kubectl get po -o wide
 
 # Execute wget
-kubectl run box --image=busybox --restart=Never -it --rm -- /bin/sh -c "wget -O- IP"
+kubectl run box --image=busybox -it --rm -- /bin/sh -c "wget -O- IP"
 
 # you can do some cleanup
 kubectl delete po box
