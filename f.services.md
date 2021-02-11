@@ -120,7 +120,7 @@ kubectl create deploy foo --image=dgkanatsios/simpleapp --port=8080 --replicas=3
 </p>
 </details>
 
-### Get the pod IPs. Create a temp busybox pod and trying hitting them on port 8080
+### Get the pod IPs. Create a temp busybox pod and try hitting them on port 8080
 
 <details><summary>show</summary>
 <p>
