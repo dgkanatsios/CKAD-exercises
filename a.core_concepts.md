@@ -18,6 +18,7 @@ kubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Use 
 
 ```bash
 kubectl create namespace mynamespace
+kubectl create ns mynamespace
 kubectl run nginx --image=nginx --restart=Never -n mynamespace
 ```
 
@@ -33,6 +34,11 @@ Easily generate YAML with:
 
 ```bash
 kubectl run nginx --image=nginx --restart=Never --dry-run=client -n mynamespace -o yaml > pod.yaml
+```
+
+Above version 1.19, no need of --restart=Never. Use the following:
+```bash
+kubectl run nginx --image=nginx --dry-run=client -n mynamespace -o yaml > pod.yaml
 ```
 
 ```bash
@@ -60,12 +66,18 @@ status: {}
 
 ```bash
 kubectl create -f pod.yaml -n mynamespace
+kubectl apply if pod.yaml -n mynamespace
 ```
 
 Alternatively, you can run in one line
 
 ```bash
 kubectl run nginx --image=nginx --restart=Never --dry-run=client -o yaml | kubectl create -n mynamespace -f -
+```
+
+Above version 1.19, remove --restart=Never
+```bash
+kubectl run nginx --image=nginx --dry-run=client -o yaml | kubectl create -n mynamespace -f -
 ```
 
 </p>
