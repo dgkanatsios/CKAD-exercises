@@ -134,6 +134,30 @@ kubectl delete -f pod.yaml
 </p>
 </details>
 
+### Lots of pods are running in `qa`,`alan`,`test`,`production` namespaces.  All of these pods are configured with liveness probe.  Please list all pods whose liveness probe are failed in the format of `<namespace>/<pod name>` per line.
+
+<details><summary>show</summary>
+<p>
+
+A typical liveness probe failure event
+```
+LAST SEEN   TYPE      REASON      OBJECT              MESSAGE
+22m         Warning   Unhealthy   pod/liveness-exec   Liveness probe failed: cat: can't open '/tmp/healthy': No such file or directory
+```
+
+collect failed pods namespace by namespace
+
+```sh  
+kubectl get ns # check namespaces
+kubectl -n qa get events | grep -i "Liveness probe failed"
+kubectl -n alan get events | grep -i "Liveness probe failed"
+kubectl -n test get events | grep -i "Liveness probe failed"
+kubectl -n production get events | grep -i "Liveness probe failed"
+```
+
+</p>
+</details>
+
 ## Logging
 
 ### Create a busybox pod that runs 'i=0; while true; do echo "$i: $(date)"; i=$((i+1)); sleep 1; done'. Check its logs
@@ -183,6 +207,7 @@ kubectl delete po busybox --force --grace-period=0
 
 </p>
 </details>
+
 
 ### Get CPU/memory utilization for nodes ([metrics-server](https://github.com/kubernetes-incubator/metrics-server) must be running)
 
