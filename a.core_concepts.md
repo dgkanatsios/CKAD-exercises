@@ -18,7 +18,7 @@ kubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Use 
 
 ```bash
 kubectl create namespace mynamespace
-kubectl run nginx --image=nginx --restart=Never -n mynamespace
+kubectl run nginx --image=nginx -n mynamespace
 ```
 
 </p>
@@ -32,7 +32,7 @@ kubectl run nginx --image=nginx --restart=Never -n mynamespace
 Easily generate YAML with:
 
 ```bash
-kubectl run nginx --image=nginx --restart=Never --dry-run=client -n mynamespace -o yaml > pod.yaml
+kubectl run nginx --image=nginx --dry-run=client -n mynamespace -o yaml > pod.yaml
 ```
 
 ```bash
@@ -66,7 +66,7 @@ kubectl create -f pod.yaml
 Alternatively, you can run in one line
 
 ```bash
-kubectl run nginx --image=nginx --restart=Never --dry-run=client -o yaml | kubectl create -n mynamespace -f -
+kubectl run nginx --image=nginx --dry-run=client -o yaml | kubectl create -n mynamespace -f -
 ```
 
 </p>
@@ -175,7 +175,7 @@ kubectl get po -A
 <p>
 
 ```bash
-kubectl run nginx --image=nginx --restart=Never --port=80
+kubectl run nginx --image=nginx --port=80
 ```
 
 </p>
@@ -346,7 +346,7 @@ kubectl get po # nowhere to be found :)
 <p>
 
 ```bash
-kubectl run nginx --image=nginx --restart=Never --env=var1=val1
+kubectl run nginx --image=nginx --env=var1=val1
 # then
 kubectl exec -it nginx -- env
 # or
@@ -354,7 +354,7 @@ kubectl exec -it nginx -- sh -c 'echo $var1'
 # or
 kubectl describe po nginx | grep val1
 # or
-kubectl run nginx --restart=Never --image=nginx --env=var1=val1 -it --rm -- env
+kubectl run nginx --image=nginx --env=var1=val1 -it --rm -- env
 ```
 
 </p>

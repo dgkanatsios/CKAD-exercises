@@ -10,9 +10,9 @@ kubernetes.io > Documentation > Concepts > Overview > [Labels and Selectors](htt
 <p>
 
 ```bash
-kubectl run nginx1 --image=nginx --restart=Never --labels=app=v1
-kubectl run nginx2 --image=nginx --restart=Never --labels=app=v1
-kubectl run nginx3 --image=nginx --restart=Never --labels=app=v1
+kubectl run nginx1 --image=nginx --labels=app=v1
+kubectl run nginx2 --image=nginx --labels=app=v1
+kubectl run nginx3 --image=nginx --labels=app=v1
 ```
 
 </p>

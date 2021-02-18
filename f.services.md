@@ -7,7 +7,7 @@
 <p>
 
 ```bash
-kubectl run nginx --image=nginx --restart=Never --port=80 --expose
+kubectl run nginx --image=nginx --port=80 --expose
 # observe that a pod as well as a service are created
 ```
 

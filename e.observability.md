@@ -11,7 +11,7 @@ kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configu
 <p>
 
 ```bash
-kubectl run nginx --image=nginx --restart=Never --dry-run=client -o yaml > pod.yaml
+kubectl run nginx --image=nginx --dry-run=client -o yaml > pod.yaml
 vi pod.yaml
 ```
 
@@ -96,7 +96,7 @@ kubectl delete -f pod.yaml
 <p>
 
 ```bash
-kubectl run nginx --image=nginx --dry-run=client -o yaml --restart=Never --port=80 > pod.yaml
+kubectl run nginx --image=nginx --dry-run=client -o yaml --port=80 > pod.yaml
 vi pod.yaml
 ```
 
