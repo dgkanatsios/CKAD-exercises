@@ -232,7 +232,7 @@ kubectl create deployment nginx  --image=nginx:1.7.8  --dry-run=client -o yaml |
 
 or, 
 ```bash
-kubectl create deploy nginx --image=nginx:1.7.8 --replicas=2 --port=80
+kubectl run nginx --image=nginx:1.7.8 --replicas=2 --port=80
 ```
 
 </p>
