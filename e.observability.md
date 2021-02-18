@@ -142,7 +142,7 @@ kubectl delete -f pod.yaml
 <p>
 
 ```bash
-kubectl run busybox --image=busybox -- /bin/sh -c 'i=0; while true; do echo "$i: $(date)"; i=$((i+1)); sleep 1; done'
+kubectl run busybox --image=busybox --restart=Never -- /bin/sh -c 'i=0; while true; do echo "$i: $(date)"; i=$((i+1)); sleep 1; done'
 kubectl logs busybox -f # follow the logs
 ```
 
@@ -157,7 +157,7 @@ kubectl logs busybox -f # follow the logs
 <p>
 
 ```bash
-kubectl run busybox --image=busybox -- /bin/sh -c 'ls /notexist'
+kubectl run busybox --restart=Never --image=busybox -- /bin/sh -c 'ls /notexist'
 # show that there's an error
 kubectl logs busybox
 kubectl describe po busybox
@@ -173,7 +173,7 @@ kubectl delete po busybox
 <p>
 
 ```bash
-kubectl run busybox --image=busybox -- notexist
+kubectl run busybox --restart=Never --image=busybox -- notexist
 kubectl logs busybox # will bring nothing! container never started
 kubectl describe po busybox # in the events section, you'll see the error
 # also...

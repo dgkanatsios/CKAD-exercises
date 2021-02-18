@@ -77,9 +77,9 @@ kubectl run nginx --image=nginx --dry-run=client -o yaml | kubectl create -n myn
 <p>
 
 ```bash
-kubectl run busybox --image=busybox --command -it -- env # -it will help in seeing the output
+kubectl run busybox --image=busybox --command --restart=Never -it -- env # -it will help in seeing the output
 # or, just run it without -it
-kubectl run busybox --image=busybox --command -- env
+kubectl run busybox --image=busybox --command --restart=Never -- env
 # and then, check its logs
 kubectl logs busybox
 ```
@@ -94,7 +94,7 @@ kubectl logs busybox
 
 ```bash
 # create a  YAML template with this command
-kubectl run busybox --image=busybox --dry-run=client -o yaml --command -- env > envpod.yaml
+kubectl run busybox --image=busybox --restart=Never --dry-run=client -o yaml --command -- env > envpod.yaml
 # see it
 cat envpod.yaml
 ```
@@ -225,7 +225,7 @@ kubectl get po nginx -o jsonpath='{.spec.containers[].image}{"\n"}'
 ```bash
 kubectl get po -o wide # get the IP, will be something like '10.1.1.131'
 # create a temp busybox pod
-kubectl run busybox --image=busybox --rm -it -- wget -O- 10.1.1.131:80
+kubectl run busybox --image=busybox --rm -it --restart=Never -- wget -O- 10.1.1.131:80
 ```
 
 Alternatively you can also try a more advanced option:
@@ -234,13 +234,13 @@ Alternatively you can also try a more advanced option:
 # Get IP of the nginx pod
 NGINX_IP=$(kubectl get pod nginx -o jsonpath='{.status.podIP}')
 # create a temp busybox pod
-kubectl run busybox --image=busybox --env="NGINX_IP=$NGINX_IP" --rm -it -- sh -c 'wget -O- $NGINX_IP:80'
+kubectl run busybox --image=busybox --env="NGINX_IP=$NGINX_IP" --rm -it --restart=Never -- sh -c 'wget -O- $NGINX_IP:80'
 ``` 
 
 Or just in one line:
 
 ```bash
-kubectl run busybox --image=busybox --rm -it -- wget -O- $(kubectl get pod nginx -o jsonpath='{.status.podIP}:{.spec.containers[0].ports[0].containerPort}')
+kubectl run busybox --image=busybox --rm -it --restart=Never -- wget -O- $(kubectl get pod nginx -o jsonpath='{.status.podIP}:{.spec.containers[0].ports[0].containerPort}')
 ```
 
 </p>
@@ -318,9 +318,9 @@ kubectl exec -it nginx -- /bin/sh
 <p>
 
 ```bash
-kubectl run busybox --image=busybox -it -- echo 'hello world'
+kubectl run busybox --image=busybox -it --restart=Never -- echo 'hello world'
 # or
-kubectl run busybox --image=busybox -it -- /bin/sh -c 'echo hello world'
+kubectl run busybox --image=busybox -it --restart=Never -- /bin/sh -c 'echo hello world'
 ```
 
 </p>
@@ -332,7 +332,7 @@ kubectl run busybox --image=busybox -it -- /bin/sh -c 'echo hello world'
 <p>
 
 ```bash
-kubectl run busybox --image=busybox -it --rm -- /bin/sh -c 'echo hello world'
+kubectl run busybox --image=busybox -it --rm --restart=Never -- /bin/sh -c 'echo hello world'
 kubectl get po # nowhere to be found :)
 ```
 
