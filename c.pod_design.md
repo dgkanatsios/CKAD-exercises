@@ -773,7 +773,7 @@ spec:
       creationTimestamp: null
       name: time-limited-job
     spec:
-      activeDeadlineSeconds: 17 # add this line
+      startingDeadlineSeconds: 17 # add this line
       template:
         metadata:
           creationTimestamp: null
