@@ -132,6 +132,8 @@ kubectl run busybox --image=busybox --restart=Never -it --rm -- sh
 wget -O- POD_IP:8080 # do not try with pod name, will not work
 # try hitting all IPs to confirm that hostname is different
 exit
+# or
+kubectl get po -o wide -l app=foo | awk '{print $6}' | grep -v IP | xargs -L1 -I '{}' kubectl run --rm -ti tmp --restart=Never --image=busybox -- wget -O- http://\{\}:8080
 ```
 
 </p>
