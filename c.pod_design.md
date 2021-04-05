@@ -367,7 +367,7 @@ kubectl edit deploy nginx
 ```bash
 kubectl rollout status deploy nginx
 # or
-kubectl get po # you'll see 'ErrImagePull'
+kubectl get po # you'll see 'ErrImagePull' or 'ImagePullBackOff'
 ```
 
 </p>
