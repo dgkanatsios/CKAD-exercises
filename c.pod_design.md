@@ -295,13 +295,13 @@ kubectl rollout status deploy nginx
 </p>
 </details>
 
-### Update the nginx image to nginx:1.19.9
+### Update the nginx image to nginx:1.19.8
 
 <details><summary>show</summary>
 <p>
 
 ```bash
-kubectl set image deploy nginx nginx=nginx:1.19.9
+kubectl set image deploy nginx nginx=nginx:1.19.8
 # alternatively...
 kubectl edit deploy nginx # change the .spec.template.spec.containers[0].image
 ```
@@ -372,7 +372,7 @@ kubectl get po # you'll see 'ErrImagePull'
 </details>
 
 
-### Return the deployment to the second revision (number 2) and verify the image is nginx:1.19.9
+### Return the deployment to the second revision (number 2) and verify the image is nginx:1.19.8
 
 <details><summary>show</summary>
 <p>
@@ -436,23 +436,23 @@ kubectl rollout pause deploy nginx
 </p>
 </details>
 
-### Update the image to nginx:1.9.1 and check that there's nothing going on, since we paused the rollout
+### Update the image to nginx:1.19.9 and check that there's nothing going on, since we paused the rollout
 
 <details><summary>show</summary>
 <p>
 
 ```bash
-kubectl set image deploy nginx nginx=nginx:1.9.1
+kubectl set image deploy nginx nginx=nginx:1.19.9
 # or
 kubectl edit deploy nginx
-# change the image to nginx:1.9.1
+# change the image to nginx:1.19.9
 kubectl rollout history deploy nginx # no new revision
 ```
 
 </p>
 </details>
 
-### Resume the rollout and check that the nginx:1.9.1 image has been applied
+### Resume the rollout and check that the nginx:1.19.9 image has been applied
 
 <details><summary>show</summary>
 <p>
