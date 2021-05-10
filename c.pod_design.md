@@ -421,6 +421,8 @@ kubectl describe deploy nginx
 
 ```bash
 kubectl autoscale deploy nginx --min=5 --max=10 --cpu-percent=80
+# view the horizontalpodautoscalers.autoscaling for nginx
+kubectl get hpa nginx
 ```
 
 </p>
