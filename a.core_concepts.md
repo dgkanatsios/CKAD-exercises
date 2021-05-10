@@ -296,6 +296,8 @@ kubectl logs nginx
 
 ```bash
 kubectl logs nginx -p
+# or
+kubectl logs nginx --previous
 ```
 
 </p>
