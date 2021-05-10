@@ -515,6 +515,12 @@ kubectl get jobs -w # wait till 'SUCCESSFUL' is 1 (will take some time, perl ima
 kubectl logs job/pi
 kubectl delete job pi
 ```
+OR 
+
+```bash
+kubectl wait --for=condition=complete --timeout=300 job pi
+kubectl delete job pi
+```
 
 </p>
 </details>
