@@ -306,7 +306,31 @@ kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Assign 
 <p>
 
 ```bash
+# Flag --requests and --limits has been deprecated will be removed in future
 kubectl run nginx --image=nginx --restart=Never --requests='cpu=100m,memory=256Mi' --limits='cpu=200m,memory=512Mi'
+```
+
+or
+
+```bash
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: nginx
+  name: nginx
+spec:
+  containers:
+  - image: nginx
+    name: nginx
+    resources:
+      limits:
+        cpu: 200m
+        memory: 512Mi
+      requests:
+        cpu: 100m
+        memory: 256Mi
+  restartPolicy: Never
 ```
 
 </p>
