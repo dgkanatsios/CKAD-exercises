@@ -312,7 +312,7 @@ kubectl run nginx --image=nginx --restart=Never --requests='cpu=100m,memory=256M
 
 or
 
-```bash
+```YAML
 apiVersion: v1
 kind: Pod
 metadata:
