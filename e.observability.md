@@ -154,6 +154,9 @@ LAST SEEN   TYPE      REASON      OBJECT              MESSAGE
 collect failed pods namespace by namespace
 
 ```sh  
+# Using grep for exact matches '-w' or '—word-regexp' $ grep -w 'one\|two\|three'
+# reference https://www.linuxscrew.com/grep-multiple-words-strings-patterns
+
 kubectl get ns # check namespaces
 kubectl -n qa get events | grep -i -w "Liveness probe failed\|errored"
 kubectl -n alan get events | grep -i -w "Liveness probe failed\|errored"
