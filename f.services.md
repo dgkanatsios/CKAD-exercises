@@ -86,6 +86,12 @@ status:
   loadBalancer: {}
 ```
 
+or
+
+```bash
+kubectl patch svc nginx -p '{"spec":{"type":"NodePort"}}' 
+```
+
 ```bash
 kubectl get svc
 ```
