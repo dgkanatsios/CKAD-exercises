@@ -237,6 +237,11 @@ or,
 kubectl create deploy nginx --image=nginx:1.18.0 --replicas=2 --port=80
 ```
 
+or, something like:
+```bash
+kubectl run nginx --image=nginx:1.7.8 --replicas=2 --port=80
+```
+
 </p>
 </details>
 
