@@ -521,6 +521,7 @@ OR
 
 ```bash
 kubectl wait --for=condition=complete --timeout=300 job pi
+kubectl logs job/pi
 kubectl delete job pi
 ```
 
