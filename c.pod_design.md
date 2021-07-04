@@ -14,7 +14,7 @@ kubectl run nginx1 --image=nginx --restart=Never --labels=app=v1
 kubectl run nginx2 --image=nginx --restart=Never --labels=app=v1
 kubectl run nginx3 --image=nginx --restart=Never --labels=app=v1
 # or
-for i in `seq 1 3`; do k run nginx$i --image=nginx -l app=v1 ; done
+for i in `seq 1 3`; do kubectl run nginx$i --image=nginx -l app=v1 ; done
 ```
 
 </p>
