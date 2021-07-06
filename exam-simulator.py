@@ -1,16 +1,6 @@
-# - [Core Concepts - 13%](a.core_concepts.md)
-# - [Multi-container pods - 10%](b.multi_container_pods.md)
-# - [Pod design - 20%](c.pod_design.md)
-# - [Configuration - 18%](d.configuration.md)
-# - [Observability - 18%](e.observability.md)
-# - [Services and networking - 13%](f.services.md)
-# - [State persistence - 8%](g.state.md)
 import os
 import random
-import ast
 
-def read_questions(file:str):
-    return os.popen(f"cat {file} | grep '### '").readlines()
 exam_composition = [{
         "name": 'a.core_concepts.md',
         "percentage": 13
@@ -34,6 +24,8 @@ exam_composition = [{
         "percentage": 8
     }
 ]
+def read_questions(file:str):
+    return os.popen(f"cat {file} | grep '### '").readlines()
 
 def choose_random_questions(exam_composition, total, random_questions=set()):
     for concept in exam_composition:
@@ -59,7 +51,7 @@ def choose_random_questions(exam_composition, total, random_questions=set()):
 
     return choose_random_questions(exam_composition, total, random_questions)
 
-def create_exam():
+def create_simulation():
     total = int(input("how many questions (20-30)?\n"))
     print(f"Generated {total} questions")
     print("\nThe online, proctored, performance-based test consists of a set of performance-based items (problems) to be solved in a command line and is expected to take approximately two (2) hours to complete.\n")
@@ -67,7 +59,7 @@ def create_exam():
     return choose_random_questions(exam_composition, total)
 
 if __name__ == '__main__':
-    questions = create_exam()
+    questions = create_simulation()
 
     for index, question in enumerate(questions, start=1):
         fp, q = question.split(" ### ")
@@ -76,4 +68,4 @@ if __name__ == '__main__':
 
 
 # TO RUN ON COMMAND LINE AND CREATE A FILE:
-# $ echo 26 | /usr/bin/python3.8 ./exam-trial.py > exam-$(date +"%Y-%m-%d").txt
+# $ echo 26 | /usr/bin/python3.8 ./exam-simulator.py > exam-$(date +"%Y-%m-%d").txt
