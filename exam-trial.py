@@ -60,18 +60,20 @@ def choose_random_questions(exam_composition, total, random_questions=set()):
     return choose_random_questions(exam_composition, total, random_questions)
 
 def create_exam():
-    total = int(input("how many questions (20-30): "))
+    total = int(input("how many questions (20-30)?\n"))
+    print(f"Generated {total} questions")
+    print("\nThe online, proctored, performance-based test consists of a set of performance-based items (problems) to be solved in a command line and is expected to take approximately two (2) hours to complete.\n")
 
     return choose_random_questions(exam_composition, total)
 
-questions = create_exam()
+if __name__ == '__main__':
+    questions = create_exam()
 
-print()
-for index, question in enumerate(questions, start=1):
-    fp, q = question.split(" ### ")
-    print(f"{index} - {fp}")
-    print(q)
+    for index, question in enumerate(questions, start=1):
+        fp, q = question.split(" ### ")
+        print(f"{index} - {fp}")
+        print(q)
 
 
 # TO RUN ON COMMAND LINE AND CREATE A FILE:
-# $ echo 20 | /usr/bin/python3.8 ./exam-trial.py > exam-1.txt
+# $ echo 26 | /usr/bin/python3.8 ./exam-trial.py > exam-$(date +"%Y-%m-%d").txt
