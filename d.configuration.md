@@ -358,10 +358,16 @@ kubectl get secret mysecret2 -o yaml
 echo YWRtaW4K | base64 -d # on MAC it is -D, which decodes the value and shows 'admin'
 ```
 
-Alternative:
+Alternative using `--jsonpath`:
 
 ```bash
 kubectl get secret mysecret2 -o jsonpath='{.data.username}{"\n"}' | base64 -d  # on MAC it is -D
+```
+
+Alternative using `--template`:
+
+```bash
+kubectl get secret mysecret2 --template '{{.data.username}}' | base64 -d  # on MAC it is -D
 ```
 
 </p>
