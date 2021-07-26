@@ -546,6 +546,28 @@ spec:
 status: {}
 ```
 
+or
+
+```YAML
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: nginx
+  name: nginx
+spec:
+  serviceAccount: myuser # we use pod.spec.serviceAccount
+  containers:
+  - image: nginx
+    imagePullPolicy: IfNotPresent
+    name: nginx
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+status: {}
+```
+
 ```bash
 kubectl create -f pod.yaml
 kubectl describe pod nginx # will see that a new secret called myuser-token-***** has been mounted
