@@ -521,13 +521,6 @@ kubectl create -f sa.yaml
 <p>
 
 ```bash
-kubectl run nginx --image=nginx --restart=Never --serviceaccount=myuser -o yaml --dry-run=client > pod.yaml
-kubectl apply -f pod.yaml
-```
-
-or you can add manually:
-
-```bash
 kubectl run nginx --image=nginx --restart=Never -o yaml --dry-run=client > pod.yaml
 vi pod.yaml
 ```
@@ -542,28 +535,6 @@ metadata:
   name: nginx
 spec:
   serviceAccountName: myuser # we use pod.spec.serviceAccountName
-  containers:
-  - image: nginx
-    imagePullPolicy: IfNotPresent
-    name: nginx
-    resources: {}
-  dnsPolicy: ClusterFirst
-  restartPolicy: Never
-status: {}
-```
-
-or
-
-```YAML
-apiVersion: v1
-kind: Pod
-metadata:
-  creationTimestamp: null
-  labels:
-    run: nginx
-  name: nginx
-spec:
-  serviceAccount: myuser # we use pod.spec.serviceAccount
   containers:
   - image: nginx
     imagePullPolicy: IfNotPresent
