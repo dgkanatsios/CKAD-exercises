@@ -22,8 +22,6 @@ During the exam, you are allowed to keep only one other browser tab open to refe
 
 Absolutely! Feel free to PR and edit/add questions and solutions, but please stick to the existing format.
 
-### References
-- [here](https://github.com/twajr/ckad-prep-notes) from twajr
-- [here](https://www.reddit.com/r/kubernetes/comments/9uydc1/passed_the_ckad_special_thanks_to_the_linux/) from Blockchain0
-- [here](https://medium.com/devopslinks/my-story-towards-cka-ckad-and-some-tips-daf495e711a9) from abdennour
-- [here](https://medium.com/chotot-techblog/tips-tricks-to-pass-certified-kubernetes-application-developer-ckad-exam-67c9e1b32e6e) from Anh Dang
+If this repo has helped you in any way, feel free to post on [discussions](https://github.com/dgkanatsios/CKAD-exercises/discussions) or buy me a coffee!
+
+<a href="https://www.buymeacoffee.com/dgkanatsios" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>

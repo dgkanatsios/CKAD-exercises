@@ -761,7 +761,7 @@ kubectl delete cj busybox
 </p>
 </details>
 
-### Create a cron job with image busybox that runs every minute and writes 'date; echo Hello from the Kubernetes cluster' to standard output. The cron job should be terminated if it takes more than 17 seconds to start execution after its schedule.
+### Create a cron job with image busybox that runs every minute and writes 'date; echo Hello from the Kubernetes cluster' to standard output. The cron job should be terminated if it takes more than 17 seconds to start execution after its scheduled time (i.e. the job missed its scheduled time).
 
 <details><summary>show</summary>
 <p>
@@ -770,7 +770,51 @@ kubectl delete cj busybox
 kubectl create cronjob time-limited-job --image=busybox --restart=Never --dry-run=client --schedule="* * * * *" -o yaml -- /bin/sh -c 'date; echo Hello from the Kubernetes cluster' > time-limited-job.yaml
 vi time-limited-job.yaml
 ```
-Add cronjob.spec.jobTemplate.spec.activeDeadlineSeconds=17
+Add cronjob.spec.startingDeadlineSeconds=17
+
+```bash
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  creationTimestamp: null
+  name: time-limited-job
+spec:
+  startingDeadlineSeconds: 17 # add this line
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+      name: time-limited-job
+    spec:
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          containers:
+          - args:
+            - /bin/sh
+            - -c
+            - date; echo Hello from the Kubernetes cluster
+            image: busybox
+            name: time-limited-job
+            resources: {}
+          restartPolicy: Never
+  schedule: '* * * * *'
+status: {}
+```
+
+</p>
+</details>
+
+### Create a cron job with image busybox that runs every minute and writes 'date; echo Hello from the Kubernetes cluster' to standard output. The cron job should be terminated if it successfully starts but takes more than 12 seconds to complete execution.
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl create cronjob time-limited-job --image=busybox --restart=Never --dry-run=client --schedule="* * * * *" -o yaml -- /bin/sh -c 'date; echo Hello from the Kubernetes cluster' > time-limited-job.yaml
+vi time-limited-job.yaml
+```
+Add cronjob.spec.jobTemplate.spec.activeDeadlineSeconds=12
 
 ```bash
 apiVersion: batch/v1beta1
@@ -784,7 +828,6 @@ spec:
       creationTimestamp: null
       name: time-limited-job
     spec:
-      activeDeadlineSeconds: 17 # add this line
       template:
         metadata:
           creationTimestamp: null
