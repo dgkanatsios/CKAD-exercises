@@ -308,7 +308,24 @@ kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Assign 
 ```bash
 kubectl run nginx --image=nginx --restart=Never --requests='cpu=100m,memory=256Mi' --limits='cpu=200m,memory=512Mi'
 ```
+  
+Note: Use of `--requests` and/or `--limits` flags in imperative `run` command is deprecated as of version (v1.21) and will be removed from the support. Instead make use of `kubectl set resources` imperative command in combination with `kubectl run --dry-run=client -o yaml ... > pod.yml` as shown in the below alternative approach.
 
+  
+Alternative using `kubectl set resources` in combination with imperative `run` command:
+
+```bash
+kubectl run nginx --image=nginx --restart=Never --dry-run=client -o yaml > nginx-pod.yml
+```
+
+```bash
+kubectl set resources -f nginx-pod.yml --requests=cpu=200m,memory=512Mi --limits=cpu=400m,memory=768Mi --dry-run=client -o yaml > nginx-pod.yml  # we override pod definition yaml with resources. 
+```
+
+```bash
+kubectl create -f nginx-pod.yml
+```
+  
 </p>
 </details>
 
@@ -497,7 +514,7 @@ Alternatively:
 
 ```bash
 # let's get a template easily
-kubectl get sa default -o yaml > sa.yaml
+kubectl get sa myuser -o yaml > sa.yaml
 vim sa.yaml
 ```
 
