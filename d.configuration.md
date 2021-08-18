@@ -509,7 +509,7 @@ Alternatively:
 
 ```bash
 # let's get a template easily
-kubectl get sa myuser -o yaml > sa.yaml
+kubectl get sa default -o yaml > sa.yaml
 vim sa.yaml
 ```
 
