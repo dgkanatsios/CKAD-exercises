@@ -104,27 +104,27 @@ metadata:
     run: box
   name: box
 spec:
-  initContainers: #
-  - args: #
-    - /bin/sh #
-    - -c #
-    - wget -O /work-dir/index.html http://neverssl.com/online #
-    image: busybox #
-    name: box #
-    volumeMounts: #
-    - name: vol #
-      mountPath: /work-dir #
+  initContainers: 
+  - args: 
+    - /bin/sh 
+    - -c 
+    - wget -O /work-dir/index.html http://neverssl.com/online 
+    image: busybox 
+    name: box 
+    volumeMounts: 
+    - name: vol 
+      mountPath: /work-dir 
   containers:
   - image: nginx
     name: nginx
     ports:
     - containerPort: 80
-    volumeMounts: #
-    - name: vol #
-      mountPath: /usr/share/nginx/html #
-  volumes: #
-  - name: vol #
-    emptyDir: {} #
+    volumeMounts: 
+    - name: vol 
+      mountPath: /usr/share/nginx/html 
+  volumes: 
+  - name: vol 
+    emptyDir: {} 
 ```
 
 ```bash
