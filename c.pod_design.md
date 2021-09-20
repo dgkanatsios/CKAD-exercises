@@ -171,6 +171,10 @@ kubectl annotate po nginx{1..3} description='my description'
 <p>
 
 ```bash
+kubectl annotate pod nginx1 --list
+  
+# or
+
 kubectl describe po nginx1 | grep -i 'annotations'
 
 # or
