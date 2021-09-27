@@ -32,7 +32,7 @@ kubectl run nginx --image=nginx --restart=Never -n mynamespace
 Easily generate YAML with:
 
 ```bash
-kubectl run nginx --image=nginx --restart=Never --dry-run=client -n mynamespace -o yaml > pod.yaml
+kubectl run nginx --image=nginx --restart=Never --dry-run=true -n mynamespace -o yaml > pod.yaml
 ```
 
 ```bash
