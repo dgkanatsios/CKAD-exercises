@@ -67,14 +67,14 @@ Volume:
 
 ```YAML
 containers:
-  - image: nginx
+- image: nginx
 ...
-    volumeMounts:
-    - name: vol
-      mountPath: /usr/share/nginx/html
-  volumes:
+  volumeMounts:
   - name: vol
-    emptyDir: {}
+    mountPath: /usr/share/nginx/html
+volumes:
+- name: vol
+  emptyDir: {}
 ```
 
 initContainer:
