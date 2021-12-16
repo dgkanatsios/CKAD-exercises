@@ -40,3 +40,26 @@ helm upgrade -f myvalues.yaml -f override.yaml redis ./redis
 </p>
 </details>
 
+### Using Helm repo
+
+<details><summary>show</summary>
+<p>
+
+Add, list, remove, update and index chart repos
+
+```bash
+helm repo add [NAME] [URL]  [flags]
+
+helm repo list / helm repo ls
+
+helm repo remove [REPO1] [flags]
+
+helm repo update / helm repo up
+
+helm repo update [REPO1] [flags]
+
+helm repo index [DIR] [flags]
+```
+
+</p>
+</details>
