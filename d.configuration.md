@@ -533,13 +533,6 @@ kubectl create -f sa.yaml
 <p>
 
 ```bash
-kubectl run nginx --image=nginx --restart=Never --serviceaccount=myuser -o yaml --dry-run=client > pod.yaml
-kubectl apply -f pod.yaml
-```
-
-or you can add manually:
-
-```bash
 kubectl run nginx --image=nginx --restart=Never -o yaml --dry-run=client > pod.yaml
 vi pod.yaml
 ```
