@@ -2,7 +2,7 @@
 # Pod design (20%)
 
 ## Labels and annotations
-kubernetes.io > Documentation > Concepts > Overview > [Labels and Selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors)
+kubernetes.io > Documentation > Concepts > Overview > Working with Kubernetes Objects > [Labels and Selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors)
 
 ### Create 3 pods with names nginx1,nginx2,nginx3. All of them should have the label app=v1
 
@@ -172,7 +172,7 @@ kubectl annotate po nginx{1..3} description='my description'
 
 ```bash
 kubectl annotate pod nginx1 --list
-  
+
 # or
 
 kubectl describe po nginx1 | grep -i 'annotations'
@@ -213,7 +213,7 @@ kubectl delete po nginx{1..3}
 
 ## Deployments
 
-kubernetes.io > Documentation > Concepts > Workloads > Controllers > [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment)
+kubernetes.io > Documentation > Concepts > Workloads > Workload Resources > [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment)
 
 ### Create a deployment with image nginx:1.18.0, called nginx, having 2 replicas, defining port 80 as the port that this container exposes (don't create a service for this deployment)
 
@@ -236,7 +236,7 @@ or, do something like:
 kubectl create deployment nginx  --image=nginx:1.18.0  --dry-run=client -o yaml | sed 's/replicas: 1/replicas: 2/g'  | sed 's/image: nginx:1.18.0/image: nginx:1.18.0\n        ports:\n        - containerPort: 80/g' | kubectl apply -f -
 ```
 
-or, 
+or,
 ```bash
 kubectl create deploy nginx --image=nginx:1.18.0 --replicas=2 --port=80
 ```
@@ -514,14 +514,14 @@ kubectl get po # get the pod name
 kubectl logs pi-**** # get the pi numbers
 kubectl delete job pi
 ```
-OR 
+OR
 
 ```bash
 kubectl get jobs -w # wait till 'SUCCESSFUL' is 1 (will take some time, perl image might be big)
 kubectl logs job/pi
 kubectl delete job pi
 ```
-OR 
+OR
 
 ```bash
 kubectl wait --for=condition=complete --timeout=300s job pi
@@ -587,12 +587,12 @@ kubectl delete job busybox
 
 <details><summary>show</summary>
 <p>
-  
+
 ```bash
 kubectl create job busybox --image=busybox --dry-run=client -o yaml -- /bin/sh -c 'while true; do echo hello; sleep 10;done' > job.yaml
 vi job.yaml
 ```
-  
+
 Add job.spec.activeDeadlineSeconds=30
 
 ```bash

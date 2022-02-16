@@ -1,9 +1,9 @@
 ![](https://gaforgithub.azurewebsites.net/api?repo=CKAD-exercises/observability&empty)
 # Observability (18%)
 
-## Liveness and readiness probes
+## Liveness, readiness and startup probes
 
-kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configure Liveness and Readiness Probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/)
+kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configure Liveness, Readiness and Startup Probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
 
 ### Create an nginx pod with a liveness probe that just runs the command 'ls'. Save its YAML in pod.yaml. Run it, check its probe status, delete it.
 
@@ -70,7 +70,7 @@ spec:
     imagePullPolicy: IfNotPresent
     name: nginx
     resources: {}
-    livenessProbe: 
+    livenessProbe:
       initialDelaySeconds: 5 # add this line
       periodSeconds: 5 # add this line as well
       exec:
@@ -147,7 +147,7 @@ LAST SEEN   TYPE      REASON      OBJECT              MESSAGE
 
 collect failed pods namespace by namespace
 
-```sh  
+```sh
 kubectl get ns # check namespaces
 kubectl -n qa get events | grep -i "Liveness probe failed"
 kubectl -n alan get events | grep -i "Liveness probe failed"
