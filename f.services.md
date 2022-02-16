@@ -155,7 +155,7 @@ kubectl get po -o wide -l app=foo | awk '{print $6}' | grep -v IP | xargs -L1 -I
 ```bash
 kubectl expose deploy foo --port=6262 --target-port=8080
 kubectl get service foo # you will see ClusterIP as well as port 6262
-kubectl get endpoints foo # you will see the IPs of the three replica nodes, listening on port 8080
+kubectl get endpoints foo # you will see the IPs of the three replica pods, listening on port 8080
 ```
 
 </p>
