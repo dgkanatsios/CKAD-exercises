@@ -70,7 +70,8 @@ helm repo index [DIR] [flags]
 <p>
 
 ```bash
-helm pull [chart URL | repo/chartname] [...] [flags] ## this would install a helm 
+helm pull [chart URL | repo/chartname] [...] [flags] ## this would download a helm, not install 
+helm pull --untar [rep/chartname] # untar the chart after downloading it 
 ```
 
 </p>
