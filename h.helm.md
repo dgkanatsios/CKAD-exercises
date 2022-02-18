@@ -63,3 +63,15 @@ helm repo index [DIR] [flags]
 
 </p>
 </details>
+
+### Download a Helm chart from a repository 
+
+<details><summary>show</summary>
+<p>
+
+```bash
+helm pull [chart URL | repo/chartname] [...] [flags] ## this would install a helm 
+```
+
+</p>
+</details>
