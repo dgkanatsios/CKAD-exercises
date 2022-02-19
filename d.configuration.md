@@ -321,6 +321,37 @@ kubectl run nginx --image=nginx --restart=Never --dry-run=client -o yaml | kubec
 kubectl create -f nginx-pod.yml
 ```
 
+Alternative approach using pod.yaml: 
+```bash
+kubectl run nginx --image=nginx --dry-run=client -o yaml > pod.yaml
+vi pod.yaml
+```
+
+```YAML
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: nginx
+  name: nginx
+spec:
+  containers:
+  - image: nginx
+    name: nginx
+    resources:
+      requests:
+        memory: "256Mi"
+        cpu: 100m
+      limits:    
+        memory: "512Mi"
+        cpu: 200m
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+``` 
+
 </p>
 </details>
 
