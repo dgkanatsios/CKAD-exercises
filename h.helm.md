@@ -28,6 +28,30 @@ helm install -f myvalues.yaml my redis ./redis
 </p>
 </details>
 
+### Find pending Helm deployments on all namespaces
+
+<details><summary>show</summary>
+<p>
+
+```bash
+helm list --pending -A
+```
+
+</p>
+</details>
+
+### Uninstall a Helm release
+
+<details><summary>show</summary>
+<p>
+
+```bash
+helm uninstall -n namespace release_name
+```
+
+</p>
+</details>
+
 ### Upgrading a Helm chart
 
 <details><summary>show</summary>
@@ -76,3 +100,4 @@ helm pull --untar [rep/chartname] # untar the chart after downloading it
 
 </p>
 </details>
+
