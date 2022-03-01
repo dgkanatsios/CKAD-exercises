@@ -11,6 +11,32 @@ kubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Acce
 
 kubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Use Port Forwarding to Access Applications in a Cluster](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/)
 
+Before jumping into exercises, let's define the terms *pod* and *namespace*
+
+### Pod
+
+A [Pod](https://kubernetes.io/docs/concepts/workloads/pods/) is the smallest deployable unit in K8s. If you want to deploy a container it gets deployed in it's own pod. A pod can store container management info like restart policy and liveness and readiness probes.
+
+A pod can have more than one container. Generally, tight coupling is frowned up on in distributed systems. However, it becomes necessary to tightly couple certain containers together in the Kubernetes world. For instance, two containers may need a shared volume or brownfield apps may require tight coupling between two components. Pods in a container share the same IP and port space.
+
+### Namespace
+
+[Namespaces](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) are used to logically separate pods on the same cluster. For instance, separate by environment, application or team. Namespaces can be configured to communicate with each other.
+
+Each cluster comes with 3 existing namespaces:
+
+1. Default – The default namespace is for the objects with no other namespace .
+
+2. Kube-system – The namespace for the Kubernetes system originated objects.
+
+3. Kube-public – The namespace used for resources that need to be publicly available to all users.
+
+All other namespaces can be created as required.
+
+### ResourceQuota
+
+[ResourceQuota](https://kubernetes.io/docs/concepts/policy/resource-quotas/) is a way to limit the resources that a namespace can use. 403 error messages are thrown when a resource is requested that exceeds the quota. For instance, you can limit compute resources like cpu and memory.
+
 ### Create a namespace called 'mynamespace' and a pod with image nginx called nginx on this namespace
 
 <details><summary>show</summary>
