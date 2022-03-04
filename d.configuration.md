@@ -1,6 +1,16 @@
 ![](https://gaforgithub.azurewebsites.net/api?repo=CKAD-exercises/configuration&empty)
 # Configuration (18%)
 
+[ConfigMaps](#configmaps)
+
+[SecurityContext](#securitycontext)
+
+[Requests and Limits](#requests-and-limits)
+
+[Secrets](#secrets)
+
+[Service Accounts](#serviceaccounts)
+
 ## ConfigMaps
 
 kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configure a Pod to Use a ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/)
