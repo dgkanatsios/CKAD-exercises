@@ -74,6 +74,29 @@ kubectl get po --selector=app=v2
 </p>
 </details>
 
+### Add a new label tier=web to all pods having 'app=v2' or 'app=v1' labels
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl label po -l "app in(v1,v2)" tier=web
+```
+</p>
+</details>
+
+
+### Add an annotation 'owner: marketing' to all pods having 'app=v2' label
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl annotate po -l "app=v2" owner=marketing
+```
+</p>
+</details>
+
 ### Remove the 'app' label from the pods we created before
 
 <details><summary>show</summary>
