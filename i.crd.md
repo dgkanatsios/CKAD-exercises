@@ -9,6 +9,7 @@
 * *Schema*: `<email: string><name: string><age: integer>`
 * *Scope*: `Namespaced`
 * *Names*: `<plural: operators><singular: operator><shortNames: op>`
+* *Kind*: `Operator`
  
 <details><summary>show</summary>
 <p>
