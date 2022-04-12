@@ -58,6 +58,15 @@ spec:
   - name: myvolume #
     emptyDir: {} #
 ```
+In case you forget to add ```bash -- /bin/sh -c 'sleep 3600'``` in template pod create command, you can include command field in config file
+
+```YAML
+spec:
+  containers:
+  - image: busybox
+    name: busybox
+    command: ["/bin/sh", "-c", "sleep 3600"]
+```
 
 Connect to the second container:
 
