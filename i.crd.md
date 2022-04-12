@@ -5,6 +5,7 @@
 ## CRD in K8s
 
 ### Create a CustomResourceDefinition manifest file for an Operator with the following specifications : 
+* *Name* : `operators.stable.example.com`
 * *Group* : `stable.example.com`
 * *Schema*: `<email: string><name: string><age: integer>`
 * *Scope*: `Namespaced`
