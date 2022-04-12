@@ -96,9 +96,9 @@ Use singular, plural and short forms
 
 ```bash
 kubectl get operators
-
+or
 kubectl get operator
-
+or
 kubectl get op
 ```
 
