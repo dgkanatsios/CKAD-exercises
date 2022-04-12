@@ -170,7 +170,7 @@ kubectl get endpoints foo # you will see the IPs of the three replica pods, list
 kubectl get svc # get the foo service ClusterIP
 kubectl run busybox --image=busybox -it --rm --restart=Never -- sh
 wget -O- foo:6262 # DNS works! run it many times, you'll see different pods responding
-wget -O- SERVICE_CLUSTER_IP:6262 # ClusterIP works as well
+wget -O- <SERVICE_CLUSTER_IP>:6262 # ClusterIP works as well
 # you can also kubectl logs on deployment pods to see the container logs
 kubectl delete svc foo
 kubectl delete deploy foo
