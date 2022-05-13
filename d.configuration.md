@@ -316,7 +316,7 @@ kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Assign 
 <p>
 
 ```bash
-kubectl run nginx --image=nginx --restart=Never --requests='cpu=100m,memory=256Mi' --limits='cpu=200m,memory=512Mi'
+kubectl run nginx --image=nginx --restart=Never --requests=cpu=100m,memory=256Mi --limits=cpu=200m,memory=512Mi
 ```
 
 Note: Use of `--requests` and `--limits` flags in the imperative `run` command is deprecated as of 1.21 K8s version and will be removed in the future. Instead, use `kubectl set resources` command in combination with `kubectl run --dry-run=client -o yaml ...` as shown below.
