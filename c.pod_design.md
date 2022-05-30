@@ -520,7 +520,7 @@ kubectl delete deploy/nginx hpa/nginx
 </p>
 </details>
 
-### Implement canary deployment by running two instances of a simple http python server marked as version=v1 and version=v2 so that the load is balanced at 75%-25% ratio.
+### Implement canary deployment by running two instances of a simple http python server marked as version=v1 and version=v2 so that the load is balanced at 75%-25% ratio
 
 <details><summary>show</summary>
 <p>
