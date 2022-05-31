@@ -655,7 +655,7 @@ version-2
 version-1
 ```
 
-If the v2 is stable, scale it up to 4 replicas and shoutsown the v1:
+If the v2 is stable, scale it up to 4 replicas and shoutdown the v1:
 ```
 kubectl scale --replicas=4 deploy my-app-v2
 kubectl delete deploy my-app-v1
