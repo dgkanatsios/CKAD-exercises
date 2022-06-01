@@ -520,7 +520,7 @@ kubectl delete deploy/nginx hpa/nginx
 </p>
 </details>
 
-### Implement canary deployment by running two instances of a simple http python server marked as version=v1 and version=v2 so that the load is balanced at 75%-25% ratio
+### Implement canary deployment by running two instances of nginx marked as version=v1 and version=v2 so that the load is balanced at 75%-25% ratio
 
 <details><summary>show</summary>
 <p>
@@ -546,18 +546,13 @@ spec:
         version: v1
     spec:
       containers:
-      - name: my-app
-        image: ubuntu
-        command:
-        - /bin/sh
-        - -c
-        - "apt update && apt install -y python3 && python3 -m http.server 80 --directory /work-dir"
+      - name: nginx
+        image: nginx
         ports:
-        - name: http
-          containerPort: 80
+        - containerPort: 80
         volumeMounts:
         - name: workdir
-          mountPath: "/work-dir"
+          mountPath: /usr/share/nginx/html
       initContainers:
       - name: install
         image: busybox:1.28
@@ -606,6 +601,7 @@ metadata:
   labels:
     app: my-app
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: my-app
@@ -617,18 +613,13 @@ spec:
         version: v2
     spec:
       containers:
-      - name: my-app
-        image: ubuntu
-        command:
-        - /bin/sh
-        - -c
-        - "apt update && apt install -y python3 && python3 -m http.server 80 --directory /work-dir"
+      - name: nginx
+        image: nginx
         ports:
-        - name: http
-          containerPort: 80
+        - containerPort: 80
         volumeMounts:
         - name: workdir
-          mountPath: "/work-dir"
+          mountPath: /usr/share/nginx/html
       initContainers:
       - name: install
         image: busybox:1.28
