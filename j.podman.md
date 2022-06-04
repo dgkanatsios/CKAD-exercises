@@ -95,7 +95,7 @@ Hello, World!
 <details><summary>show</summary>
 <p>
 
-> Note: Some small distributions of Kubernetes (such as [microk8s](https://microk8s.io/docs/registry-built-in)) has a built-in registry you can use for this exercise. If this is not your case, you'll have to setup it on your own.
+> Note: Some small distributions of Kubernetes (such as [microk8s](https://microk8s.io/docs/registry-built-in)) have a built-in registry you can use for this exercise. If this is not your case, you'll have to setup it on your own.
 
 ```bash
 :~$ podman tag localhost/simpleapp $registry_ip:5000/simpleapp
