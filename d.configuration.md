@@ -316,11 +316,6 @@ kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Assign 
 <p>
 
 ```bash
-kubectl create -f nginx-pod.yml
-```
-
-Alternative approach using pod.yaml: 
-```bash
 kubectl run nginx --image=nginx --dry-run=client -o yaml > pod.yaml
 vi pod.yaml
 ```
