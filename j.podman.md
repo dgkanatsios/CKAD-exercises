@@ -153,10 +153,11 @@ Hello, World!
 
 ### Log into a remote registry server and then read the credentials from the default file
 
-> Note: The two most used container registry servers with a free plan are [DockerHub](https://hub.docker.com/) and [Quay.io](https://quay.io/).
 
 <details><summary>show</summary>
 <p>
+
+> Note: The two most used container registry servers with a free plan are [DockerHub](https://hub.docker.com/) and [Quay.io](https://quay.io/).
 
 ```bash
 :~$ podman login --username $YOUR_USER --password $YOUR_PWD docker.io
