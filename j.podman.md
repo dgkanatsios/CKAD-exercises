@@ -90,7 +90,7 @@ Hello, World!
 </p>
 </details>
 
-### Tag the image with ip and port of a local private registry and then push the image to this registry
+### Tag the image with ip and port of a private local registry and then push the image to this registry
 
 <details><summary>show</summary>
 <p>
@@ -146,6 +146,62 @@ ef4b14a72d02ae0577eb0632d084c057777725c279e12ccf5b0c6e4ff5fd598b
 
 :~$ curl ${kubectl get pods simpleapp -o jsonpath='{.status.podIP}'}
 Hello, World!
+```
+
+</p>
+</details>
+
+### Log into a remote registry server and then read the credentials from the default file
+
+<details><summary>show</summary>
+<p>
+
+```bash
+:~$ podman login --username $YOUR_USER --password $YOUR_PWD docker.io
+:~$ cat ${XDG_RUNTIME_DIR}/containers/auth.json
+{
+        "auths": {
+                "docker.io": {
+                        "auth": "Z2l1bGl0JLSGtvbkxCcX1xb617251xh0x3zaUd4QW45Q3JuV3RDOTc="
+                }
+        }
+}
+```
+
+</p>
+</details>
+
+### Create a secret both from existing login credentials and from the CLI
+
+<details><summary>show</summary>
+<p>
+
+```bash
+:~$ kubectl create secret generic mysecret --from-file=.dockerconfigjson=${XDG_RUNTIME_DIR}/containers/auth.json --type=kubernetes.io/dockeconfigjson
+secret/mysecret created
+:~$ kubectl create secret docker-registry mysecret2 --docker-server=https://index.docker.io/v1/ --docker-username=$YOUR_USR --docker-password=$YOUR_PWD
+secret/mysecret2 created
+```
+
+</p>
+</details>
+
+### Create the manifest for a Pod that uses one of the two secrets just created to pull an image hosted on the relative private remote registry
+
+<details><summary>show</summary>
+<p>
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: private-reg
+spec:
+  containers:
+  - name: private-reg-container
+    image: $YOUR_PRIVATE_IMAGE
+  imagePullSecrets:
+  - name: mysecret
 ```
 
 </p>
