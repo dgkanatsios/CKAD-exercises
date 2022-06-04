@@ -90,19 +90,32 @@ Hello, World!
 </p>
 </details>
 
-### Tag the image with ip and port of a local private registry and then push the image to this registry. Verify that the registry contains the pushed image and that you can pull it
+### Tag the image with ip and port of a local private registry and then push the image to this registry
 
 <details><summary>show</summary>
 <p>
+
+> Note: Some small distributions of Kubernetes (such as [microk8s](https://microk8s.io/docs/registry-built-in)) has a built-in registry you can use for this exercise. If this is not your case, you'll have to setup it on your own.
 
 ```bash
 :~$ podman tag localhost/simpleapp $registry_ip:5000/simpleapp
 
 :~$ podman push $registry_ip:5000/simpleapp
+```
 
+</p>
+</details>
+
+ Verify that the registry contains the pushed image and that you can pull it
+
+<details><summary>show</summary>
+<p>
+
+```bash
 :~$ curl http://$registry_ip:5000/v2/_catalog
 {"repositories":["simpleapp"]}
 
+# remove the image already present
 :~$ podman rmi $registry_ip:5000/simpleapp
 
 :~$ podman pull $registry_ip:5000/simpleapp
