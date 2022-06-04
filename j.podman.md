@@ -90,7 +90,7 @@ Hello, World!
 </p>
 </details>
 
-### Tag the image with ip and port of a local private registry and then push the image to this registry. Verify that the registry contains the pushed image and that you cann pull it
+### Tag the image with ip and port of a local private registry and then push the image to this registry. Verify that the registry contains the pushed image and that you can pull it
 
 <details><summary>show</summary>
 <p>
