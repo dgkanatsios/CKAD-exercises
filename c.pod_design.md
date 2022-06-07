@@ -670,7 +670,7 @@ version-2
 <p>
 
 ```bash
-kubectl create job pi  --image=perl -- perl -Mbignum=bpi -wle 'print bpi(2000)'
+kubectl create job pi  --image=perl -- /bin/sh -c perl -Mbignum=bpi -wle 'print bpi(2000)'
 ```
 
 </p>
