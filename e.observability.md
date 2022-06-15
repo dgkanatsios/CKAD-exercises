@@ -149,10 +149,10 @@ collect failed pods namespace by namespace
 
 ```sh
 kubectl get ns # check namespaces
-kubectl -n qa get events | grep -i "Liveness probe failed"
-kubectl -n alan get events | grep -i "Liveness probe failed"
-kubectl -n test get events | grep -i "Liveness probe failed"
-kubectl -n production get events | grep -i "Liveness probe failed"
+kubectl -n qa get events | grep -i "Liveness probe failed" | awk -F ' ' '{print $4}'
+kubectl -n alan get events | grep -i "Liveness probe failed" | awk -F ' ' '{print $4}'
+kubectl -n test get events | grep -i "Liveness probe failed" | awk -F ' ' '{print $4}'
+kubectl -n production get events | grep -i "Liveness probe failed" | awk -F ' ' '{print $4}'
 ```
 
 </p>
