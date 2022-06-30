@@ -406,6 +406,12 @@ Alternative using `--template`:
 kubectl get secret mysecret2 --template '{{.data.username}}' | base64 -d  # on MAC it is -D
 ```
 
+Alternative using `jq`:
+
+```bash
+kubectl get secret mysecret2 -o json | jq -r .data.username | base64 -d  # on MAC it is -D
+```
+
 </p>
 </details>
 
