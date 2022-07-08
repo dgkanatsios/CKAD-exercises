@@ -148,11 +148,7 @@ LAST SEEN   TYPE      REASON      OBJECT              MESSAGE
 collect failed pods namespace by namespace
 
 ```sh
-kubectl get ns # check namespaces
-kubectl -n qa get events | grep -i "Liveness probe failed" | awk '{print $4}'
-kubectl -n alan get events | grep -i "Liveness probe failed" | awk '{print $4}'
-kubectl -n test get events | grep -i "Liveness probe failed" | awk '{print $4}'
-kubectl -n production get events | grep -i "Liveness probe failed" | awk '{print $4}'
+kubectl get events -A | grep -i "Liveness probe failed" | awk '{print $1,$5}'
 ```
 
 </p>
