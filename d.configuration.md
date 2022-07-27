@@ -339,7 +339,6 @@ spec:
       limits:    
         memory: "512Mi"
         cpu: 200m
-    resources: {}
   dnsPolicy: ClusterFirst
   restartPolicy: Always
 status: {}
