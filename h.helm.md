@@ -58,7 +58,7 @@ helm uninstall -n namespace release_name
 <p>
 
 ```bash
-helm upgrade -f myvalues.yaml -f override.yaml redis ./redis
+helm upgrade -f override.yaml myredis ./redis
 ```
 
 </p>
