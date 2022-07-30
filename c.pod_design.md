@@ -950,7 +950,7 @@ vi time-limited-job.yaml
 Add cronjob.spec.startingDeadlineSeconds=17
 
 ```bash
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   creationTimestamp: null
@@ -994,7 +994,7 @@ vi time-limited-job.yaml
 Add cronjob.spec.jobTemplate.spec.activeDeadlineSeconds=12
 
 ```bash
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   creationTimestamp: null
