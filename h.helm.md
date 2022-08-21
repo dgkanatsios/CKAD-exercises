@@ -22,7 +22,7 @@ helm create chart-test ## this would create a helm
 <p>
 
 ```bash
-helm install -f myvalues.yaml my redis ./redis
+helm install -f myvalues.yaml myredis ./redis
 ```
 
 </p>
