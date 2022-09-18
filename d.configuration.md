@@ -452,7 +452,7 @@ status: {}
 
 ```bash
 kubectl create -f pod.yaml
-kubectl exec -it nginx /bin/bash
+kubectl exec -it nginx -- /bin/bash
 ls /etc/foo  # shows username
 cat /etc/foo/username # shows admin
 ```
