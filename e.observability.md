@@ -148,7 +148,7 @@ LAST SEEN   TYPE      REASON      OBJECT              MESSAGE
 collect failed pods namespace by namespace
 
 ```sh
-kubectl get events -A | grep -i "Liveness probe failed" | awk '{print $1,$5}'
+kubectl get events -o json | jq -r '.items[] | select(.message | contains("failed liveness probe")).involvedObject | .namespace + "/" + .name'
 ```
 
 </p>
