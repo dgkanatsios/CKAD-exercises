@@ -156,7 +156,7 @@ kubectl get events -o json | jq -r '.items[] | select(.message | contains("faile
 
 ## Logging
 
-### Create a busybox pod that runs 'i=0; while true; do echo "$i: $(date)"; i=$((i+1)); sleep 1; done'. Check its logs
+### Create a busybox pod that runs `i=0; while true; do echo "$i: $(date)"; i=$((i+1)); sleep 1; done`. Check its logs
 
 <details><summary>show</summary>
 <p>
