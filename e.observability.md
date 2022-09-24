@@ -148,11 +148,7 @@ LAST SEEN   TYPE      REASON      OBJECT              MESSAGE
 collect failed pods namespace by namespace
 
 ```sh
-kubectl get ns # check namespaces
-kubectl -n qa get events | grep -i "Liveness probe failed"
-kubectl -n alan get events | grep -i "Liveness probe failed"
-kubectl -n test get events | grep -i "Liveness probe failed"
-kubectl -n production get events | grep -i "Liveness probe failed"
+kubectl get events -o json | jq -r '.items[] | select(.message | contains("failed liveness probe")).involvedObject | .namespace + "/" + .name'
 ```
 
 </p>
@@ -160,7 +156,7 @@ kubectl -n production get events | grep -i "Liveness probe failed"
 
 ## Logging
 
-### Create a busybox pod that runs 'i=0; while true; do echo "$i: $(date)"; i=$((i+1)); sleep 1; done'. Check its logs
+### Create a busybox pod that runs `i=0; while true; do echo "$i: $(date)"; i=$((i+1)); sleep 1; done`. Check its logs
 
 <details><summary>show</summary>
 <p>
