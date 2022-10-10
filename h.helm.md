@@ -101,3 +101,52 @@ helm pull --untar [rep/chartname] # untar the chart after downloading it
 </p>
 </details>
 
+### Add the Bitnami repo at https://charts.bitnami.com/bitnami to Helm
+<details><summary>show</summary>
+<p>
+    
+```bash
+helm repo add bitnami https://charts.bitnami.com/bitnami
+```
+  
+</p>
+</details>
+
+### Write the contents of the values.yaml file of the `bitname/node` chart to standard output
+<details><summary>show</summary>
+<p>
+    
+```bash
+helm show values bitnami/node
+```
+  
+</p>
+</details>
+
+### Install the `bitnami/node` chart setting the number of replicas to 5
+<details><summary>show</summary>
+<p>
+
+To achieve this, we need two key pieces of information:
+- The name of the attribute in values.yaml which controls replica count
+- A simple way to set the value of this attribute during installation
+
+To identify the name of the attribute in the values.yaml file, we could get all the values, as in the previous task, and then grep to find attributes matching the pattern `replica`
+```bash
+helm show values bitnami/node | grep -i replica
+```
+which returns
+```bash
+## @param replicaCount Specify the number of replicas for the application
+replicaCount: 1
+```
+ 
+We can use the `--set` argument during installation to override attribute values. Hence, to set the replica count to 5, we need to run
+```bash
+helm install mynode bitnami/node --set replicaCount=5
+```
+
+</p>
+</details>
+
+
