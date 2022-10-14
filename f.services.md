@@ -122,7 +122,7 @@ kubectl delete pod nginx # Deletes the pod
 
 ```bash
 kubectl create deploy foo --image=dgkanatsios/simpleapp --port=8080 --replicas=3
-kubectl label deployment foo --overwrite app=foo
+kubectl label deployment foo --overwrite app=foo #This is optional since kubectl create deploy foo will create label app=foo by default
 ```
 </p>
 </details>
