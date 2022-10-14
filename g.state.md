@@ -72,7 +72,7 @@ Connect to the second container:
 
 ```bash
 kubectl exec -it busybox -c busybox2 -- /bin/sh
-cat /etc/passwd | cut -f 1 -d ':' > /etc/foo/passwd 
+cat /etc/passwd | cut -f 1 -d ':' > /etc/foo/passwd # instead of cut command you can use awk -F ":" '{print $1}'
 cat /etc/foo/passwd # confirm that stuff has been written successfully
 exit
 ```
