@@ -922,11 +922,20 @@ kubectl create cronjob busybox --image=busybox --schedule="*/1 * * * *" -- /bin/
 </details>
 
 ### See its logs and delete it
+
+<details><summary>show</summary>
+<p>
+
 ```bash
 kubectl get po   # copy the container just created
 kubectl logs <container> # you will see the date and message 
 kubectl delete cj busybox --force #cj stands for cronjob and --force to delete immediately 
 ```
+
+</p>
+</details>
+
+### Create the same cron job again, and watch the status. Once it ran, check which job ran by the created cron job. Check the log, and delete the cron job
 
 <details><summary>show</summary>
 <p>
