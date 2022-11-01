@@ -586,10 +586,12 @@ spec:
     app: my-app
 ```
 
-Test if the deployment was successful:
-```bash
-curl $(kubectl get svc my-app-svc -o jsonpath="{.spec.clusterIP}")
-version-1
+Test if the deployment was successful from within a Pod:
+```
+# run a wget to the Service my-app-svc
+  kubectl run -it --rm --restart=Never busybox --image=gcr.io/google-containers/busybox --command -- wget -qO- my-app-svc
+
+  version-1
 ```
 
 Deploy 1 replica of v2:
@@ -636,8 +638,13 @@ spec:
 ```
 
 Observe that calling the ip exposed by the service the requests are load balanced across the two versions:
-```bash
-while sleep 0.1; do curl $(kubectl get svc my-app-svc -o jsonpath="{.spec.clusterIP}"); done
+```
+# run a busyBox pod 
+kubectl run -it --rm --restart=Never busybox --image=gcr.io/google-containers/busybox sh
+# Once in the busybox shell run the following command 
+# This will make a wget call to the service my-app-svc and print out the version of the pod it reached.
+while sleep 1; do wget -qO- my-app-svc; done
+
 version-1
 version-1
 version-1
