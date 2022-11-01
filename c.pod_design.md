@@ -589,9 +589,9 @@ spec:
 Test if the deployment was successful from within a Pod:
 ```
 # run a wget to the Service my-app-svc
-  kubectl run -it --rm --restart=Never busybox --image=gcr.io/google-containers/busybox --command -- wget -qO- my-app-svc
+kubectl run -it --rm --restart=Never busybox --image=gcr.io/google-containers/busybox --command -- wget -qO- my-app-svc
 
-  version-1
+version-1
 ```
 
 Deploy 1 replica of v2:
