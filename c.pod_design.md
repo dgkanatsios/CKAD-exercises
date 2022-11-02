@@ -639,11 +639,8 @@ spec:
 
 Observe that calling the ip exposed by the service the requests are load balanced across the two versions:
 ```
-# run a busyBox pod 
-kubectl run -it --rm --restart=Never busybox --image=gcr.io/google-containers/busybox sh
-# Once in the busybox shell run the following command 
-# This will make a wget call to the service my-app-svc and print out the version of the pod it reached.
-while sleep 1; do wget -qO- my-app-svc; done
+# run a busyBox pod that will make a wget call to the service my-app-svc and print out the version of the pod it reached.
+kubectl run -it --rm --restart=Never busybox --image=gcr.io/google-containers/busybox -- /bin/sh -c 'while sleep 1; do wget -qO- my-app-svc; done'
 
 version-1
 version-1
