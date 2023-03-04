@@ -335,10 +335,10 @@ spec:
     resources:
       requests:
         memory: "256Mi"
-        cpu: 100m
+        cpu: "100m"
       limits:    
         memory: "512Mi"
-        cpu: 200m
+        cpu: "200m"
   dnsPolicy: ClusterFirst
   restartPolicy: Always
 status: {}
