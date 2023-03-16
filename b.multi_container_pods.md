@@ -85,7 +85,7 @@ initContainers:
 - args:
   - /bin/sh
   - -c
-  - echo "Test" > /work-dir/index.html
+  - "wget -O /work-dir/index.html http://neverssl.com/online"
   image: busybox
   name: box
   volumeMounts:
@@ -108,7 +108,7 @@ spec:
   - args: 
     - /bin/sh 
     - -c 
-    - echo "Test" > /work-dir/index.html
+    - "wget -O /work-dir/index.html http://neverssl.com/online"
     image: busybox 
     name: box 
     volumeMounts: 
