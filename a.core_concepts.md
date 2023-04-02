@@ -357,6 +357,8 @@ kubectl exec -it nginx -- sh -c 'echo $var1'
 kubectl describe po nginx | grep val1
 # or
 kubectl run nginx --restart=Never --image=nginx --env=var1=val1 -it --rm -- env
+# or
+kubectl run nginx --image nginx --restart=Never --env=var1=val1 -it --rm -- sh -c 'echo $var1'
 ```
 
 </p>

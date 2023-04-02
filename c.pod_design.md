@@ -586,9 +586,11 @@ spec:
     app: my-app
 ```
 
-Test if the deployment was successful:
-```bash
-curl $(kubectl get svc my-app-svc -o jsonpath="{.spec.clusterIP}")
+Test if the deployment was successful from within a Pod:
+```
+# run a wget to the Service my-app-svc
+kubectl run -it --rm --restart=Never busybox --image=gcr.io/google-containers/busybox --command -- wget -qO- my-app-svc
+
 version-1
 ```
 
@@ -636,8 +638,10 @@ spec:
 ```
 
 Observe that calling the ip exposed by the service the requests are load balanced across the two versions:
-```bash
-while sleep 0.1; do curl $(kubectl get svc my-app-svc -o jsonpath="{.spec.clusterIP}"); done
+```
+# run a busyBox pod that will make a wget call to the service my-app-svc and print out the version of the pod it reached.
+kubectl run -it --rm --restart=Never busybox --image=gcr.io/google-containers/busybox -- /bin/sh -c 'while sleep 1; do wget -qO- my-app-svc; done'
+
 version-1
 version-1
 version-1

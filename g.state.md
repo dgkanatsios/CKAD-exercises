@@ -72,7 +72,7 @@ Connect to the second container:
 
 ```bash
 kubectl exec -it busybox -c busybox2 -- /bin/sh
-cat /etc/passwd | cut -f 1 -d ':' > /etc/foo/passwd 
+cat /etc/passwd | cut -f 1 -d ':' > /etc/foo/passwd # instead of cut command you can use awk -F ":" '{print $1}'
 cat /etc/foo/passwd # confirm that stuff has been written successfully
 exit
 ```
@@ -265,7 +265,7 @@ There are lots of different types per cloud provider [(see here)](https://kubern
 
 ```bash
 kubectl run busybox --image=busybox --restart=Never -- sleep 3600
-kubectl cp busybox:/etc/passwd ./passwd # kubectl cp command
+kubectl cp busybox:etc/passwd ./passwd # kubectl cp command
 # previous command might report an error, feel free to ignore it since copy command works
 cat passwd
 ```
