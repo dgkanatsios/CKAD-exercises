@@ -1043,3 +1043,14 @@ status: {}
 
 </p>
 </details>
+
+### Create a job from cronjob.
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl create job --from=cronjob/sample-cron-job sample-job
+```
+</p>
+</details>
