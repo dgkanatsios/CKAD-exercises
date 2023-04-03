@@ -347,6 +347,85 @@ status: {}
 </p>
 </details>
 
+## Limit Ranges
+kubernetes.io > Documentation > Concepts > Policies > Limit Ranges (https://kubernetes.io/docs/concepts/policy/limit-range/)
+
+### Create a namespace with limit range
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl create ns one
+```
+
+vi 1.yaml
+```YAML
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: ns-memory-limit
+  namespace: one
+spec:
+  limits:
+  - max: # max and min define the limit range
+      memory: "500Mi"
+    min:
+      memory: "100Mi"
+    type: Container
+``` 
+
+```bash
+kubectl apply -f 1.yaml
+```
+</p>
+</details>
+
+### Describe the namespace limitrange
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl describe limitrange ns-memory-limit -n one
+```
+</p>
+</details>
+
+### Create a pod with resources requests memory = half of max memory constraint in namespace
+
+<details><summary>show</summary>
+<p>
+
+vi 2.yaml
+```YAML
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: nginx
+  name: nginx
+  namespace: one
+spec:
+  containers:
+  - image: nginx
+    name: nginx
+    resources:
+      requests:
+        memory: "250Mi"
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+``` 
+
+```bash
+kubectl apply -f 2.yaml
+```
+</p>
+</details>
+
+
 ## Secrets
 
 kubernetes.io > Documentation > Concepts > Configuration > [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)
