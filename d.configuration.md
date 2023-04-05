@@ -583,6 +583,63 @@ kubectl exec -it nginx -- env | grep USERNAME | cut -d '=' -f 2 # will show 'adm
 </p>
 </details>
 
+### Create a Secret named 'ext-service-secret' in the namespace 'secret-ops'. Then, provide the key-value pair API_KEY=LmLHbYhsgWZwNifiqaRorH8T as literal.
+
+<details><summary>show</summary>
+<p>
+
+```bash
+export ns="-n secret-ops"
+k create secret generic ext-service-secret -n secret-ops --from-literal=API_KEY=LmLHbYhsgWZwNifiqaRorH8T $do > sc.yaml
+k apply -f sc.yaml
+```
+
+</p>
+</details>
+
+### Consuming the Secret. Create a Pod named 'consumer' with the image 'nginx' in the namespace 'secret-ops' and consume the Secret as an environment variable. Then, open an interactive shell to the Pod, and print all environment variables.
+<details><summary>show</summary>
+<p>
+
+```bash
+export ns="-n secret-ops"
+export do="--dry-run=client -oyaml"
+k run consumer --image=nginx $ns $do > nginx.yaml
+vi nginx.yaml
+```
+
+```YAML
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: consumer
+  name: consumer
+  namespace: secret-ops
+spec:
+  containers:
+  - image: nginx
+    name: consumer
+    resources: {}
+    env:
+    - name: API_KEY
+      valueFrom:
+        secretKeyRef:
+          name: ext-service-secret
+          key: API_KEY
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+```
+
+```bash
+k exec -it $ns consumer -- /bin/sh
+#env
+```
+</p>
+</details>
+
 ## ServiceAccounts
 
 kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configure Service Accounts for Pods](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/)
