@@ -11,6 +11,9 @@
 
 [Service Accounts](#serviceaccounts)
 
+<br>#Tips, export to variable<br>
+<br>export ns="-n secret-ops"</br>
+<br>export do="--dry-run=client -oyaml"</br>
 ## ConfigMaps
 
 kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configure a Pod to Use a ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/)
