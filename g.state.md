@@ -241,6 +241,8 @@ kubectl create -f pod.yaml
 kubectl exec busybox2 -- ls /etc/foo # will show 'passwd'
 # cleanup
 kubectl delete po busybox busybox2
+kubectl delete pvc mypvc
+kubectl delete pv myvolume
 ```
 
 If the file doesn't show on the second pod but it shows on the first, it has most likely been scheduled on a different node.
@@ -265,7 +267,7 @@ There are lots of different types per cloud provider [(see here)](https://kubern
 
 ```bash
 kubectl run busybox --image=busybox --restart=Never -- sleep 3600
-kubectl cp busybox:etc/passwd ./passwd # kubectl cp command
+kubectl cp busybox:/etc/passwd ./passwd # kubectl cp command
 # previous command might report an error, feel free to ignore it since copy command works
 cat passwd
 ```
