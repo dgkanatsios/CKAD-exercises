@@ -241,6 +241,8 @@ kubectl create -f pod.yaml
 kubectl exec busybox2 -- ls /etc/foo # will show 'passwd'
 # cleanup
 kubectl delete po busybox busybox2
+kubectl delete pvc mypvc
+kubectl delete pv myvolume
 ```
 
 If the file doesn't show on the second pod but it shows on the first, it has most likely been scheduled on a different node.
