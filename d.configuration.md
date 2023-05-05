@@ -463,12 +463,15 @@ kubectl apply -f rq-one.yaml
 </p>
 </details>
 
-### Attempt to make a pod with resource requests `cpu=2`, `memory=3Gi` and limits `cpu=3`, `memory=4Gi` in namespace `one`
+### Attempt to create a pod with resource requests `cpu=2`, `memory=3Gi` and limits `cpu=3`, `memory=4Gi` in namespace `one`
 
 <details><summary>show</summary>
 <p>
 
+```bash
 vi pod.yaml
+```
+
 ```YAML
 apiVersion: v1
 kind: Pod
@@ -504,6 +507,57 @@ Error from server (Forbidden): error when creating "pod.yaml": pods "nginx" is f
 ```
 </p>
 </details>
+
+### Create a pod with resource requests `cpu=0.5`, `memory=1Gi` and limits `cpu=1`, `memory=2Gi` in namespace `one`
+
+<details><summary>show</summary>
+<p>
+
+```bash
+vi pod2.yaml
+```
+
+```YAML
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: nginx
+  name: nginx
+  namespace: one
+spec:
+  containers:
+  - image: nginx
+    name: nginx
+    resources:
+      requests:
+        memory: "1Gi"
+        cpu: "0.5"
+      limits:
+        memory: "2Gi"
+        cpu: "1"
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+```
+
+```bash
+kubectl create -f pod2.yaml
+```
+
+Show the ResourceQuota usage in namespace `one`
+```bash
+kubectl get resourcequota -n one
+```
+
+```
+NAME    AGE   REQUEST                                          LIMIT
+my-rq   10m   requests.cpu: 500m/1, requests.memory: 3Mi/1Gi   limits.cpu: 1/2, limits.memory: 4Mi/2Gi
+```
+</p>
+</details>
+
 
 ## Secrets
 
