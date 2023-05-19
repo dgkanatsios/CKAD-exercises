@@ -720,7 +720,7 @@ Use the imperative command:
 kubectl create role developer --verb=create,delete,get,list,watch --resource=pods
 ```
 
-Or, create the yaml file:
+Or, create the YAML file:
 
 ```bash
 vi role.yaml
