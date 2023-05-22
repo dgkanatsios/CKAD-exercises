@@ -1013,7 +1013,7 @@ kubectl delete cj busybox --force #cj stands for cronjob and --force to delete i
 
 ```bash
 kubectl get cj
-kubectl get jobs --watch
+kubectl get cj --watch
 kubectl get po --show-labels # observe that the pods have a label that mentions their 'parent' job
 kubectl logs busybox-1529745840-m867r
 # Bear in mind that Kubernetes will run a new job/pod for each new cron job
