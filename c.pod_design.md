@@ -9,7 +9,7 @@
 
 [Cron Jobs](#cron-jobs)
 
-## Labels and annotations
+## Labels and Annotations
 kubernetes.io > Documentation > Concepts > Overview > Working with Kubernetes Objects > [Labels and Selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors)
 
 ### Create 3 pods with names nginx1,nginx2,nginx3. All of them should have the label app=v1
@@ -121,64 +121,6 @@ kubectl label po -l app app-
 </p>
 </details>
 
-### Create a pod that will be deployed to a Node that has the label 'accelerator=nvidia-tesla-p100'
-
-<details><summary>show</summary>
-<p>
-
-Add the label to a node:
-
-```bash
-kubectl label nodes <your-node-name> accelerator=nvidia-tesla-p100
-kubectl get nodes --show-labels
-```
-
-We can use the 'nodeSelector' property on the Pod YAML:
-
-```YAML
-apiVersion: v1
-kind: Pod
-metadata:
-  name: cuda-test
-spec:
-  containers:
-    - name: cuda-test
-      image: "k8s.gcr.io/cuda-vector-add:v0.1"
-  nodeSelector: # add this
-    accelerator: nvidia-tesla-p100 # the selection label
-```
-
-You can easily find out where in the YAML it should be placed by:
-
-```bash
-kubectl explain po.spec
-```
-
-OR:
-Use node affinity (https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes-using-node-affinity/#schedule-a-pod-using-required-node-affinity)
-
-```YAML
-apiVersion: v1
-kind: Pod
-metadata:
-  name: affinity-pod
-spec:
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: accelerator
-            operator: In
-            values:
-            - nvidia-tesla-p100
-  containers:
-    ...
-```
-
-</p>
-</details>
-
 ### Annotate pods nginx1, nginx2, nginx3 with "description='my description'" value
 
 <details><summary>show</summary>
@@ -237,6 +179,131 @@ kubectl annotate po nginx{1..3} description-
 
 ```bash
 kubectl delete po nginx{1..3}
+```
+
+</p>
+</details>
+
+## Pod Placement
+
+### Create a pod that will be deployed to a Node that has the label 'accelerator=nvidia-tesla-p100'
+
+<details><summary>show</summary>
+<p>
+
+Add the label to a node:
+
+```bash
+kubectl label nodes <your-node-name> accelerator=nvidia-tesla-p100
+kubectl get nodes --show-labels
+```
+
+We can use the 'nodeSelector' property on the Pod YAML:
+
+```YAML
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cuda-test
+spec:
+  containers:
+    - name: cuda-test
+      image: "k8s.gcr.io/cuda-vector-add:v0.1"
+  nodeSelector: # add this
+    accelerator: nvidia-tesla-p100 # the selection label
+```
+
+You can easily find out where in the YAML it should be placed by:
+
+```bash
+kubectl explain po.spec
+```
+
+OR:
+Use node affinity (https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes-using-node-affinity/#schedule-a-pod-using-required-node-affinity)
+
+```YAML
+apiVersion: v1
+kind: Pod
+metadata:
+  name: affinity-pod
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: accelerator
+            operator: In
+            values:
+            - nvidia-tesla-p100
+  containers:
+    ...
+```
+
+</p>
+</details>
+
+### Taint a node with key `tier` and value `frontend` with effect `NoShedule`. Then, create a pod that tolerates this taint.
+
+<details><summary>show</summary>
+<p>
+
+Taint a node:
+
+```bash
+kubectl taint node node1 tier=frontend:NoSchedule # key=value:Effect
+kubectl describe node node1 # view the taints on a node
+```
+
+And to tolerate the taint:
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: frontend
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+  tolerations:
+  - key: "tier"
+    operator: "Equal"
+    value: "frontend"
+    effect: "NoSchedule"
+```
+
+</p>
+</details>
+
+### Create a pod that will be placed on node `controlplane`. Use nodeSelector and tolerations.
+
+<details><summary>show</summary>
+<p>
+
+```bash
+vi pod.yaml
+```
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: frontend
+spec:
+  image:
+    name: nginx
+    image: nginx
+  nodeSelector:
+    kubernetes.io/hostname: controlplane
+  tolerations:
+  - key: "node-role.kubernetes.io/control-plane"
+    operator: "Exists"
+    effect: "NoSchedule"
+```
+
+```bash
+kubectl create -f pod.yaml
 ```
 
 </p>

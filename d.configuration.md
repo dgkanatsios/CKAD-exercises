@@ -306,7 +306,7 @@ status: {}
 </p>
 </details>
 
-## Requests and limits
+## Resource requests and limits
 
 kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Assign CPU Resources to Containers and Pods](https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-resource/)
 
@@ -373,7 +373,7 @@ spec:
     min:
       memory: "100Mi"
     type: Container
-``` 
+```
 
 ```bash
 kubectl apply -f 1.yaml
@@ -421,6 +421,139 @@ status: {}
 
 ```bash
 kubectl apply -f 2.yaml
+```
+</p>
+</details>
+
+
+## Resource Quotas
+kubernetes.io > Documentation > Concepts > Policies > Resource Quotas (https://kubernetes.io/docs/concepts/policy/resource-quotas/)
+
+### Create ResourceQuota in namespace `one` with hard requests `cpu=1`, `memory=1Gi` and hard limits `cpu=2`, `memory=2Gi`.
+
+<details><summary>show</summary>
+<p>
+
+Create the namespace:
+```bash
+kubectl create ns one
+```
+
+Create the ResourceQuota
+```bash
+vi rq-one.yaml
+```
+
+```YAML
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: my-rq
+spec:
+  hard:
+    requests.cpu: "1"
+    requests.memory: 1Gi
+    limits.cpu: "2"
+    limits.memory: 2Gi
+```
+
+```bash
+kubectl apply -f rq-one.yaml
+```
+</p>
+</details>
+
+### Attempt to create a pod with resource requests `cpu=2`, `memory=3Gi` and limits `cpu=3`, `memory=4Gi` in namespace `one`
+
+<details><summary>show</summary>
+<p>
+
+```bash
+vi pod.yaml
+```
+
+```YAML
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: nginx
+  name: nginx
+  namespace: one
+spec:
+  containers:
+  - image: nginx
+    name: nginx
+    resources:
+      requests:
+        memory: "3Gi"
+        cpu: "2"
+      limits:
+        memory: "4Gi"
+        cpu: "3"
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+```
+
+```bash
+kubectl create -f pod.yaml
+```
+
+Expected error message:
+```bash
+Error from server (Forbidden): error when creating "pod.yaml": pods "nginx" is forbidden: exceeded quota: my-rq, requested: limits.cpu=3,limits.memory=4Gi,requests.cpu=2,requests.memory=3Gi, used: limits.cpu=0,limits.memory=0,requests.cpu=0,requests.memory=0, limited: limits.cpu=2,limits.memory=2Gi,requests.cpu=1,requests.memory=1Gi
+```
+</p>
+</details>
+
+### Create a pod with resource requests `cpu=0.5`, `memory=1Gi` and limits `cpu=1`, `memory=2Gi` in namespace `one`
+
+<details><summary>show</summary>
+<p>
+
+```bash
+vi pod2.yaml
+```
+
+```YAML
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: nginx
+  name: nginx
+  namespace: one
+spec:
+  containers:
+  - image: nginx
+    name: nginx
+    resources:
+      requests:
+        memory: "1Gi"
+        cpu: "0.5"
+      limits:
+        memory: "2Gi"
+        cpu: "1"
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+```
+
+```bash
+kubectl create -f pod2.yaml
+```
+
+Show the ResourceQuota usage in namespace `one`
+```bash
+kubectl get resourcequota -n one
+```
+
+```
+NAME    AGE   REQUEST                                          LIMIT
+my-rq   10m   requests.cpu: 500m/1, requests.memory: 3Mi/1Gi   limits.cpu: 1/2, limits.memory: 4Mi/2Gi
 ```
 </p>
 </details>
