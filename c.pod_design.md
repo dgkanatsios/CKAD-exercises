@@ -244,7 +244,7 @@ spec:
 </p>
 </details>
 
-### Taint a node with key `tier` and value `frontend` with effect `NoShedule`. Then, create a pod that tolerates this taint.
+### Taint a node with key `tier` and value `frontend` with the effect `NoSchedule`. Then, create a pod that tolerates this taint.
 
 <details><summary>show</summary>
 <p>
