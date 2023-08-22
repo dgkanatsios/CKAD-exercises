@@ -452,6 +452,7 @@ apiVersion: v1
 kind: ResourceQuota
 metadata:
   name: my-rq
+  namespace: one
 spec:
   hard:
     requests.cpu: "1"
