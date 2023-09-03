@@ -464,6 +464,11 @@ spec:
 ```bash
 kubectl apply -f rq-one.yaml
 ```
+
+or
+```bash
+kubectl create quota my-rq --namespace=one --hard=requests.cpu=1,requests.memory=1Gi,limits.cpu=2,limits.memory=2Gi
+```
 </p>
 </details>
 
