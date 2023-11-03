@@ -166,7 +166,7 @@ As an alternative to using `| grep` you can use jsonPath like `kubectl get po ng
 <p>
 
 ```bash
-kubectl annotate po nginx{1..3} description-
+kubectl annotate po nginx{1..3} description- owner-
 ```
 
 </p>
