@@ -732,7 +732,8 @@ kubectl exec -it nginx -- env | grep USERNAME | cut -d '=' -f 2 # will show 'adm
 
 ```bash
 export ns="-n secret-ops"
-k create secret generic ext-service-secret -n secret-ops --from-literal=API_KEY=LmLHbYhsgWZwNifiqaRorH8T $do > sc.yaml
+export do="--dry-run=client -oyaml"
+k create secret generic ext-service-secret --from-literal=API_KEY=LmLHbYhsgWZwNifiqaRorH8T $ns $do > sc.yaml
 k apply -f sc.yaml
 ```
 
