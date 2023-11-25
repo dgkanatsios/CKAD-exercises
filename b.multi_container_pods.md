@@ -17,7 +17,7 @@ Copy/paste the container related values, so your final YAML should contain the f
 
 ```YAML
 containers:
-  - args:
+  - command:
     - /bin/sh
     - -c
     - echo hello;sleep 3600
@@ -25,7 +25,7 @@ containers:
     imagePullPolicy: IfNotPresent
     name: busybox
     resources: {}
-  - args:
+  - command:
     - /bin/sh
     - -c
     - echo hello;sleep 3600
@@ -82,7 +82,7 @@ initContainer:
 ```YAML
 ...
 initContainers:
-- args:
+- command:
   - /bin/sh
   - -c
   - "wget -O /work-dir/index.html http://neverssl.com/online"
@@ -105,7 +105,7 @@ metadata:
   name: box
 spec:
   initContainers: 
-  - args: 
+  - command: 
     - /bin/sh 
     - -c 
     - "wget -O /work-dir/index.html http://neverssl.com/online"
