@@ -856,7 +856,7 @@ spec:
         run: busybox
     spec:
       containers:
-      - args:
+      - command:
         - /bin/sh
         - -c
         - while true; do echo hello; sleep 10;done
@@ -898,7 +898,7 @@ spec:
         run: busybox
     spec:
       containers:
-      - args:
+      - command:
         - /bin/sh
         - -c
         - echo hello;sleep 30;echo world
@@ -951,7 +951,7 @@ spec:
         run: busybox
     spec:
       containers:
-      - args:
+      - command:
         - /bin/sh
         - -c
         - echo hello;sleep 30;echo world
@@ -1052,7 +1052,7 @@ spec:
           creationTimestamp: null
         spec:
           containers:
-          - args:
+          - command:
             - /bin/sh
             - -c
             - date; echo Hello from the Kubernetes cluster
@@ -1096,7 +1096,7 @@ spec:
           creationTimestamp: null
         spec:
           containers:
-          - args:
+          - command:
             - /bin/sh
             - -c
             - date; echo Hello from the Kubernetes cluster
