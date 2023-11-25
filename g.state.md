@@ -34,7 +34,7 @@ spec:
   dnsPolicy: ClusterFirst
   restartPolicy: Never
   containers:
-  - args:
+  - command:
     - /bin/sh
     - -c
     - sleep 3600
@@ -45,7 +45,7 @@ spec:
     volumeMounts: #
     - name: myvolume #
       mountPath: /etc/foo #
-  - args:
+  - command:
     - /bin/sh
     - -c
     - sleep 3600
@@ -190,7 +190,7 @@ metadata:
   name: busybox
 spec:
   containers:
-  - args:
+  - command:
     - /bin/sh
     - -c
     - sleep 3600
