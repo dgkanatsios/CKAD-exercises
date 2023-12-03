@@ -244,7 +244,7 @@ spec:
 </p>
 </details>
 
-### Taint a node with key `tier` and value `frontend` with effect `NoShedule`. Then, create a pod that tolerates this taint.
+### Taint a node with key `tier` and value `frontend` with the effect `NoSchedule`. Then, create a pod that tolerates this taint.
 
 <details><summary>show</summary>
 <p>
@@ -998,9 +998,9 @@ kubectl create cronjob busybox --image=busybox --schedule="*/1 * * * *" -- /bin/
 <p>
 
 ```bash
-kubectl get po   # copy the container just created
-kubectl logs <container> # you will see the date and message 
-kubectl delete cj busybox --force #cj stands for cronjob and --force to delete immediately 
+kubectl get po # copy the ID of the pod whose container was just created
+kubectl logs <busybox-***> # you will see the date and message 
+kubectl delete cj busybox --force # cj stands for cronjob and --force to delete immediately 
 ```
 
 </p>
