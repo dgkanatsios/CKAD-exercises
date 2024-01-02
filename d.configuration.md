@@ -353,7 +353,7 @@ status: {}
 ## Limit Ranges
 kubernetes.io > Documentation > Concepts > Policies > Limit Ranges (https://kubernetes.io/docs/concepts/policy/limit-range/)
 
-### Create a namespace with limit range
+### Create a namespace named limitrange with a LimitRange that limits pod memory to a max of 500Mi and min of 100Mi
 
 <details><summary>show</summary>
 <p>
@@ -395,7 +395,7 @@ kubectl describe limitrange ns-memory-limit -n one
 </p>
 </details>
 
-### Create a pod with resources requests memory = half of max memory constraint in namespace
+### Create an nginx pod that requests 250Mi of memory in the limitrange namespace
 
 <details><summary>show</summary>
 <p>
