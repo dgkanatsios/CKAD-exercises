@@ -114,12 +114,11 @@ spec:
     imagePullPolicy: IfNotPresent
     name: nginx
     resources: {}
-    ports:
-      - containerPort: 80 # Note: Readiness probes runs on the container during its whole lifecycle. Since nginx exposes 80, containerPort: 80 is not required for readiness to work.
+    # Note: Readiness probes runs on the container during its whole lifecycle. Since nginx will serve on port 80 and the readiness probe tests that port from within the container, it is not required to expose containerPort 80.
     readinessProbe: # declare the readiness probe
       httpGet: # add this line
         path: / #
-        port: 80 #
+        port: 80 # test usage of containerport 80
   dnsPolicy: ClusterFirst
   restartPolicy: Never
 status: {}
