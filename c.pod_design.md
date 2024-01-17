@@ -166,7 +166,7 @@ As an alternative to using `| grep` you can use jsonPath like `kubectl get po ng
 <p>
 
 ```bash
-kubectl annotate po nginx{1..3} description-
+kubectl annotate po nginx{1..3} description- owner-
 ```
 
 </p>
@@ -291,8 +291,8 @@ kind: Pod
 metadata:
   name: frontend
 spec:
-  image:
-    name: nginx
+  containers:
+  - name: nginx
     image: nginx
   nodeSelector:
     kubernetes.io/hostname: controlplane
@@ -1000,7 +1000,7 @@ kubectl create cronjob busybox --image=busybox --schedule="*/1 * * * *" -- /bin/
 ```bash
 kubectl get po # copy the ID of the pod whose container was just created
 kubectl logs <busybox-***> # you will see the date and message 
-kubectl delete cj busybox --force # cj stands for cronjob and --force to delete immediately 
+kubectl delete cj busybox # cj stands for cronjob
 ```
 
 </p>
