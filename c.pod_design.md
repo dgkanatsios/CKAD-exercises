@@ -756,6 +756,7 @@ kubectl create job pi  --image=perl:5.34 -- perl -Mbignum=bpi -wle 'print bpi(20
 kubectl get jobs -w # wait till 'SUCCESSFUL' is 1 (will take some time, perl image might be big)
 kubectl get po # get the pod name
 kubectl logs pi-**** # get the pi numbers
+kubectl logs jobs/pi   #get logs by job name
 kubectl delete job pi
 ```
 OR
