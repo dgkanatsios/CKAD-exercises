@@ -253,7 +253,7 @@ Taint a node:
 
 ```bash
 kubectl taint node node1 tier=frontend:NoSchedule # key=value:Effect
-kubectl describe node node1 # view the taints on a node
+kubectl describe node node1 | grep i taint # view the taints on a node
 ```
 
 And to tolerate the taint:
