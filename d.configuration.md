@@ -359,7 +359,7 @@ kubernetes.io > Documentation > Concepts > Policies > Limit Ranges (https://kube
 <p>
 
 ```bash
-kubectl create ns one
+kubectl create ns limitrange
 ```
 
 vi 1.yaml
@@ -368,7 +368,7 @@ apiVersion: v1
 kind: LimitRange
 metadata:
   name: ns-memory-limit
-  namespace: one
+  namespace: limitrange
 spec:
   limits:
   - max: # max and min define the limit range
