@@ -115,7 +115,7 @@ spec:
     name: nginx
     resources: {}
     ports:
-      - containerPort: 80 # Note: Readiness probes runs on the container during its whole lifecycle. Since nginx exposes 80, containerPort: 80 is not required for readiness to work.
+    - containerPort: 80 # Note: Readiness probes runs on the container during its whole lifecycle. Since nginx exposes 80, containerPort: 80 is not required for readiness to work.
     readinessProbe: # declare the readiness probe
       httpGet: # add this line
         path: / #
