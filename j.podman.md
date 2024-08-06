@@ -136,6 +136,16 @@ ef4b14a72d02ae0577eb0632d084c057777725c279e12ccf5b0c6e4ff5fd598b
 </p>
 </details>
 
+### Export an image to output.tar file without running it
+<details><summary>show</summary>
+<p>
+```bash
+podman create <image id>
+podman container ls
+podman export <container id> --output=output.tar
+```
+</p>
+
 ### Run a pod with the image pushed to the registry
 
 <details><summary>show</summary>
