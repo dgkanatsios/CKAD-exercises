@@ -136,13 +136,25 @@ ef4b14a72d02ae0577eb0632d084c057777725c279e12ccf5b0c6e4ff5fd598b
 </p>
 </details>
 
-### Export an image to output.tar file without running it
+### Creates a container without running/starting it
 <details><summary>show</summary>
 <p>
 
 ```bash
-:~$ podman create <image id>
+:~$ podman create simpleapp # create
 :~$ podman container ls
+```
+
+</p>
+</details>
+
+
+### Exports a container to output.tar file
+<details><summary>show</summary>
+<p>
+
+```bash
+:~$ podman container ls # pick the container id
 :~$ podman export <container id> --output=output.tar
 ```
 
