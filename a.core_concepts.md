@@ -141,7 +141,7 @@ kubectl create namespace myns -o yaml --dry-run=client
 </p>
 </details>
 
-### Get the YAML for a new ResourceQuota called 'myrq' with hard limits of 1 CPU, 1G memory and 2 pods without creating it
+### Create the YAML for a new ResourceQuota called 'myrq' with hard limits of 1 CPU, 1G memory and 2 pods without creating it
 
 <details><summary>show</summary>
 <p>
