@@ -115,7 +115,7 @@ spec:
     name: nginx
     resources: {}
     ports:
-      - containerPort: 80 # Note: Readiness probes runs on the container during its whole lifecycle. Since nginx exposes 80, containerPort: 80 is not required for readiness to work.
+    - containerPort: 80 # Note: Readiness probes runs on the container during its whole lifecycle. Since nginx exposes 80, containerPort: 80 is not required for readiness to work.
     readinessProbe: # declare the readiness probe
       httpGet: # add this line
         path: / #
@@ -148,7 +148,7 @@ LAST SEEN   TYPE      REASON      OBJECT              MESSAGE
 collect failed pods namespace by namespace
 
 ```sh
-kubectl get events -o json | jq -r '.items[] | select(.message | contains("failed liveness probe")).involvedObject | .namespace + "/" + .name'
+kubectl get events -o json | jq -r '.items[] | select(.message | contains("Liveness probe failed")).involvedObject | .namespace + "/" + .name'
 ```
 
 </p>

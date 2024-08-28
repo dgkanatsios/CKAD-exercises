@@ -359,7 +359,7 @@ kubernetes.io > Documentation > Concepts > Policies > Limit Ranges (https://kube
 <p>
 
 ```bash
-kubectl create ns one
+kubectl create ns limitrange
 ```
 
 vi 1.yaml
@@ -368,7 +368,7 @@ apiVersion: v1
 kind: LimitRange
 metadata:
   name: ns-memory-limit
-  namespace: one
+  namespace: limitrange
 spec:
   limits:
   - max: # max and min define the limit range
@@ -562,7 +562,7 @@ kubectl get resourcequota -n one
 
 ```
 NAME    AGE   REQUEST                                          LIMIT
-my-rq   10m   requests.cpu: 500m/1, requests.memory: 3Mi/1Gi   limits.cpu: 1/2, limits.memory: 4Mi/2Gi
+my-rq   10m   requests.cpu: 500m/1, requests.memory: 1Gi/1Gi   limits.cpu: 1/2, limits.memory: 2Gi/2Gi
 ```
 </p>
 </details>
