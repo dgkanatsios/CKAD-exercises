@@ -562,7 +562,7 @@ kubectl get resourcequota -n one
 
 ```
 NAME    AGE   REQUEST                                          LIMIT
-my-rq   10m   requests.cpu: 500m/1, requests.memory: 3Mi/1Gi   limits.cpu: 1/2, limits.memory: 4Mi/2Gi
+my-rq   10m   requests.cpu: 500m/1, requests.memory: 1Gi/1Gi   limits.cpu: 1/2, limits.memory: 2Gi/2Gi
 ```
 </p>
 </details>
