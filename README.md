@@ -7,7 +7,7 @@
 A set of exercises that helped me prepare for the [Certified Kubernetes Application Developer](https://www.cncf.io/certification/ckad/) exam, offered by the Cloud Native Computing Foundation, organized by curriculum domain.
 They may as well serve as learning and practicing with Kubernetes.
 
-Make a mental note of the breadcrumb at the start of the excercise section, to quickly locate the relevant document in kubernetes.io.
+Make a mental note of the breadcrumb at the start of the exercise section, to quickly locate the relevant document in kubernetes.io.
 It is recommended that you read the official documents before attempting exercises below it.
 During the exam, you are only allowed to refer to official documentation from a browser window within the exam VM.
 A Quick Reference box will contain helpful links for each exam exercise as well.
