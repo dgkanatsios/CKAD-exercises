@@ -409,7 +409,7 @@ metadata:
   labels:
     run: nginx
   name: nginx
-  namespace: one
+  namespace: limitrange
 spec:
   containers:
   - image: nginx
@@ -417,6 +417,8 @@ spec:
     resources:
       requests:
         memory: "250Mi"
+      limits:
+        memory: "500Mi" # limit has to be specified and be <= limitrange
   dnsPolicy: ClusterFirst
   restartPolicy: Always
 status: {}
