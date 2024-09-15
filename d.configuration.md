@@ -972,3 +972,201 @@ kubectl create token myuser
 
 </p>
 </details>
+
+## Role Based Access Control (RBAC)
+
+### Create a Role named `developer` with permissions to create, delete, get, list, and watch pod resources
+
+<details><summary>show</summary>
+<p>
+
+Use the imperative command:
+
+```bash
+kubectl create role developer --verb=create,delete,get,list,watch --resource=pods
+```
+
+Or, create the YAML file:
+
+```bash
+vi role.yaml
+```
+
+```YAML
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: developer
+rules:
+- apiGroups: [""] # "" indicates the core API group
+  resources: ["pods"]
+  verbs: ["create", "delete", "list", "get", "watch"]
+```
+
+```bash
+kubectl create -f role.yaml
+```
+
+Show the Role resource:
+
+```bash
+kubectl describe role developer
+```
+
+</p>
+</details>
+
+### Create a RoleBinding for user `alice` in namespace `green`. The RoleBinding should use the role created in the previous task, `developer`
+
+<details><summary>show</summary>
+<p>
+
+Create the namespace:
+```bash
+kubectl create ns green
+```
+
+Use the imperative command:
+
+```bash
+kubectl create rolebinding alice-role --user alice --role developer --namespace green
+```
+
+Or, create the yaml file:
+
+```bash
+vi rolebinding.yaml
+```
+
+```YAML
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: alice-role
+  namespace: green
+subjects:
+- kind: User
+  name: alice
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: developer
+  apiGroup: rbac.authorization.k8s.io
+```
+
+```bash
+kubectl create -f rolebinding.yaml
+```
+
+Show the RoleBinding resource:
+
+```bash
+kubectl describe rolebinding alice-role -n green
+```
+
+This role allows the user `alice` to perform actions on pods in the `green` namespace.
+
+</p>
+</details>
+
+### Create a ClusterRole named `admin` with permissions to create, delete, get, list, and watch `pod` and `job` resources
+
+<details><summary>show</summary>
+<p>
+
+Use the imperative command:
+
+```bash
+kubectl create clusterrole admin-app --verb=create,delete,get,list,watch --resource=pods --resource=jobs
+```
+
+Or, create the yaml file:
+
+```bash
+vi clusterrole.yaml
+```
+
+```YAML
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: admin-app
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["create", "delete", "list", "get", "watch"]
+- apiGroups: ["batch"]
+  resources: ["jobs"]
+  verbs: ["create", "delete", "list", "get", "watch"]
+```
+
+```bash
+kubectl create -f clusterrole.yaml
+```
+
+Show the ClusterRole resource:
+
+```bash
+kubectl describe clusterrole admin-app
+```
+
+</p>
+</details>
+
+### Create a ClusterRoleBinding for service account `app-service` which exists in the `default` namespace. The ClusterRoleBinding should use the ClusterRole created in the previous task, `admin-app`
+
+<details><summary>show</summary>
+<p>
+
+Use the imperative command:
+
+```bash
+kubectl create clusterrolebinding app-service-role --clusterrole admin-app --serviceaccount default:app-service
+```
+
+Or, create the yaml file:
+
+```bash
+vi crb.yaml
+```
+
+```YAML
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: app-service-role
+subjects:
+- kind: ServiceAccount
+  name: app-service
+  namespace: default
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin-app
+```
+
+```bash
+kubectl create -f crb.yaml
+```
+
+Show the ClusterRoleBinding resource:
+
+```bash
+kubectl describe clusterrolebinding app-service-role
+```
+
+</p>
+</details>
+
+### What is the main difference between Role/RoleBinding and ClusterRole/ClusterRoleBinding?
+
+<details><summary>show</summary>
+<p>
+
+ClusterRoleBindings do not have a `namespace` defined. When used with a ClusterRole, they grant permissions across the whole cluster.
+RoleBindings, when used with Roles, grant permissions _within a namespace_.
+
+However, a RoleBinding may reference a ClusterRole -- the permissions granted by the ClusterRole will be limited to the namespace defined in the RoleBinding.
+</p>
+</details>
