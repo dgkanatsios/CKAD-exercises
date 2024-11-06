@@ -14,7 +14,7 @@ kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configu
 
 *This question is probably a better fit for the 'Multi-container-pods' section but I'm keeping it here as it will help you get acquainted with state*
 
-Easiest way to do this is to create a template pod with:
+The easiest way to do this is to create a template pod with:
 
 ```bash
 kubectl run busybox --image=busybox --restart=Never -o yaml --dry-run=client -- /bin/sh -c 'sleep 3600' > pod.yaml
