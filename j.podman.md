@@ -195,7 +195,6 @@ Hello, World!
 
 ### Log into a remote registry server and then read the credentials from the default file
 
-
 <details><summary>show</summary>
 <p>
 
