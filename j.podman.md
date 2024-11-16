@@ -159,7 +159,6 @@ CONTAINER ID  IMAGE                             COMMAND     CREATED        STATU
 </p>
 </details>
 
-
 ### Export a container to output.tar file
 
 <details><summary>show</summary>
