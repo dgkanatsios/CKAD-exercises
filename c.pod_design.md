@@ -336,7 +336,7 @@ kubectl create deployment nginx  --image=nginx:1.18.0  --dry-run=client -o yaml 
 
 or,
 ```bash
-kubectl create deploy nginx --image=nginx:1.18.0 --replicas=2 --port=80
+kubectl create deploy nginx --image=nginx:1.18.0 -r=2 --port=80
 ```
 
 </p>
