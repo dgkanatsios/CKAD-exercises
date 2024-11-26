@@ -731,6 +731,29 @@ version-2
 ```
 
 </p>
+  <p>
+In CKAD use imperative commands to save time:
+```
+$ k create deploy nginx1 --image=nginx -r=3 
+$ k label deployments.apps nginx1 version=v1
+$ k create deploy nginx2 --image=nginx -r=1 
+$ k label deployments.apps nginx2 version=v2
+$ k expose deployment nginx1 --port=80
+$ k get svc
+$ k get endpoints
+$kubectl run tmp --rm -it --image=busybox --restart=Never -- wget -O- http://10.244.120.100:80
+
+Connecting to 10.244.120.100:80 (10.244.120.100:80)
+writing to stdout
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+
+$ k scale deployment nginx1 --replicas=4
+$ k scale deployment nginx2 --replicas=0
+```
+  </p>
 </details>
 
 ## Jobs
