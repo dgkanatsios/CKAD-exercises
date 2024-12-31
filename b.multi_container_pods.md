@@ -6,7 +6,7 @@
 <details><summary>show</summary>
 <p>
 
-Easiest way to do it is create a pod with a single container and save its definition in a YAML file:
+The easiest way to do it is create a pod with a single container and save its definition in a YAML file:
 
 ```bash
 kubectl run busybox --image=busybox --restart=Never -o yaml --dry-run=client -- /bin/sh -c 'echo hello;sleep 3600' > pod.yaml
@@ -40,7 +40,7 @@ kubectl exec -it busybox -c busybox2 -- /bin/sh
 ls
 exit
 
-# or you can do the above with just an one-liner
+# or you can do the above with just a one-liner
 kubectl exec -it busybox -c busybox2 -- ls
 
 # you can do some cleanup
@@ -55,7 +55,7 @@ kubectl delete po busybox
 <details><summary>show</summary>
 <p>
 
-Easiest way to do it is create a pod with a single container and save its definition in a YAML file:
+The easiest way to do it is create a pod with a single container and save its definition in a YAML file:
 
 ```bash
 kubectl run box --image=nginx --restart=Never --port=80 --dry-run=client -o yaml > pod-init.yaml

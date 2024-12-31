@@ -375,7 +375,7 @@ spec:
       memory: "500Mi"
     min:
       memory: "100Mi"
-    type: Container
+    type: Pod
 ```
 
 ```bash
