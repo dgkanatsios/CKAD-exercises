@@ -14,7 +14,7 @@ kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configu
 
 *This question is probably a better fit for the 'Multi-container-pods' section but I'm keeping it here as it will help you get acquainted with state*
 
-Easiest way to do this is to create a template pod with:
+The easiest way to do this is to create a template pod with:
 
 ```bash
 kubectl run busybox --image=busybox --restart=Never -o yaml --dry-run=client -- /bin/sh -c 'sleep 3600' > pod.yaml
@@ -127,7 +127,7 @@ kubectl get pv
 </p>
 </details>
 
-### Create a PersistentVolumeClaim for this storage class, called 'mypvc', a request of 4Gi and an accessMode of ReadWriteOnce, with the storageClassName of normal, and save it on pvc.yaml. Create it on the cluster. Show the PersistentVolumeClaims of the cluster. Show the PersistentVolumes of the cluster
+### Create a PersistentVolumeClaim for this PersistentVolume, called 'mypvc', a request of 4Gi and an accessMode of ReadWriteOnce, with the storageClassName of normal, and save it on pvc.yaml. Create it on the cluster. Show the PersistentVolumeClaims of the cluster. Show the PersistentVolumes of the cluster
 
 <details><summary>show</summary>
 <p>
