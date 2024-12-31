@@ -136,6 +136,48 @@ ef4b14a72d02ae0577eb0632d084c057777725c279e12ccf5b0c6e4ff5fd598b
 </p>
 </details>
 
+### Create a container without running/starting it
+
+<details><summary>show</summary>
+<p>
+
+```bash
+:~$ podman create busybox # create
+Resolved "busybox" as an alias (/etc/containers/registries.conf.d/000-shortnames.conf)
+Trying to pull docker.io/library/busybox:latest...
+Getting image source signatures
+Copying blob sha256:213a27df5921cd9ae24732504c590bb6408911c20fb50a597f2a40896d554a8f
+Copying config sha256:3fba0c87fcc8ba126bf99e4ee205b43c91ffc6b15bb052315312e71bc6296551
+Writing manifest to image destination
+51b613406e8889213c176523e1c430e4bd00047965b0c22cff5b1c9badfbc452
+
+:~$ podman container ls -a
+CONTAINER ID  IMAGE                             COMMAND     CREATED        STATUS      PORTS       NAMES
+51b613406e88  docker.io/library/busybox:latest  sh          2 minutes ago  Created                 adoring_almeida
+```
+
+</p>
+</details>
+
+### Export a container to output.tar file
+
+<details><summary>show</summary>
+<p>
+
+```bash
+:~$ podman container ls -a # pick the container id
+CONTAINER ID  IMAGE                             COMMAND     CREATED        STATUS      PORTS       NAMES
+51b613406e88  docker.io/library/busybox:latest  sh          2 minutes ago  Created                 adoring_almeida
+
+:~$ podman export <container id> --output=output.tar
+
+:~$ ls -al output.tar
+-rw-r--r--@ 1 limistah  wheel  4272640 28 Aug 13:48 output.tar
+```
+
+</p>
+</details>
+
 ### Run a pod with the image pushed to the registry
 
 <details><summary>show</summary>
@@ -152,7 +194,6 @@ Hello, World!
 </details>
 
 ### Log into a remote registry server and then read the credentials from the default file
-
 
 <details><summary>show</summary>
 <p>
