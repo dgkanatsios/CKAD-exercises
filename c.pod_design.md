@@ -253,7 +253,7 @@ Taint a node:
 
 ```bash
 kubectl taint node node1 tier=frontend:NoSchedule # key=value:Effect
-kubectl describe node node1 # view the taints on a node
+kubectl describe node node1 | grep i taint # view the taints on a node
 ```
 
 And to tolerate the taint:
@@ -511,6 +511,23 @@ kubectl rollout history deploy nginx --revision=4 # You'll also see the wrong im
 kubectl scale deploy nginx --replicas=5
 kubectl get po
 kubectl describe deploy nginx
+```
+or
+
+```bash
+kubectl edit deploy nginx
+# edit replicas to 5
+```
+or
+
+```bash
+kubectl get deploy nginx -o yaml > nginx-deploy.yaml
+#edit replicas to 5
+kubctl replace -f replicaset-definition.yml
+```
+or 
+```bash
+kubectl scale --replicas=5 -f nginx-deploy.yaml
 ```
 
 </p>
