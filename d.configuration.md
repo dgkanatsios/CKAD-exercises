@@ -957,7 +957,10 @@ status: {}
 
 ```bash
 kubectl create -f pod.yaml
-kubectl describe pod nginx # will see that a new secret called myuser-token-***** has been mounted
+kubectl get pod nginx -o jsonpath='{.spec.serviceAccountName}' # output: myuser
+
+kubectl exec -it nginx -- cat /var/run/secrets/kubernetes.io/serviceaccount/token # to check if the ServiceAccount token is mounted inside the Pod. Starting from Kubernetes 1.24+, the token is dynamically projected into the Pod
+
 ```
 
 </p>
