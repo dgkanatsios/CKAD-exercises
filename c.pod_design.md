@@ -84,6 +84,22 @@ kubectl get po --selector=app=v2
 </p>
 </details>
 
+### Get 'app=v2' and not 'tier=frontend' pods
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl get po -l app=v2,tier!=frontend
+# or
+kubectl get po -l 'app in (v2), tier notin (frontend)'
+# or
+kubectl get po --selector=app=v2,tier!=frontend
+```
+
+</p>
+</details>
+
 ### Add a new label tier=web to all pods having 'app=v2' or 'app=v1' labels
 
 <details><summary>show</summary>
