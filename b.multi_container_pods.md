@@ -140,6 +140,11 @@ kubectl run box-test --image=busybox --restart=Never -it --rm -- /bin/sh -c "wge
 # you can do some cleanup
 kubectl delete po box
 ```
+Alternative approach (easiest for me!)
+
+At the k8s docs, search for "Configure Pod Initialization"
+Go to the page https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-initialization/#create-a-pod-that-has-an-init-container
+copy-paste the code and it is pretty much the exact answer to the question.
 
 </p>
 </details>
