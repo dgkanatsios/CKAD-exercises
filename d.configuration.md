@@ -5,7 +5,11 @@
 
 [SecurityContext](#securitycontext)
 
-[Requests and Limits](#requests-and-limits)
+[Resource Requests and Limits](#resource-requests-and-limits)
+
+[Limit Ranges](#limit-ranges)
+
+[Resource Quotas](#resource-quotas)
 
 [Secrets](#secrets)
 
