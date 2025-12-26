@@ -51,6 +51,16 @@ kubectl run busybox --rm --image=busybox -it --restart=Never --env="IP=$IP" -- w
 ```
 
 </p>
+
+or we can use the `Service name` as destination address
+<p>
+
+```bash
+kubectl run busybox --rm --image=busybox -it --restart=Never -- wget -O- nginx:80
+# Tip: Uses Kubernetes DNS to reach the Service (no need for ClusterIP)
+```
+
+</p>
 </details>
 
 ### Convert the ClusterIP to NodePort for the same service and find the NodePort port. Hit service using Node's IP. Delete the service and the pod at the end.
