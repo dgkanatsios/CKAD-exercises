@@ -262,6 +262,34 @@ spec:
 </p>
 </details>
 
+### Create a pod that will be placed on node `node01` using `nodeName`
+
+<details><summary>show</summary>
+<p>
+
+`nodeName` forces the Pod to be bound to a specific node (bypassing the scheduler). For more details, see the official docs: [https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodename](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodename)
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nodename-pod
+spec:
+  nodeName: node01
+  containers:
+  - name: nodename-con
+    image: nginx  
+```
+
+Verify which node it landed on:
+
+```bash
+kubectl get pod nodename-pod -o wide
+```
+
+</p>
+</details>
+
 ### Taint a node with key `tier` and value `frontend` with the effect `NoSchedule`. Then, create a pod that tolerates this taint.
 
 <details><summary>show</summary>
