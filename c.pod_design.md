@@ -1157,6 +1157,72 @@ status: {}
 </p>
 </details>
 
+### Keep only the last 2 successful and 1 failed runs of a CronJob
+
+<details><summary>show</summary> <p>
+
+Create a CronJob with history limits configured:
+```bash
+kubectl create cronjob history-demo \
+  --image=busybox \
+  --schedule="*/1 * * * *" \
+  --dry-run=client -o yaml \
+  -- /bin/sh -c 'date; echo Hello from history demo' > history-demo.yaml
+```
+
+Edit the file:
+
+```bash
+vi history-demo.yaml
+```
+
+Add the following fields under spec:
+
+```bash
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: history-demo
+spec:
+  schedule: "*/1 * * * *"
+  successfulJobsHistoryLimit: 2   # keep last 2 successful jobs
+  failedJobsHistoryLimit: 1        # keep last 1 failed job
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: history-demo
+            image: busybox
+            args:
+            - /bin/sh
+            - -c
+            - date; echo Hello from history demo
+          restartPolicy: Never
+```
+
+Apply the CronJob:
+```bash
+kubectl apply -f history-demo.yaml
+```
+
+Verify job history behavior:
+
+```bash
+kubectl get cj history-demo
+kubectl get jobs --watch
+```
+
+After several runs, confirm that:
+- Only 2 successful Jobs are kept
+- Only 1 failed Job is kept (if failures occur)
+
+Clean up:
+```bash
+kubectl delete cj history-demo
+```
+</p> </details>
+
 ### Create a job from cronjob.
 
 <details><summary>show</summary>
