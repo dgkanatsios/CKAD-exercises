@@ -66,7 +66,7 @@ kubectl create -f pod.yaml
 Alternatively, you can run in one line
 
 ```bash
-kubectl run nginx --image=nginx --restart=Never --dry-run=client -o yaml | kubectl create -n mynamespace -f -
+kubectl run nginx --image=nginx --dry-run=client -o yaml | kubectl create -n mynamespace -f -
 ```
 
 </p>
