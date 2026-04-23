@@ -147,7 +147,7 @@ kubectl create namespace myns -o yaml --dry-run=client
 <p>
 
 ```bash
-kubectl create quota myrq --hard=cpu=1,memory=1G,pods=2 --dry-run=client -o yaml
+kubectl create quota myrq --hard=limits.cpu=1,limits.memory=1G,pods=2 --dry-run=client -o yaml
 ```
 
 </p>
