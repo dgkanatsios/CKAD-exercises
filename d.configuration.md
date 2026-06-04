@@ -388,7 +388,7 @@ kubectl apply -f 1.yaml
 </p>
 </details>
 
-### Describe the namespace limitrange
+### Describe the limitrange in the namespace `limitrange`
 
 <details><summary>show</summary>
 <p>

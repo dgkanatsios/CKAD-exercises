@@ -46,7 +46,9 @@ or
 
 ```bash
 IP=$(kubectl get svc nginx --template={{.spec.clusterIP}}) # get the IP (something like 10.108.93.130)
-kubectl run busybox --rm --image=busybox -it --restart=Never --env="IP=$IP" -- wget -O- $IP:80 --timeout 2
+# Note: the env var name passed to the pod is intentionally different from the host-side $IP
+# so that the variable inside the container is unambiguous (see issue #231)
+kubectl run busybox --rm --image=busybox -it --restart=Never --env="SVC_IP=$IP" -- sh -c 'wget -O- $SVC_IP:80 --timeout 2'
 # Tip: --timeout is optional, but it helps to get answer more quickly when connection fails (in seconds vs minutes)
 ```
 
