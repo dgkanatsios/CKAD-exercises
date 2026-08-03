@@ -47,6 +47,8 @@ kubectl get po --show-labels
 
 ```bash
 kubectl label po nginx2 app=v2 --overwrite
+# or edit the pod yaml
+kubectl edit po nginx2
 ```
 
 </p>
@@ -77,6 +79,22 @@ kubectl get po -l app=v2
 kubectl get po -l 'app in (v2)'
 # or
 kubectl get po --selector=app=v2
+```
+
+</p>
+</details>
+
+### Get 'app=v2' and not 'tier=frontend' pods
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl get po -l app=v2,tier!=frontend
+# or
+kubectl get po -l 'app in (v2), tier notin (frontend)'
+# or
+kubectl get po --selector=app=v2,tier!=frontend
 ```
 
 </p>
@@ -239,6 +257,34 @@ spec:
             - nvidia-tesla-p100
   containers:
     ...
+```
+
+</p>
+</details>
+
+### Create a pod that will be placed on node `node01` using `nodeName`
+
+<details><summary>show</summary>
+<p>
+
+`nodeName` forces the Pod to be bound to a specific node (bypassing the scheduler). For more details, see the official docs: [https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodename](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodename)
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nodename-pod
+spec:
+  nodeName: node01
+  containers:
+  - name: nodename-con
+    image: nginx  
+```
+
+Verify which node it landed on:
+
+```bash
+kubectl get pod nodename-pod -o wide
 ```
 
 </p>
@@ -598,7 +644,7 @@ kubectl rollout history deploy nginx --revision=6 # insert the number of your la
 kubectl delete deploy nginx
 kubectl delete hpa nginx
 
-#Or
+# or
 kubectl delete deploy/nginx hpa/nginx
 ```
 </p>
@@ -844,48 +890,6 @@ kubectl delete job busybox
 </p>
 </details>
 
-### Create a job but ensure that it will be automatically terminated by kubernetes if it takes more than 30 seconds to execute
-
-<details><summary>show</summary>
-<p>
-
-```bash
-kubectl create job busybox --image=busybox --dry-run=client -o yaml -- /bin/sh -c 'while true; do echo hello; sleep 10;done' > job.yaml
-vi job.yaml
-```
-
-Add job.spec.activeDeadlineSeconds=30
-
-```bash
-apiVersion: batch/v1
-kind: Job
-metadata:
-  creationTimestamp: null
-  labels:
-    run: busybox
-  name: busybox
-spec:
-  activeDeadlineSeconds: 30 # add this line
-  template:
-    metadata:
-      creationTimestamp: null
-      labels:
-        run: busybox
-    spec:
-      containers:
-      - args:
-        - /bin/sh
-        - -c
-        - while true; do echo hello; sleep 10;done
-        image: busybox
-        name: busybox
-        resources: {}
-      restartPolicy: OnFailure
-status: {}
-```
-</p>
-</details>
-
 ### Create the same job, make it run 5 times, one after the other. Verify its status and delete it
 
 <details><summary>show</summary>
@@ -896,7 +900,7 @@ kubectl create job busybox --image=busybox --dry-run=client -o yaml -- /bin/sh -
 vi job.yaml
 ```
 
-Add job.spec.completions=5
+Add job.spec.completions=5 and job.spec.completionMode=Indexed
 
 ```YAML
 apiVersion: batch/v1
@@ -908,6 +912,7 @@ metadata:
   name: busybox
 spec:
   completions: 5 # add this line
+  completionMode: Indexed # add this line
   template:
     metadata:
       creationTimestamp: null
@@ -990,6 +995,48 @@ It will take some time for the parallel jobs to finish (>= 30 seconds)
 kubectl delete job busybox
 ```
 
+</p>
+</details>
+
+### Create a job but ensure that it will be automatically terminated by kubernetes if it takes more than 30 seconds to execute
+
+<details><summary>show</summary>
+<p>
+
+```bash
+kubectl create job busybox --image=busybox --dry-run=client -o yaml -- /bin/sh -c 'while true; do echo hello; sleep 10;done' > job.yaml
+vi job.yaml
+```
+
+Add job.spec.activeDeadlineSeconds=30
+
+```bash
+apiVersion: batch/v1
+kind: Job
+metadata:
+  creationTimestamp: null
+  labels:
+    run: busybox
+  name: busybox
+spec:
+  activeDeadlineSeconds: 30 # add this line
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: busybox
+    spec:
+      containers:
+      - args:
+        - /bin/sh
+        - -c
+        - while true; do echo hello; sleep 10;done
+        image: busybox
+        name: busybox
+        resources: {}
+      restartPolicy: OnFailure
+status: {}
+```
 </p>
 </details>
 
@@ -1127,6 +1174,72 @@ status: {}
 
 </p>
 </details>
+
+### Keep only the last 2 successful and 1 failed runs of a CronJob
+
+<details><summary>show</summary> <p>
+
+Create a CronJob with history limits configured:
+```bash
+kubectl create cronjob history-demo \
+  --image=busybox \
+  --schedule="*/1 * * * *" \
+  --dry-run=client -o yaml \
+  -- /bin/sh -c 'date; echo Hello from history demo' > history-demo.yaml
+```
+
+Edit the file:
+
+```bash
+vi history-demo.yaml
+```
+
+Add the following fields under spec:
+
+```bash
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: history-demo
+spec:
+  schedule: "*/1 * * * *"
+  successfulJobsHistoryLimit: 2   # keep last 2 successful jobs
+  failedJobsHistoryLimit: 1        # keep last 1 failed job
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: history-demo
+            image: busybox
+            args:
+            - /bin/sh
+            - -c
+            - date; echo Hello from history demo
+          restartPolicy: Never
+```
+
+Apply the CronJob:
+```bash
+kubectl apply -f history-demo.yaml
+```
+
+Verify job history behavior:
+
+```bash
+kubectl get cj history-demo
+kubectl get jobs --watch
+```
+
+After several runs, confirm that:
+- Only 2 successful Jobs are kept
+- Only 1 failed Job is kept (if failures occur)
+
+Clean up:
+```bash
+kubectl delete cj history-demo
+```
+</p> </details>
 
 ### Create a job from cronjob.
 
