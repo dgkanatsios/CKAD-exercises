@@ -767,7 +767,7 @@ If the v2 is stable, scale it up to 4 replicas and shutdown the v1:
 ```
 kubectl scale --replicas=4 deploy my-app-v2
 kubectl delete deploy my-app-v1
-while sleep 0.1; do curl $(kubectl get svc my-app-svc -o jsonpath="{.spec.clusterIP}"); done
+kubectl run curl --image=curlimages/curl --rm -it --restart=Never -- sh -c 'while sleep 0.1; do curl my-app-svc; done'
 version-2
 version-2
 version-2
