@@ -883,7 +883,7 @@ kubectl create job busybox --image=busybox --dry-run=client -o yaml -- /bin/sh -
 vi job.yaml
 ```
 
-Add job.spec.completions=5
+Add job.spec.completions=5 and job.spec.completionMode=Indexed
 
 ```YAML
 apiVersion: batch/v1
@@ -895,6 +895,7 @@ metadata:
   name: busybox
 spec:
   completions: 5 # add this line
+  completionMode: Indexed # add this line
   template:
     metadata:
       creationTimestamp: null

@@ -783,6 +783,7 @@ status: {}
 ```
 
 ```bash
+k create $ns -f nginx.yaml
 k exec -it $ns consumer -- /bin/sh
 #env
 ```
