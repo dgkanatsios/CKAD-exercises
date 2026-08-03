@@ -226,7 +226,9 @@ metadata:
 spec:
   containers:
     - name: cuda-test
-      image: "k8s.gcr.io/cuda-vector-add:v0.1"
+      # k8s.gcr.io was deprecated in 2022 and is read-only. Use registry.k8s.io instead.
+      # See https://kubernetes.io/blog/2022/11/28/registry-k8s-io-faster-cheaper-and-geographically-available/
+      image: "registry.k8s.io/cuda-vector-add:v0.1"
   nodeSelector: # add this
     accelerator: nvidia-tesla-p100 # the selection label
 ```
@@ -702,7 +704,7 @@ spec:
 Test if the deployment was successful from within a Pod:
 ```
 # run a wget to the Service my-app-svc
-kubectl run -it --rm --restart=Never busybox --image=gcr.io/google-containers/busybox --command -- wget -qO- my-app-svc
+kubectl run -it --rm --restart=Never busybox --image=busybox --command -- wget -qO- my-app-svc
 
 version-1
 ```
@@ -753,7 +755,7 @@ spec:
 Observe that calling the ip exposed by the service the requests are load balanced across the two versions:
 ```
 # run a busyBox pod that will make a wget call to the service my-app-svc and print out the version of the pod it reached.
-kubectl run -it --rm --restart=Never busybox --image=gcr.io/google-containers/busybox -- /bin/sh -c 'while sleep 1; do wget -qO- my-app-svc; done'
+kubectl run -it --rm --restart=Never busybox --image=busybox -- /bin/sh -c 'while sleep 1; do wget -qO- my-app-svc; done'
 
 version-1
 version-1
@@ -767,7 +769,10 @@ If the v2 is stable, scale it up to 4 replicas and shutdown the v1:
 ```
 kubectl scale --replicas=4 deploy my-app-v2
 kubectl delete deploy my-app-v1
-while sleep 0.1; do curl $(kubectl get svc my-app-svc -o jsonpath="{.spec.clusterIP}"); done
+# Note: this `curl` must be executed from inside a Pod in the cluster (see issue #281),
+# not from the host shell, since the Service ClusterIP is only reachable in-cluster.
+# A simple way to do that is to spin up a throwaway curl pod:
+kubectl run curl --image=curlimages/curl --rm -it --restart=Never -- sh -c 'while sleep 0.1; do curl $(kubectl get svc my-app-svc -o jsonpath="{.spec.clusterIP}"); done'
 version-2
 version-2
 version-2
