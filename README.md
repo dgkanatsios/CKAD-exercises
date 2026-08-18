@@ -24,8 +24,6 @@ A Quick Reference box will contain helpful links for each exam exercise as well.
 - [helm](h.helm.md)
 - [Custom Resource Definitions](i.crd.md)
 
-> If your work is related to multiplayer game servers, checkout out [thundernetes, a brand new project to host game servers on Kubernetes](https://github.com/PlayFab/thundernetes)!
-
 ### Can I PR? There is an error/an alternative way/an extra question/solution I can offer
 
 Absolutely! Feel free to PR and edit/add questions and solutions, but please stick to the existing format.
