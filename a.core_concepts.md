@@ -175,7 +175,7 @@ kubectl get po -A
 <p>
 
 ```bash
-kubectl run nginx --image=nginx --restart=Never --port=80
+kubectl run nginx --image=nginx --restart=Never --expose --port=80
 ```
 
 </p>
