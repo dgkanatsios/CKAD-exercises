@@ -45,8 +45,8 @@ or
 <p>
 
 ```bash
-IP=$(kubectl get svc nginx --template={{.spec.clusterIP}}) # get the IP (something like 10.108.93.130)
-kubectl run busybox --rm --image=busybox -it --restart=Never --env="IP=$IP" -- wget -O- $IP:80 --timeout 2
+SVCIP=$(kubectl get svc nginx --template={{.spec.clusterIP}}) # get the IP (something like 10.108.93.130)
+kubectl run busybox --rm --image=busybox -it --restart=Never --env="IP=$SVCIP" -- /bin/sh -c 'wget -O- $IP:80 --timeout 2'
 # Tip: --timeout is optional, but it helps to get answer more quickly when connection fails (in seconds vs minutes)
 ```
 
