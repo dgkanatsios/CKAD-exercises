@@ -408,8 +408,7 @@ kubectl get deploy nginx -o yaml
 ```bash
 kubectl describe deploy nginx # you'll see the name of the replica set on the Events section and in the 'NewReplicaSet' property
 # OR you can find rs directly by:
-kubectl get rs -l run=nginx # if you created deployment by 'run' command
-kubectl get rs -l app=nginx # if you created deployment by 'create' command
+kubectl get rs -l app=nginx
 # you could also just do kubectl get rs
 kubectl get rs nginx-7bf7478b77 -o yaml
 ```
